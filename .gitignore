@@ -1,6 +1,11 @@
 # ─── Local tooling (preview server, etc.) ─────
 .claude/
 
+# ─── Deploy SSH keys (NEVER commit these) ─────
+deploy_key
+deploy_key.pub
+*.pem
+
 # ─── Source documents / scratch (not for web) ──
 *.DOCX
 1.docx.txt

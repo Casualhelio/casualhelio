@@ -1,7 +1,8 @@
 name: Deploy to cPanel
 
-# Runs on every push to the main branch (and can be run manually from the
-# Actions tab). Uploads only the changed files to cPanel over secure FTP (FTPS).
+# Runs on every push to main (and can be run manually from the Actions tab).
+# Deploys over SSH with rsync — only changed files are sent. Port 21 (FTP) is
+# firewalled by the host, so we use SSH/SFTP (port 22), which is open.
 on:
   push:
     branches: [ main ]
@@ -9,53 +10,20 @@ on:
 
 jobs:
   deploy:
-    name: FTP upload to public_html
+    name: rsync over SSH to public_html
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy via SSH (rsync)
+        uses: easingthemes/ssh-deploy@v5.1.0
         with:
-          server:   ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp           # plain FTP — cPanel's FTPS handshake was hanging (control-socket timeout)
-          port:     21
-          timeout:  60000         # give the connection up to 60s before failing
-          server-dir: ./   # FTP account admin1@nest.mn is rooted at /home/nestmn/public_html, so "./" = public_html
-          local-dir:  ./
-          # Files that must NOT be published to the live site.
-          # (Most are already untracked via .gitignore; listed again for safety.)
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/.claude/**
-            **/node_modules/**
-            sanity-studio/**
-            excel_parser/**
-            **/*.ps1
-            **/*.py
-            **/*.csv
-            **/*.md
-            *.DOCX
-            1.docx.txt
-            cleaned_map.txt
-            excel_content.txt
-            excel_math.txt
-            extracted_paths.txt
-            index-alt.html
-            admin-translations.html
-            edit.html
-            preview.html
-            css/styles-alt.css
-            world.svg
-            map_new.svg
-            countries.geo.json
-            test.js
-            package.json
-            package-lock.json
-            _headers
-            vercel.json
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: "202.131.237.181"     # cPanel server IP (domain is behind Cloudflare)
+          REMOTE_USER: "nestmn"              # main cPanel username
+          REMOTE_PORT: "22"
+          SOURCE: "./"
+          TARGET: "/home/nestmn/public_html/"
+          ARGS: "-rltgoDzvO"                 # archive-ish; no --delete, so nothing on the server is removed
+          EXCLUDE: "/.git/, /.github/, /.claude/, /node_modules/, /sanity-studio/, *.md, /_headers, /vercel.json, /package.json, /package-lock.json, /.gitignore, /edit.html, /js/index-alt.js, /deploy_key, /deploy_key.pub"
