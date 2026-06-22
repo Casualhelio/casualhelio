@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps          # secure FTP over TLS (cPanel supports this on port 21)
           port:     21
-          server-dir: public_html/   # ← change if your site lives in a subfolder / addon domain
+          server-dir: ./   # FTP account admin1@nest.mn is rooted at /home/nestmn/public_html, so "./" = public_html
           local-dir:  ./
           # Files that must NOT be published to the live site.
           # (Most are already untracked via .gitignore; listed again for safety.)
