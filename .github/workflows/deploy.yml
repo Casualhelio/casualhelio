@@ -22,7 +22,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: "202.131.237.181"     # cPanel server IP (domain is behind Cloudflare)
           REMOTE_USER: "nestmn"              # main cPanel username
-          REMOTE_PORT: "22"
+          REMOTE_PORT: "2222"   # host firewalls 22; cPanel SSH commonly runs on 2222
           SOURCE: "./"
           TARGET: "/home/nestmn/public_html/"
           ARGS: "-rltgoDzvO"                 # archive-ish; no --delete, so nothing on the server is removed
