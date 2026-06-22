@@ -21,8 +21,9 @@ jobs:
           server:   ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps          # secure FTP over TLS (cPanel supports this on port 21)
+          protocol: ftp           # plain FTP — cPanel's FTPS handshake was hanging (control-socket timeout)
           port:     21
+          timeout:  60000         # give the connection up to 60s before failing
           server-dir: ./   # FTP account admin1@nest.mn is rooted at /home/nestmn/public_html, so "./" = public_html
           local-dir:  ./
           # Files that must NOT be published to the live site.
