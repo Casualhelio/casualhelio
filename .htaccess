@@ -1,0 +1,51 @@
+# Apache / cPanel shared hosting config.
+# Ignored automatically by Netlify, Vercel, Cloudflare Pages and GitHub Pages —
+# only Apache reads this file, so it is safe to leave in the deploy.
+
+# ─── Custom error page ────────────────────────
+ErrorDocument 404 /404.html
+
+# ─── Security headers (the ones <meta> cannot set) ──
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+</IfModule>
+
+# ─── Force HTTPS ──────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ─── Compression ──────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# ─── Caching ──────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                "access plus 7 days"
+  ExpiresByType application/javascript  "access plus 7 days"
+  ExpiresByType image/png               "access plus 1 day"
+  ExpiresByType image/jpeg              "access plus 1 day"
+  ExpiresByType image/webp              "access plus 1 day"
+  ExpiresByType image/svg+xml           "access plus 1 day"
+  ExpiresByType video/mp4               "access plus 7 days"
+  ExpiresByType application/pdf         "access plus 1 day"
+  ExpiresByType text/html               "access plus 0 seconds"
+</IfModule>
+
+# ─── Block access to dev / source files if they ever get uploaded ──
+<FilesMatch "\.(ps1|py|csv|md|log)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(test|edit|index-alt|admin-translations)\.(js|html)$">
+  Require all denied
+</FilesMatch>

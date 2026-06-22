@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>News Article Nest Group</title>
+    <link rel="canonical" href="https://nest.mn/article.html" />
+    <meta name="description" content="Read the full news article." />
+    <!-- Dynamic OG tags will be injected by article.js -->
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <style>
+        .article-hero {
+            padding: 100px 5% 40px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            position: relative;
+            text-align: center;
+        }
+
+        .article-hero .article-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .article-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            line-height: 1.25;
+            margin: 16px auto 0;
+            color: #fff;
+        }
+
+        .article-meta {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 28px;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        /* ── SLIDER ── */
+        .article-slider {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: -40px auto 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .article-slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            will-change: transform;
+        }
+
+        .article-slide {
+            flex: 0 0 100%;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .article-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .article-slide-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 24px 32px 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+            color: #fff;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-btn:hover {
+            background: var(--gold);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .slider-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--primary);
+        }
+
+        .slider-btn.prev {
+            left: 16px;
+        }
+
+        .slider-btn.next {
+            right: 16px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, width 0.2s;
+            padding: 0;
+        }
+
+        .slider-dot.active {
+            background: var(--gold);
+            width: 28px;
+            border-radius: 4px;
+        }
+
+        .slider-counter {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            z-index: 5;
+        }
+
+        .article-content {
+            padding: 60px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-content p {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .article-content h2,
+        .article-content h3 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .slider-btn.prev {
+                left: 10px;
+            }
+
+            .slider-btn.next {
+                right: 10px;
+            }
+
+            .article-slider {
+                margin-top: -20px;
+                border-radius: 8px;
+            }
+
+            .article-slide-caption {
+                padding: 18px 18px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/aurora-background.css?v=46" />
+</head>
+
+<body>
+
+    <!-- NAVBAR WRAPPER -->
+    <div id="navbar-wrapper"></div>
+
+    <main id="article-loader" role="status" aria-label="Loading" style="padding: 80px 5%; min-height: 60vh;">
+        <div aria-hidden="true" style="max-width: 760px; margin: 0 auto;">
+            <div class="sk-line w40" style="margin: 0 auto 18px;"></div>
+            <div class="sk-line w90" style="height: 26px; margin: 0 auto 10px;"></div>
+            <div class="sk-line w70" style="height: 26px; margin: 0 auto 34px;"></div>
+            <div class="sk-img" style="height: 340px; border-radius: 14px; margin-bottom: 30px;"></div>
+            <div class="sk-line w90"></div>
+            <div class="sk-line w90"></div>
+            <div class="sk-line w70"></div>
+        </div>
+    </main>
+
+    <div id="article-container" style="display: none;">
+        <section class="article-hero" id="article-hero">
+            <div class="article-hero-inner">
+                <a href="news.html" class="back-link" data-i18n="art_back">&larr; Back to News</a>
+                <div class="article-meta">
+                    <span id="article-date">&#128197; Loading Date...</span>
+                </div>
+                <h1 id="article-title">Loading Title...</h1>
+            </div>
+        </section>
+
+        <!-- SLIDER -->
+        <section style="padding: 0 5%;">
+            <div class="article-slider" id="article-slider" style="display:none;">
+                <div class="article-slider-track" id="slider-track">
+                    <!-- Slides injected here -->
+                </div>
+                <button class="slider-btn prev" id="slider-prev" aria-label="Previous image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="slider-btn next" id="slider-next" aria-label="Next image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                <div class="slider-dots" id="slider-dots"></div>
+                <div class="slider-counter" id="slider-counter"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-inner article-content" id="article-body">
+                <!-- Content injected here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER WRAPPER -->
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+    <script src="js/sanity-client.js?v=46"></script>
+    <script src="js/article.js?v=46"></script>
+
+</body>
+
+</html>

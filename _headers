@@ -1,0 +1,26 @@
+# HTTP headers for Netlify & Cloudflare Pages (static hosting).
+# These set the security headers that CANNOT be set via <meta> in HTML
+# (clickjacking / nosniff / HSTS) plus sensible caching.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
+
+# Versioned CSS/JS (cache-busted with ?v=NN) — safe to cache for a week.
+/css/*
+  Cache-Control: public, max-age=604800
+/js/*
+  Cache-Control: public, max-age=604800
+
+# Images / video / pdf — replaced in place occasionally, so cache 1 day.
+/assets/*
+  Cache-Control: public, max-age=86400
+
+# HTML must always re-validate so content/version updates appear immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>News & Media — Nest Group</title>
+    <link rel="canonical" href="https://nest.mn/news.html" />
+    <meta name="description"
+        content="Stay updated with the latest news, press releases, and announcements from Nest Group and its subsidiaries." />
+        <meta property="og:title" content="News & Media — Nest Group" />
+    <meta property="og:description" content="Nest Group is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:image" content="https://nest.mn/assets/logo.png" />
+    <meta property="og:url" content="https://nest.mn/news.html" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+</head>
+
+<body>
+
+    <div id="navbar-wrapper"></div>
+
+    <!-- NEWS GRID -->
+    <section class="section">
+        <div class="section-inner">
+            <!-- Dynamic Fetch Container -->
+            <div id="sanity-news-loader" role="status" aria-label="Loading" style="padding: 20px 0 40px;">
+                <div class="sk-grid" aria-hidden="true">
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                </div>
+            </div>
+            <div id="sanity-news-featured"></div>
+
+            <!-- All Stories Grid -->
+            <div style="border-bottom:1px solid var(--light-gray);margin-bottom:40px;padding:28px 0 20px;">
+                <div class="section-tag reveal" data-i18n="np_all">All Stories</div>
+            </div>
+            
+            <div class="news-grid" id="sanity-news-grid" style="display:none;"></div>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div style="position:relative; text-align:center;">
+            <h2 data-i18n="cta_simple_h" style="font-family:var(--font-display); font-size:clamp(28px,3.5vw,40px); font-weight:600; letter-spacing:0.04em; color:var(--primary); margin:0 auto 28px;">Contact Us</h2>
+            <a href="contact.html" class="btn-primary" data-i18n="nav_contact">Contact Us</a>
+        </div>
+    </section>
+
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/sanity-client.js?v=46"></script>
+    <script src="js/news.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+
+</body>
+
+</html>
+
+

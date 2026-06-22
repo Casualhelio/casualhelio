@@ -1,0 +1,535 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>About Us — Nest Group</title>
+    <link rel="canonical" href="https://nest.mn/about.html" />
+    <meta name="description"
+        content="Learn about Nest Group's mission, vision, history, and the leadership team driving growth across Real Estate and Non-Banking Finance." />
+    <meta property="og:title" content="About Us — Nest Group" />
+    <meta property="og:description"
+        content="Nest Group is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:image" content="https://nest.mn/assets/logo.png" />
+    <meta property="og:url" content="https://nest.mn/about.html" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/timeline.css?v=46" />
+    <link rel="stylesheet" href="css/aurora-background.css?v=46" />
+    <link rel="stylesheet" href="css/v2.css?v=46" />
+    <style>
+        /* ============ CINEMATIC HERO ============ */
+        .ap-hero {
+            position: relative;
+            min-height: 88vh;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+            padding: 150px 6% 110px;
+        }
+
+        .ap-hero-media {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: url('assets/videos/about-hero-poster.jpg') center/cover no-repeat #0c1b24;
+        }
+
+        .ap-hero-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ap-hero-media video { display: none; }
+        }
+
+        .ap-hero-scrim {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(78deg, rgba(12, 27, 36, 0.78) 0%, rgba(12, 27, 36, 0.35) 55%, rgba(12, 27, 36, 0.25) 100%),
+                linear-gradient(180deg, rgba(12, 27, 36, 0.45) 0%, rgba(12, 27, 36, 0.18) 45%, rgba(12, 27, 36, 0.82) 100%);
+        }
+
+        .ap-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .ap-hero .breadcrumb {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+        }
+
+        .ap-hero .breadcrumb a,
+        .ap-hero .breadcrumb span { color: rgba(255, 255, 255, 0.55); }
+
+        .ap-hero .breadcrumb a:hover { color: var(--gold); }
+
+        .ap-hero .breadcrumb span:last-child { color: var(--gold); }
+
+        .ap-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(46px, 7.2vw, 102px);
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            line-height: 1.04;
+            color: #fff;
+            margin: 0 0 30px;
+            max-width: 14ch;
+            text-wrap: balance;
+        }
+
+        .ap-hero-title em {
+            font-style: italic;
+            font-weight: 500;
+            color: var(--gold);
+        }
+
+        .ap-hero-rule {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .ap-hero-rule::before {
+            content: "";
+            width: 84px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .ap-hero-rule::after {
+            content: "";
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+        }
+
+        /* scroll cue — pure symbol, no text */
+        .ap-scrollcue {
+            position: absolute;
+            right: 6%;
+            bottom: 46px;
+            z-index: 2;
+            width: 30px;
+            height: 52px;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 100px;
+        }
+
+        .ap-scrollcue::before {
+            content: "";
+            position: absolute;
+            top: 9px;
+            left: 50%;
+            width: 4px;
+            height: 9px;
+            margin-left: -2px;
+            border-radius: 100px;
+            background: var(--gold);
+            animation: ap-cue 2.1s var(--v2-ease) infinite;
+        }
+
+        @keyframes ap-cue {
+            0% { transform: translateY(0); opacity: 1; }
+            70% { transform: translateY(22px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ap-scrollcue::before { animation: none; }
+        }
+
+        /* ============ EDITORIAL INTRO (the letter) ============ */
+        .ap-letter {
+            position: relative;
+            background: var(--white);
+            padding: 110px 6% 100px;
+            overflow: hidden;
+        }
+
+        .ap-letter::before {
+            /* giant editorial quote mark */
+            content: "\201C";
+            position: absolute;
+            top: -60px;
+            right: 3%;
+            font-family: var(--font-display);
+            font-size: clamp(280px, 30vw, 480px);
+            font-weight: 700;
+            line-height: 1;
+            color: rgba(36, 69, 86, 0.055);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .ap-letter__inner {
+            position: relative;
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+
+        .ap-letter__body p {
+            margin: 0 0 18px;
+            font-size: 15.5px;
+            line-height: 1.9;
+            color: var(--text-body);
+            break-inside: avoid;
+        }
+
+        .ap-letter__body p:first-child {
+            font-family: var(--font-display);
+            font-size: clamp(20px, 2.3vw, 26px);
+            line-height: 1.6;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 40px;
+            padding-left: 26px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .ap-letter__body p:first-child::first-letter {
+            font-size: 1.9em;
+            color: var(--gold);
+            font-weight: 600;
+            line-height: 1;
+            padding-right: 2px;
+        }
+
+        .ap-letter__cols {
+            column-count: 2;
+            column-gap: 60px;
+            column-rule: 1px solid rgba(36, 69, 86, 0.1);
+        }
+
+        /* first paragraph escapes the columns */
+        .ap-letter__body p:first-child {
+            column-span: all;
+        }
+
+        .ap-letter__sig {
+            margin-top: 44px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .ap-letter__sig::before {
+            content: "";
+            width: 56px;
+            height: 1.5px;
+            background: var(--gold);
+        }
+
+        .ap-letter__sig img {
+            height: 52px;
+            width: auto;
+            background: var(--primary);
+            padding: 9px 12px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 900px) {
+            .ap-letter { padding: 80px 6% 70px; }
+            .ap-letter__cols { column-count: 1; }
+            .ap-letter__body p:first-child { padding-left: 18px; }
+        }
+
+        /* ============ MISC ============ */
+        .ap-film-band .section-title { margin-bottom: 14px; }
+
+        .ap-film-band .section-sub {
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.85;
+        }
+
+        .ap-photo {
+            margin-top: 72px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            height: 68vh;
+            min-height: 380px;
+            overflow: hidden;
+        }
+
+        .ap-photo img {
+            width: 100%;
+            height: 124%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="navbar-wrapper"></div>
+
+    <!-- HERO -->
+    <section class="ap-hero">
+        <div class="ap-hero-media">
+            <video autoplay muted loop playsinline disablepictureinpicture poster="assets/videos/about-hero-poster.jpg">
+                <source src="assets/videos/about-hero.mp4" type="video/mp4" />
+            </video>
+            <div class="ap-hero-scrim"></div>
+        </div>
+        <div class="ap-hero-content">
+            <div class="breadcrumb aceternity-text aceternity-delay-1"><a href="index.html" data-i18n="nav_home">Home</a><span>/</span><span data-i18n="nav_about">About Us</span></div>
+            <h1 class="ap-hero-title aceternity-text aceternity-delay-2" data-i18n-html="ap_h1">About <em>Nest Group</em></h1>
+            <div class="ap-hero-rule aceternity-text aceternity-delay-3"></div>
+        </div>
+        <div class="ap-scrollcue" aria-hidden="true"></div>
+    </section>
+
+    <!-- EDITORIAL INTRO -->
+    <section class="ap-letter">
+        <div class="ap-letter__inner reveal">
+            <div class="ap-letter__body ap-letter__cols" data-i18n-html="ap_p"><p>Our story is one of vision, resilience, and a relentless pursuit of sustainable value creation.</p></div>
+            <div class="ap-letter__sig">
+                <img src="assets/logo.png" alt="Nest Group" loading="lazy" />
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION / VISION / VALUES -->
+    <section class="section" style="background:var(--off-white); padding-top:90px; padding-bottom:90px;">
+        <div class="section-inner">
+            <div class="v2-mvv" data-stagger>
+                <div class="v2-mvv__card" data-tilt>
+                    <div class="v2-mvv__icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="ap_mission_title">Our Mission</h3>
+                    <p data-i18n="ap_mission_p">Through our relationships, we foster growth opportunities for our customers, creating new value and innovative opportunities in society.</p>
+                </div>
+                <div class="v2-mvv__card is-primary" data-tilt>
+                    <div class="v2-mvv__icon" style="background:rgba(201,168,76,0.18);">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8l0 4 3 3" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="ap_vision_title">Our Vision</h3>
+                    <p data-i18n="ap_vision_p">ONE HEART, ONE TEAM &mdash; Towards a more amazing tomorrow than today. We aim to create 100 years of history, which will last for generations.</p>
+                </div>
+                <div class="v2-mvv__card" data-tilt>
+                    <div class="v2-mvv__icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="ap_values_title">Our Values</h3>
+                    <p data-i18n-html="ap_values_p" style="text-align:left;">Integrity, innovation, and impact &mdash; three pillars that guide every decision we make and every partnership we forge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION STATEMENT + GROUP FILM (dark band) -->
+    <section class="section v2-dark ap-film-band">
+        <div class="section-inner">
+            <div style="text-align:center; max-width:800px; margin:0 auto;">
+                <h2 class="section-title reveal" data-i18n="ap_principles_title">Our Mission Statement</h2>
+                <p class="section-sub reveal" data-i18n="ap_principles_p">We strive to create lasting value through innovation, integrity, and collaboration, building a legacy that will endure for generations.</p>
+            </div>
+
+            <div class="reveal" style="max-width:920px; margin:52px auto 0;">
+                <div class="v2-video" data-tilt>
+                    <video preload="none" poster="assets/videos/hm-poster.jpg" playsinline>
+                        <source src="assets/videos/hm.mp4" type="video/mp4" />
+                    </video>
+                    <div class="v2-video__cover">
+                        <span class="v2-video__play">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STANDARDS & CULTURE TIMELINE -->
+    <section class="section" style="background:#fff; padding-top:80px;">
+        <div class="section-inner">
+            <div style="text-align:center; margin-bottom:40px;">
+                <div class="v2-chip reveal" style="justify-content:center;" data-i18n="ap_quality_tag">Standards & Culture</div>
+            </div>
+
+            <div class="timeline-container reveal">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-entry right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">ISO 9001 & ISO 27001</div>
+                        <h4 class="timeline-card-title" data-i18n="ap_quality_title">Quality Management & Information Security</h4>
+                        <div class="timeline-card-desc" data-i18n-html="ap_quality_p"><p class="tl-lead">We have successfully implemented the ISO 9001:2015 Quality Management System across our subsidiaries, fostering a culture of continuous improvement at all levels.</p><p>We have also implemented ISO 27001:2022 Information Security Management System, ensuring client data confidentiality, integrity, and accessibility at international standards.</p></div>
+                        <div class="v2-iso">
+                            <img src="assets/iso2001-logo.png" alt="ISO 9001:2015" loading="lazy" />
+                            <img src="assets/ISO 27001 Information Security.png" alt="ISO 27001:2022 Information Security" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">CSR</div>
+                        <h4 class="timeline-card-title" data-i18n="ap_csr_title">Social Responsibility & Sustainable Development</h4>
+                        <div class="timeline-card-desc" data-i18n-html="ap_csr_p"><p class="tl-lead">NEST Group implements social responsibility as an integral part of our organizational values and culture, annually organizing donation campaigns.</p><p>We support environmentally friendly practices, waste reduction, and provide real support to target social groups.</p></div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">HR</div>
+                        <h4 class="timeline-card-title" data-i18n="ap_hr_title">Human Resources & Organizational Culture</h4>
+                        <div class="timeline-card-desc" data-i18n-html="ap_hr_p"><p class="tl-lead">We view our employees as the organization's most valuable capital, implementing policies that sustainably support their knowledge, skills, and personal development.</p><p>We regularly organize language and professional training, building a capable, internationally competitive team.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP TEAM -->
+    <section class="section">
+        <div class="section-inner">
+            <div style="text-align:center; max-width:600px; margin:0 auto 60px;">
+                <h2 class="section-title reveal" data-i18n="ap_team_h2">Management</h2>
+                <p class="section-sub reveal" style="margin:0 auto;" data-i18n="ap_team_p">Our leadership team brings decades of combined
+                    experience across finance, real estate, strategy, and governance.</p>
+            </div>
+            <div class="team-stack-container">
+                <!-- Card 1 -->
+                <div class="team-card-sticky reveal">
+                    <div class="team-card-img-col">
+                        <img src="assets/tugs.png" alt="Tugsbileg Khurelbaatar" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="team-card-content">
+                        <h4 data-i18n="lead1_name">Tugsbileg Khurelbaatar</h4>
+                        <div class="team-role" data-i18n="lead1_role">CEO, VE-ST Holdings Mongolia LLC</div>
+                        <div class="team-bio" data-i18n="lead1_bio">Since 2018, served as responsible executive for
+                            VE-ST Property Service LLC, VE-ST Travel Service LLC, and VE-ST Foods LLC. From 2023,
+                            appointed as Group CEO of VE-ST Holdings Mongolia LLC. Focuses on human resource development
+                            — especially empowering women — and on building support programs for the next generation.
+                            Dedicated to customer satisfaction, service quality, and urban community development.</div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="team-card-sticky bg-primary reveal">
+                    <div class="team-card-img-col">
+                        <img src="assets/munkhbold.png" alt="Munkhbold Boldbaatar" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="team-card-content">
+                        <h4 data-i18n="lead2_name">Munkhbold Boldbaatar</h4>
+                        <div class="team-role" data-i18n="lead2_role">CEO, NEST PROPERTY SERVICE LLC</div>
+                        <div class="team-bio" data-i18n="lead2_bio">Leading VE-ST Property Service from 7 managed
+                            properties in 2016 to over 115 by 2025 through strategic growth and one-stop service
+                            delivery.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Photo — cinematic parallax window -->
+            <div class="ap-photo reveal">
+                <img src="assets/group.jpg" alt="NEST Group Team" loading="lazy" data-parallax="0.1" />
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTNERS — infinite marquee -->
+    <section class="section partners-marquee-section">
+        <div class="section-inner">
+            <div class="partners-marquee-intro">
+                <h2 class="section-title reveal" data-i18n="partners_h2">Partner Organizations</h2>
+                <p class="section-sub reveal partners-marquee-intro__p" data-i18n="partners_p">We have been working with the following organizations since our establishment. Including:</p>
+            </div>
+        </div>
+
+        <div class="partners-marquee reveal" aria-label="Partners">
+            <div class="partners-marquee__track">
+                <div class="partners-marquee__group">
+                    <div class="partners-marquee__logo"><img src="assets/logo-tdb.png" alt="Trade &amp; Development Bank" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-bogd.png" alt="Bogd Bank" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-golomt.png" alt="Golomt Bank" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-khan.png" alt="Khan Bank" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <span class="partners-marquee__chip" data-i18n="partner5">World Standard Consulting LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner6">MonCertf LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner7">Idea+ LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner8">NUDEN SOLUTION LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner9">Chingeltei District Kindergarten #39</span>
+                    <span class="partners-marquee__chip" data-i18n="partner10">Kaisei Capital LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner11">Flower Hotel</span>
+                </div>
+                <div class="partners-marquee__group" aria-hidden="true">
+                    <div class="partners-marquee__logo"><img src="assets/logo-tdb.png" alt="" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-bogd.png" alt="" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-golomt.png" alt="" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <div class="partners-marquee__logo"><img src="assets/logo-khan.png" alt="" width="120" height="44" loading="lazy" decoding="async" /></div>
+                    <span class="partners-marquee__chip" data-i18n="partner5">World Standard Consulting LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner6">MonCertf LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner7">Idea+ LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner8">NUDEN SOLUTION LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner9">Chingeltei District Kindergarten #39</span>
+                    <span class="partners-marquee__chip" data-i18n="partner10">Kaisei Capital LLC</span>
+                    <span class="partners-marquee__chip" data-i18n="partner11">Flower Hotel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+        <div style="position:relative; text-align:center;">
+            <h2 data-i18n="cta_simple_h" style="font-family:var(--font-display); font-size:clamp(28px,3.5vw,40px); font-weight:600; letter-spacing:0.04em; color:var(--primary); margin:0 auto 28px;">Contact Us</h2>
+            <a href="contact.html" class="btn-primary" data-i18n="nav_contact">Contact Us</a>
+        </div>
+    </section>
+
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+    <script src="js/timeline.js?v=46"></script>
+    <script src="js/v2.js?v=46"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin-translations.html
+Disallow: /preview.html
+Disallow: /index-alt.html
+Disallow: /sanity-studio/
+Disallow: /excel_parser/
+
+Sitemap: https://nest.mn/sitemap.xml

@@ -1,0 +1,60 @@
+name: Deploy to cPanel
+
+# Runs on every push to the main branch (and can be run manually from the
+# Actions tab). Uploads only the changed files to cPanel over secure FTP (FTPS).
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: FTP upload to public_html
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:   ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps          # secure FTP over TLS (cPanel supports this on port 21)
+          port:     21
+          server-dir: public_html/   # ← change if your site lives in a subfolder / addon domain
+          local-dir:  ./
+          # Files that must NOT be published to the live site.
+          # (Most are already untracked via .gitignore; listed again for safety.)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.claude/**
+            **/node_modules/**
+            sanity-studio/**
+            excel_parser/**
+            **/*.ps1
+            **/*.py
+            **/*.csv
+            **/*.md
+            *.DOCX
+            1.docx.txt
+            cleaned_map.txt
+            excel_content.txt
+            excel_math.txt
+            extracted_paths.txt
+            index-alt.html
+            admin-translations.html
+            edit.html
+            preview.html
+            css/styles-alt.css
+            world.svg
+            map_new.svg
+            countries.geo.json
+            test.js
+            package.json
+            package-lock.json
+            _headers
+            vercel.json

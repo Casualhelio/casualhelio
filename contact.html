@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Contact Us — Nest Group</title>
+    <link rel="canonical" href="https://nest.mn/contact.html" />
+    <meta name="description"
+        content="Get in touch with Nest Group. Contact our team for investor inquiries, partnership opportunities, or general information." />
+    <meta property="og:title" content="Contact Us — Nest Group" />
+    <meta property="og:description"
+        content="Nest Group is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:image" content="https://nest.mn/assets/logo.png" />
+    <meta property="og:url" content="https://nest.mn/contact.html" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 56px;
+            align-items: start;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .contact-info-card {
+            background: var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+        }
+
+        .contact-info-card .social-btn {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.20);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .contact-info-card .social-btn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--primary);
+        }
+
+        .contact-info-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .contact-info-sub {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .contact-info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .contact-info-detail h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .contact-info-detail p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.6;
+        }
+
+        .contact-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 32px 0;
+        }
+
+        .form-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .form-sub {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 36px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.04em;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(36, 69, 86, 0.3);
+        }
+
+        @media(max-width:900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/aurora-background.css?v=46" />
+</head>
+
+<body>
+
+    <div id="navbar-wrapper"></div>
+
+    <section class="page-hero">
+        <div class="aurora-bg-container"><div class="aurora-visuals"></div></div>
+        <div class="page-hero-inner" style="z-index: 10; position: relative; text-align:center;">
+            <div class="breadcrumb" style="justify-content:center;"><a href="index.html" data-i18n="nav_home">Home</a><span>/</span><span data-i18n="nav_contact">Contact</span></div>
+            <img src="assets/logo.png" alt="Nest Group" style="width:96px; height:96px; margin:24px auto 18px; display:block; filter:brightness(0) invert(1); opacity:0.95;" />
+            <h1 data-i18n-html="con_h1" style="font-family:var(--font-display); font-size:clamp(36px,5vw,56px); max-width:none; margin:0 auto 6px; line-height:1.1; font-weight:600; letter-spacing:0.12em; color:#fff;">НЭСТ Групп</h1>
+            <div style="width:60px; height:2px; background:var(--gold); margin:18px auto 22px; opacity:0.8;"></div>
+            <p data-i18n="con_p" style="font-size:16px; margin:0 auto; max-width:680px; color:rgba(255,255,255,0.85); letter-spacing:0.02em;">+976 7737-0770 | info@nest.mn | www.nest.mn</p>
+            <p data-i18n="con_addr" style="font-size:14px; margin:10px auto 0; max-width:780px; color:rgba(255,255,255,0.65); line-height:1.6;">Монгол Улс, Улаанбаатар хот, Чингэлтэй дүүрэг, 1-хороо, Бага тойруу гудамж 46-р байр</p>
+        </div>
+    </section>
+
+    <!-- GOOGLE MAP -->
+    <section style="position:relative; overflow:hidden; background:var(--off-white);">
+        <div style="width:100%; height:480px; position:relative;">
+            <iframe
+                src="https://maps.google.com/maps?q=loc:47.918664,106.910667&t=m&z=17&hl=en&output=embed&iwloc=near"
+                width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Nest Group Office - Baga toiruu street 46, Chingeltei district, Ulaanbaatar"></iframe>
+        </div>
+        <div style="text-align:center;padding:20px 20px 32px;">
+            <a href="https://www.google.com/maps?q=47.918664,106.910667" target="_blank" rel="noopener noreferrer"
+                class="btn-primary" style="display:inline-flex;" data-i18n="con_map_btn">Open in Google Maps</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-inner">
+            <div class="contact-grid">
+                <!-- Form -->
+                <div class="reveal">
+                    <div class="form-title" data-i18n="con_form_title">Бидэнтэй холбогдох</div>
+                    <p class="form-sub" data-i18n="con_form_sub">Fill in the form below and our team will get back to you within 1&ndash;2
+                        business
+                        days.</p>
+                    <form id="contactForm">
+                        <!-- SECURITY: Restrict this key to nest.mn domain in Web3Forms dashboard. Enable reCAPTCHA and rate limits. -->
+                        <input type="hidden" name="access_key" value="684f67e5-3807-4e02-83eb-3697e95681ca">
+                        <input type="hidden" name="botcheck" value="">
+                        <input type="hidden" name="subject" value="New Submission from Nest Group Contact Form">
+                        <input type="hidden" name="from_name" value="Nest Group">
+
+                        <!-- Honeypot Spam Protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                        <div class="form-group">
+                            <label for="fullName" data-i18n="con_name">Таны нэр</label>
+                            <input type="text" id="fullName" name="Full Name" placeholder="Таны нэр"
+                                data-i18n-ph="con_name_ph" required />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" data-i18n="con_email">Таны мэйл</label>
+                                <input type="email" id="email" name="Email" placeholder="you@company.com"
+                                    data-i18n-ph="con_email_ph" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" data-i18n="con_phone">Таны утасны дугаар</label>
+                                <input type="tel" id="phone" name="Phone" placeholder="+976 XX XXX XXXX" data-i18n-ph="con_phone_ph" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n="con_msg">Дэлгэрэнгүй мэдээлэл</label>
+                            <textarea id="message" name="message"
+                                placeholder="Дэлгэрэнгүй мэдээлэл оруулна уу..." data-i18n-ph="con_msg_ph"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submitBtn" data-i18n="con_submit">Санал илгээх
+                            &rarr;</button>
+                        <div id="resultMsg"
+                            style="display:none; margin-top:20px; padding:18px 24px; border-radius:var(--radius-sm); font-size:15px; font-weight:600;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+    <script src="js/contact-form.js?v=46"></script>
+
+</body>
+
+</html>
+
+

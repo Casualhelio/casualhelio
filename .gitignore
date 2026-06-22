@@ -1,0 +1,76 @@
+# ─── Local tooling (preview server, etc.) ─────
+.claude/
+
+# ─── Source documents / scratch (not for web) ──
+*.DOCX
+1.docx.txt
+
+# ─── Raw client source archive (huge originals, NOT for web/git) ──
+# Promo film originals here are 200–490 MB — over GitHub's 100 MB limit.
+# Curated web copies already live in assets/videos/ and assets/renovations/.
+website2/
+
+# ─── Dependencies ─────────────────────────────
+node_modules/
+sanity-studio/node_modules/
+sanity-studio/dist/
+
+# ─── Build / cache ────────────────────────────
+.cache/
+.parcel-cache/
+.DS_Store
+Thumbs.db
+
+# ─── Editor / IDE ─────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Environment / secrets ────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+
+# ─── Logs ─────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# ─── Internal data extraction (PowerShell + Python) ──
+read_excel.ps1
+read_excel_utf8.ps1
+read_investor_excel.ps1
+read_math.ps1
+test_excel.py
+excel_content.txt
+excel_math.txt
+extracted_paths.txt
+cleaned_map.txt
+excel_parser/
+
+# ─── Translation pipeline ─────────────────────
+export_translations.ps1
+import_translations.ps1
+translations_active.csv
+translations_latest.csv
+
+# ─── Test / scratch ───────────────────────────
+test.js
+
+# ─── Alternate / preview pages (not for production) ──
+index-alt.html
+preview.html
+admin-translations.html
+css/styles-alt.css
+
+# ─── Unused asset experiments ─────────────────
+world.svg
+map_new.svg
+countries.geo.json
+
+# ─── Sanity Studio runtime artifacts ──────────
+sanity-studio/.sanity/

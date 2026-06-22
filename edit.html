@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Nest Group — Text Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #244556;
+            --navy-dark: #173140;
+            --gold: #C9A84C;
+            --off-white: #f4f6f7;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--off-white);
+            color: #2a3b44;
+            margin: 0;
+            padding: 48px 20px;
+            line-height: 1.6;
+        }
+
+        .wrap { max-width: 760px; margin: 0 auto; }
+
+        .head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .head .dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--gold);
+        }
+
+        h1 { color: var(--navy); font-size: 28px; margin: 0; }
+
+        .sub { color: #647882; margin: 0 0 32px; }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            box-shadow: 0 6px 24px rgba(36, 69, 86, .08);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            color: var(--navy);
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin: 0 0 16px;
+        }
+
+        .steps { margin: 0; padding-left: 0; list-style: none; counter-reset: s; }
+
+        .steps li {
+            position: relative;
+            padding: 6px 0 6px 44px;
+            counter-increment: s;
+        }
+
+        .steps li::before {
+            content: counter(s);
+            position: absolute; left: 0; top: 4px;
+            width: 28px; height: 28px;
+            background: var(--navy); color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+        }
+
+        .pages { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+
+        .page-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 18px;
+            background: var(--navy);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: transform .12s, background .12s;
+        }
+
+        .page-btn:hover { background: var(--navy-dark); transform: translateY(-2px); }
+        .page-btn span.arrow { color: var(--gold); font-size: 18px; }
+
+        .tip {
+            background: #fff8e8;
+            border-left: 4px solid var(--gold);
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #6b5b2e;
+        }
+
+        code {
+            background: #eef1f3; padding: 2px 6px; border-radius: 4px;
+            font-size: 13px; color: var(--navy-dark);
+        }
+
+        .muted { color: #8597a0; font-size: 13px; }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="head">
+            <span class="dot"></span>
+            <h1>Website Text Editor</h1>
+        </div>
+        <p class="sub">Edit any text on your site — in English, Mongolian, and Japanese — by clicking it directly on the page.</p>
+
+        <div class="card">
+            <h2>How it works</h2>
+            <ol class="steps">
+                <li>Pick a page below. It opens in <strong>edit mode</strong> (a navy toolbar appears at the top).</li>
+                <li><strong>Click any text</strong> and type your change. Use the <strong>EN / MN / JA</strong> buttons in the toolbar to edit each language.</li>
+                <li>Click <strong>💾 Save</strong>. Your changes are written to a file called <code>translations.js</code>.</li>
+                <li>Upload that one file to your web host (same place you publish the site) to make it live.</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Choose a page to edit</h2>
+            <div class="pages">
+                <a class="page-btn" href="index.html?edit=1">Home <span class="arrow">→</span></a>
+                <a class="page-btn" href="about.html?edit=1">About <span class="arrow">→</span></a>
+                <a class="page-btn" href="companies.html?edit=1">Our Companies <span class="arrow">→</span></a>
+                <a class="page-btn" href="investor-relations.html?edit=1">Investment <span class="arrow">→</span></a>
+                <a class="page-btn" href="contact.html?edit=1">Contact <span class="arrow">→</span></a>
+                <a class="page-btn" href="news.html?edit=1">News page <span class="arrow">→</span></a>
+            </div>
+            <p class="muted" style="margin-top:16px;">News <em>articles</em> themselves are edited in your Sanity CMS at <a href="https://nest-group.sanity.studio/" target="_blank" rel="noopener">nest-group.sanity.studio</a> — this editor handles all the fixed wording around them.</p>
+        </div>
+
+        <div class="tip">
+            💡 <strong>For one-click saving:</strong> open this through a local web address
+            (<code>http://localhost</code>) in Chrome or Edge — then Save writes straight to
+            <code>translations.js</code>. If you just double-click the file instead, Save will
+            <em>download</em> the new <code>translations.js</code>; replace the one in your
+            <code>js/</code> folder with it and re-upload.
+        </div>
+    </div>
+</body>
+
+</html>

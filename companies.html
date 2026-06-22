@@ -1,0 +1,480 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Company Introduction — Nest Group</title>
+    <link rel="canonical" href="https://nest.mn/companies.html" />
+    <meta name="description"
+        content="Discover our five subsidiaries — NEST Property Service, NEST Mirais NBFI, NEST Travel Service, NEST Foods, and NEST Career — forming the heart of Nest Group's diversified portfolio." />
+    <meta property="og:title" content="Company Introduction — Nest Group" />
+    <meta property="og:description"
+        content="Nest Group is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:image" content="https://nest.mn/assets/logo.png" />
+    <meta property="og:url" content="https://nest.mn/companies.html" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/glowing-effect.css?v=46" />
+    <link rel="stylesheet" href="css/v2.css?v=46" />
+    <style>
+        .cp-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+
+        @media (max-width: 980px) {
+            .cp-split { grid-template-columns: 1fr; gap: 36px; }
+        }
+
+        .cp-desc {
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 8px;
+        }
+
+        .cp-section-head {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .cp-services-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid rgba(36, 69, 86, 0.12);
+            padding-bottom: 18px;
+            margin-bottom: 8px;
+        }
+
+        .v2-dark .cp-services-head { border-bottom-color: rgba(255,255,255,0.12); }
+
+        /* travel band background image */
+        .cp-travel-band {
+            position: relative;
+        }
+
+        .cp-travel-band .band-bg {
+            position: absolute;
+            inset: 0;
+            background: url('assets/ub1.png') center/cover no-repeat;
+            opacity: 0.14;
+            pointer-events: none;
+        }
+
+        /* foods coming-soon panel */
+        .cp-foods-panel {
+            background: linear-gradient(150deg, var(--ink) 0%, var(--ink-2) 100%);
+            border-radius: var(--radius-lg);
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(201, 168, 76, 0.25);
+        }
+
+        .cp-foods-panel h3 {
+            font-family: var(--font-display);
+            font-size: 26px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cp-badge {
+            display: inline-block;
+            font-size: 11px;
+            background: var(--gold);
+            color: var(--ink);
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 12px;
+            position: relative;
+            top: -4px;
+            white-space: nowrap;
+        }
+
+        .cp-seg-note {
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 22px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="navbar-wrapper"></div>
+
+    <!-- CHAPTER RAIL -->
+    <nav class="v2-rail" aria-label="Sections">
+        <a href="#nest-property"><span class="label" data-i18n="c1_name">Nest Real Estate</span><span class="dot"></span></a>
+        <a href="#nest-mirais"><span class="label" data-i18n="c2_name">Nest Mirais NBFI</span><span class="dot"></span></a>
+        <a href="#nest-travel"><span class="label" data-i18n="c3_name">Nest Travel Service</span><span class="dot"></span></a>
+        <a href="#nest-foods"><span class="label" data-i18n="c4_name">Nest Foods</span><span class="dot"></span></a>
+        <a href="#nest-career"><span class="label" data-i18n="c5_name">Nest Career</span><span class="dot"></span></a>
+    </nav>
+
+    <!-- ============ 01 · NEST PROPERTY ============ -->
+    <section class="section v2-dark" id="nest-property">
+        <span class="v2-ghost-num" aria-hidden="true">01</span>
+        <div class="section-inner">
+            <div class="cp-split">
+                <div class="reveal">
+                    <div class="v2-chip" data-i18n="prop_tag">Our Services</div>
+                    <h2 class="section-title cp-section-head" data-i18n-html="cp_prop_title">Nest<br />Real Estate</h2>
+                    <p class="cp-desc" data-i18n="cp_prop_desc">VE-ST Property Service is the real estate arm of Nest Group, providing comprehensive one-stop services including property sales, leasing, mediation, and full management. Home of the iconic "NEST" residential project, designed as a welcoming place for generations.</p>
+                    <div class="v2-stat-row">
+                        <div class="v2-stat"><b>115+</b><span data-i18n="cp_props_managed">Properties Managed</span></div>
+                        <div class="v2-stat"><b><span data-i18n="cp_est">Est.</span> 2016</b><span data-i18n="cp_in_operation">In Operation</span></div>
+                    </div>
+                    <a href="contact.html" class="btn-outline" style="display:inline-flex;color:#fff;border-color:rgba(255,255,255,0.4);" data-i18n="cp_inquiry">Inquire About Properties &rarr;</a>
+                </div>
+                <div class="reveal">
+                    <div class="v2-video" data-tilt>
+                        <video preload="none" poster="assets/videos/ps-poster.jpg" playsinline>
+                            <source src="assets/videos/ps.mp4" type="video/mp4" />
+                        </video>
+                        <div class="v2-video__cover">
+                            <span class="v2-video__play">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROPERTY SERVICES -->
+    <section class="section" style="background:var(--off-white);">
+        <div class="section-inner">
+            <div class="cp-services-head reveal">
+                <div class="v2-chip" style="margin-bottom:0;" data-i18n="prop_tag">Our Services</div>
+            </div>
+            <div class="v2-rows" data-stagger>
+                <div class="v2-row">
+                    <span class="v2-row__num">01</span>
+                    <h4 class="v2-row__title" data-i18n="prop_consulting_title">Real Estate Consulting &amp; Mediation</h4>
+                    <p class="v2-row__body" data-i18n="prop_consulting_p">We help you maximize the value of your property. From free consultations to leasing, mediation, sales, management, interior renovation, and investment — all services under one roof, fast and efficient.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">02</span>
+                    <h4 class="v2-row__title" data-i18n="prop_buying_title">Property Buying Service</h4>
+                    <div class="v2-row__body">
+                        <p data-i18n="prop_buying_p">Within the NEST project, we offer a direct property purchase service. No need to find buyers or advertise — simply contact us and we save your time, buying at current market value.</p>
+                        <ul>
+                            <li data-i18n="prop_buying_b1">Fast &amp; Direct — Once price is agreed, we sign immediately with 100% cash payment.</li>
+                            <li data-i18n="prop_buying_b2">Fair Valuation — Priced based on location, size, and condition — no renovation needed.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">03</span>
+                    <h4 class="v2-row__title" data-i18n="prop_rental_title">PLATHOME Rental Service</h4>
+                    <p class="v2-row__body" data-i18n="prop_rental_p">Fully furnished 1-3 bedroom apartments in central Ulaanbaatar for short or long-term lease with flexible monthly payment. Full management included. Rental Investment option available — sign an 8–10 year agreement and receive stable monthly income.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">04</span>
+                    <h4 class="v2-row__title" data-i18n="prop_interior_title">R+LDK Interior Design</h4>
+                    <p class="v2-row__body" data-i18n="prop_interior_p">Your home's interior reflects your lifestyle. Our experienced team proposes custom interior designs completed on a turnkey basis in short timeframes. Improve rental value at low cost. Renovation financing available through our NBFI partner.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RENOVATION SHOWCASE: BEFORE / AFTER -->
+    <section class="section v2-dark">
+        <div class="section-inner">
+            <div style="text-align:center; max-width:720px; margin:0 auto 44px;">
+                <div class="v2-chip reveal" style="justify-content:center;" data-i18n="prop_interior_title">R+LDK Interior Design</div>
+                <h2 class="section-title reveal" style="margin-bottom:0;">BEFORE / AFTER</h2>
+            </div>
+
+            <div class="ba-wrap reveal" style="max-width:980px;margin:0 auto;">
+                <div class="ba-slider">
+                    <img class="ba-after-img" src="assets/renovations/p1-after.jpg" alt="After renovation" loading="lazy" decoding="async" />
+                    <img class="ba-before-img" src="assets/renovations/p1-before.jpg" alt="Before renovation" loading="lazy" decoding="async" />
+                    <span class="ba-tag ba-tag-before">BEFORE</span>
+                    <span class="ba-tag ba-tag-after">AFTER</span>
+                    <div class="ba-handle"></div>
+                </div>
+                <div class="ba-tabs" role="tablist">
+                    <button class="ba-tab active" data-before="assets/renovations/p1-before.jpg" data-after="assets/renovations/p1-after.jpg">01</button>
+                    <button class="ba-tab" data-before="assets/renovations/p2-before.jpg" data-after="assets/renovations/p2-after.jpg">02</button>
+                    <button class="ba-tab" data-before="assets/renovations/p3-before.jpg" data-after="assets/renovations/p3-after.jpg">03</button>
+                </div>
+            </div>
+
+            <div class="v2-marquee reveal" aria-hidden="true">
+                <div class="v2-marquee__track">
+                    <img src="assets/renovations/g1.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g2.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g3.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g4.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g5.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g6.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g1.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g2.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g3.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g4.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g5.jpg" alt="" loading="lazy" />
+                    <img src="assets/renovations/g6.jpg" alt="" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 02 · NEST MIRAIS NBFI ============ -->
+    <section class="section" id="nest-mirais" style="background:#fff;">
+        <span class="v2-ghost-num" aria-hidden="true">02</span>
+        <div class="section-inner">
+            <div class="cp-split">
+                <div class="reveal">
+                    <div class="v2-video" data-tilt>
+                        <video preload="none" poster="assets/videos/ms-poster.jpg" playsinline>
+                            <source src="assets/videos/ms.mp4" type="video/mp4" />
+                        </video>
+                        <div class="v2-video__cover">
+                            <span class="v2-video__play">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="v2-chip" data-i18n="nbfi_tag">Our Products</div>
+                    <h2 class="section-title cp-section-head" data-i18n-html="cp_nbfi_title">Nest Mirais<br />NBFI</h2>
+                    <p class="cp-desc" style="color:var(--text-light);" data-i18n="cp_nbfi_desc">VE-ST Mirais NBFI is our non-banking financial institution, offering flexible loan products for up to 60 months. Since 2018, the portfolio has grown 10x — from 1.6B to 16.4B MNT — with competitive asset management rates in both MNT and JPY.</p>
+                    <div class="v2-stat-row">
+                        <div class="v2-stat"><b>16.4B</b><span data-i18n="cp_mnt_portfolio">MNT Portfolio</span></div>
+                        <div class="v2-stat"><b>10x</b><span data-i18n="cp_portfolio_growth">Portfolio Growth</span></div>
+                    </div>
+                    <a href="contact.html" class="btn-outline" style="display:inline-flex;color:var(--primary);border-color:rgba(36,69,86,0.35);" data-i18n="cp_financial">Explore Financial Services &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NBFI PRODUCTS + SEGMENTS -->
+    <section class="section" style="background:var(--off-white); padding-top:0;">
+        <div class="section-inner">
+            <div class="cp-services-head reveal" style="padding-top:40px;">
+                <div>
+                    <div class="v2-chip" style="margin-bottom:10px;" data-i18n="nbfi_tag">Our Products</div>
+                    <p style="font-size:15px;color:var(--text-light);max-width:700px;margin:0;" data-i18n="nbfi_intro_p">NEST Mirais NBFI provides secured loans with flexible rates, resolved same-day. Trusted, risk-free, reliable service since 2018 — serving 2,500+ clients.</p>
+                </div>
+            </div>
+            <div class="v2-rows" data-stagger>
+                <div class="v2-row">
+                    <span class="v2-row__num">01</span>
+                    <h4 class="v2-row__title" data-i18n="nbfi_re_title">Real Estate Collateral Loan</h4>
+                    <p class="v2-row__body" data-i18n="nbfi_re_p">Fast real estate secured loans — apartments, commercial spaces, parking — resolved quickly. We accept older apartments as collateral that other banks reject.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">02</span>
+                    <h4 class="v2-row__title" data-i18n="nbfi_car_title">Car Collateral Loan</h4>
+                    <p class="v2-row__body" data-i18n="nbfi_car_p">Up to 60 months at 2.3–3.2% interest, keep driving your vehicle. Evaluated at up to 50% of market value, same-day processing, no service fee.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">03</span>
+                    <h4 class="v2-row__title" data-i18n="nbfi_lease_title">Car Leasing (Japan &amp; USA Imports)</h4>
+                    <p class="v2-row__body" data-i18n="nbfi_lease_p">Partnered with SABO DEALS LLC (12 years importing US vehicles). Japan imports also available. 30% upfront, finance the rest. Quality vehicles at favorable prices.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">04</span>
+                    <h4 class="v2-row__title" data-i18n="nbfi_mobile_title">Mobile Number Collateral Loan</h4>
+                    <p class="v2-row__body" data-i18n="nbfi_mobile_p">Premium mobile numbers (9911, 9909, 8811 prefixes) accepted as collateral. Up to 5 years, 60% of market value, no service fee, same-day approval. Monthly 2.5–2.9%.</p>
+                </div>
+            </div>
+
+            <!-- Loan product showcase (client-provided ad creatives) — marquee matches the BEFORE/AFTER strip -->
+            <div class="v2-marquee v2-marquee--zoom reveal" style="margin-top:64px;">
+                <div class="v2-marquee__track">
+                    <img src="assets/loans/green.jpg" alt="Ногоон зээл — Green Loan" loading="lazy" />
+                    <img src="assets/loans/business.jpg" alt="Бизнесийн зээл — Business Loan" loading="lazy" />
+                    <img src="assets/loans/realestate.jpg" alt="Үл хөдлөх барьцаалсан зээл — Real Estate Collateral Loan" loading="lazy" />
+                    <img src="assets/loans/carcollateral.jpg" alt="Автомашин барьцаалсан зээл — Car Collateral Loan" loading="lazy" />
+                    <img src="assets/loans/carlease.jpg" alt="Автомашин лизингийн зээл — Car Leasing Loan" loading="lazy" />
+                    <img src="assets/loans/phone.jpg" alt="Дугаар барьцаалсан зээл — Phone Number Collateral Loan" loading="lazy" />
+                    <img src="assets/loans/green.jpg" alt="" aria-hidden="true" loading="lazy" />
+                    <img src="assets/loans/business.jpg" alt="" aria-hidden="true" loading="lazy" />
+                    <img src="assets/loans/realestate.jpg" alt="" aria-hidden="true" loading="lazy" />
+                    <img src="assets/loans/carcollateral.jpg" alt="" aria-hidden="true" loading="lazy" />
+                    <img src="assets/loans/carlease.jpg" alt="" aria-hidden="true" loading="lazy" />
+                    <img src="assets/loans/phone.jpg" alt="" aria-hidden="true" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 03 · NEST TRAVEL ============ -->
+    <section class="section v2-dark cp-travel-band" id="nest-travel">
+        <div class="band-bg" data-parallax="0.06"></div>
+        <span class="v2-ghost-num" aria-hidden="true">03</span>
+        <div class="section-inner">
+            <div class="cp-split">
+                <div class="reveal">
+                    <div class="v2-chip" data-i18n="travel_tag">Our Services</div>
+                    <h2 class="section-title cp-section-head" data-i18n-html="cp_travel_title">Nest Travel<br />Service</h2>
+                    <p class="cp-desc" data-i18n="cp_travel_desc">VE-ST Travel Service connects Mongolia with the world. We specialize in investor-focused business tours and immersive national tours that showcase Mongolia's extraordinary culture, landscapes, and heritage.</p>
+                    <div class="v2-stat-row">
+                        <div class="v2-stat"><b>&#127474;&#127475;</b><span data-i18n="cp_mongolia">Mongolia</span></div>
+                        <div class="v2-stat"><b>&#127471;&#127477;</b><span data-i18n="cp_japan_route">Japan Route</span></div>
+                    </div>
+                    <a href="contact.html" class="btn-outline" style="display:inline-flex;color:#fff;border-color:rgba(255,255,255,0.4);" data-i18n="cp_book_tour">Book a Tour &rarr;</a>
+                </div>
+                <div class="reveal">
+                    <h4 style="font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;" data-i18n="cp_sample_plans">Sample Travel Plans</h4>
+                    <div class="v2-tickets">
+                        <a class="v2-ticket" href="assets/pdfs/Bulgan 7Nuga 4nights 5days plan.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="v2-ticket__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                            <span class="v2-ticket__name" data-i18n="cp_plan1">Bulgan 7Nuga (5 Days)</span>
+                            <span class="v2-ticket__pdf">PDF &rarr;</span>
+                        </a>
+                        <a class="v2-ticket" href="assets/pdfs/Elsen tasarkhai 4nights 5 days plan.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="v2-ticket__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                            <span class="v2-ticket__name" data-i18n="cp_plan2">Elsen Tasarkhai (5 Days)</span>
+                            <span class="v2-ticket__pdf">PDF &rarr;</span>
+                        </a>
+                        <a class="v2-ticket" href="assets/pdfs/UB GOLD 4nights 5days plan.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="v2-ticket__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                            <span class="v2-ticket__name" data-i18n="cp_plan3">UB Gold (5 Days)</span>
+                            <span class="v2-ticket__pdf">PDF &rarr;</span>
+                        </a>
+                        <a class="v2-ticket" href="assets/pdfs/Ub terelj 3nights 4 days plan.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="v2-ticket__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                            <span class="v2-ticket__name" data-i18n="cp_plan4">UB Terelj (4 Days)</span>
+                            <span class="v2-ticket__pdf">PDF &rarr;</span>
+                        </a>
+                        <a class="v2-ticket" href="assets/pdfs/Umnugovi 5 nights 6 days plan.pdf" target="_blank" rel="noopener noreferrer">
+                            <span class="v2-ticket__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                            <span class="v2-ticket__name" data-i18n="cp_plan5">Umnugovi (6 Days)</span>
+                            <span class="v2-ticket__pdf">PDF &rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRAVEL SERVICES -->
+    <section class="section" style="background:var(--off-white);">
+        <div class="section-inner">
+            <div class="cp-services-head reveal">
+                <div class="v2-chip" style="margin-bottom:0;" data-i18n="travel_tag">Our Services</div>
+            </div>
+            <div class="v2-rows" data-stagger>
+                <div class="v2-row">
+                    <span class="v2-row__num">01</span>
+                    <h4 class="v2-row__title" data-i18n="travel_biz_title">Investor Business Tours</h4>
+                    <p class="v2-row__body" data-i18n="travel_biz_p">Tailored tours for international investors, providing direct introductions to Mongolia's business opportunities and on-site insight into central Ulaanbaatar's real estate projects, market conditions, and legal environment — supporting informed decisions.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">02</span>
+                    <h4 class="v2-row__title" data-i18n="travel_culture_title">Mongolian Cultural Tours</h4>
+                    <p class="v2-row__body" data-i18n="travel_culture_p">Authentic national tours immersing visitors in Mongolia's nomadic traditions, history, and warm hospitality.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">03</span>
+                    <h4 class="v2-row__title" data-i18n="travel_nature_title">Nature &amp; Adventure Tours</h4>
+                    <p class="v2-row__body" data-i18n="travel_nature_p">Expeditions across Mongolia's breathtaking landscapes — from the Gobi Desert to Lake Khövsgöl — including national parks, historical sites, and ancient temples.</p>
+                </div>
+                <div class="v2-row">
+                    <span class="v2-row__num">04</span>
+                    <h4 class="v2-row__title" data-i18n="travel_custom_title">Custom Tour Packages</h4>
+                    <p class="v2-row__body" data-i18n="travel_custom_p">Bespoke travel packages designed around each group's or individual's unique needs — flexible itineraries, premium vehicles, and personal guides for an exclusive experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 04 · NEST FOODS ============ -->
+    <section class="section" id="nest-foods" style="background:#fff;">
+        <span class="v2-ghost-num" aria-hidden="true">04</span>
+        <div class="section-inner">
+            <div class="cp-split">
+                <div class="reveal">
+                    <h2 class="section-title cp-section-head"><span data-i18n="c4_name">Nest Foods</span><span class="cp-badge" data-i18n="c4_badge">Coming Soon</span></h2>
+                    <p class="cp-desc" style="color:var(--text-light);" data-i18n="c4_p">Bringing high-quality food products and culinary experiences to the Mongolian market. Elevating dining and retail food experiences soon.</p>
+                </div>
+                <div class="reveal">
+                    <div class="cp-foods-panel v2-shimmer">
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                            <path d="M11 6h2v6h-2z" />
+                            <path d="M11 16h2v2h-2z" />
+                        </svg>
+                        <h3 data-i18n="c4_launch">Preparing to Launch</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 05 · NEST CAREER ============ -->
+    <section class="section v2-dark" id="nest-career">
+        <span class="v2-ghost-num" aria-hidden="true">05</span>
+        <div class="section-inner">
+            <div class="cp-split">
+                <div class="reveal">
+                    <h2 class="section-title cp-section-head" data-i18n-html="c5_title">Nest<br />Career</h2>
+                    <p class="cp-desc" data-i18n="c5_desc">Nest Career is the labor placement arm of Nest Group, connecting talented professionals with employers both domestically and internationally. We specialize in workforce recruitment, placement services, and career consulting to build bridges between opportunity and talent.</p>
+                    <a href="contact.html" class="btn-outline" style="display:inline-flex;color:#fff;border-color:rgba(255,255,255,0.4);margin-top:16px;" data-i18n="c5_cta">Explore Career Services &rarr;</a>
+                </div>
+                <div class="reveal">
+                    <div class="v2-stat-row" style="margin:0;">
+                        <div class="v2-stat" style="flex:1;">
+                            <b data-i18n="c5_stat1_val">&#127759;</b>
+                            <span data-i18n="c5_stat1">Labor Placement</span>
+                        </div>
+                        <div class="v2-stat" style="flex:1;">
+                            <b data-i18n="c5_stat2_val">&#129309;</b>
+                            <span data-i18n="c5_stat2">Career Services</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA (kept) -->
+    <section class="cta-banner">
+        <div style="position:relative; text-align:center;">
+            <h2 data-i18n="cta_simple_h" style="font-family:var(--font-display); font-size:clamp(28px,3.5vw,40px); font-weight:600; letter-spacing:0.04em; color:var(--primary); margin:0 auto 28px;">Contact Us</h2>
+            <a href="contact.html" class="btn-primary" data-i18n="nav_contact">Contact Us</a>
+        </div>
+    </section>
+
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+    <script src="js/glowing-effect.js?v=46"></script>
+    <script src="js/v2.js?v=46"></script>
+
+</body>
+
+</html>

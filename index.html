@@ -1,0 +1,913 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Nest Group — Towards a More Amazing Tomorrow</title>
+    <link rel="canonical" href="https://nest.mn/" />
+    <meta name="description"
+        content="Nest Group (VE-ST Holdings Mongolia LLC) is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:title" content="Nest Group — Towards a More Amazing Tomorrow" />
+    <meta property="og:description"
+        content="Nest Group is a diversified holding company with subsidiaries in Real Estate, Non-Banking Finance, and Travel, committed to creating 100 years of history." />
+    <meta property="og:image" content="https://nest.mn/assets/logo.png" />
+    <meta property="og:url" content="https://nest.mn/index.html" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
+    <meta name="theme-color" content="#244556" />
+    <link rel="stylesheet" href="css/styles.css?v=46" />
+    <link rel="stylesheet" href="css/glowing-effect.css?v=46" />
+    <link rel="stylesheet" href="css/v2.css?v=46" />
+    <style>
+        /* ── HOME VIDEO HERO ── */
+        .hero-video-home { background: #0a1a24; }
+
+        .hero-video-wrap {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-video-wrap video {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100vw; height: 56.25vw;   /* 16:9 */
+            min-height: 100vh; min-width: 177.78vh;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 26, 36, 0.55) 0%,
+                rgba(10, 26, 36, 0.45) 50%,
+                rgba(10, 26, 36, 0.70) 100%
+            );
+            z-index: 1;
+        }
+
+        /* ── Recolor text for dark video bg ── */
+        .hero-video-home .hero-content { z-index: 10; position: relative; }
+
+        .hero-video-home .hero-badge {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.20);
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .hero-video-home .hero-badge::before { background: var(--gold); }
+
+        .hero-video-home h1,
+        .hero-video-home h1 em { color: #fff; }
+
+        .hero-video-home p { color: rgba(255, 255, 255, 0.82); }
+
+        .hero-video-home .btn-primary {
+            background: var(--gold);
+            color: #0a1a24;
+        }
+        .hero-video-home .btn-primary:hover {
+            background: #d4b35a;
+        }
+
+        .hero-video-home .btn-outline {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+        .hero-video-home .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.65);
+        }
+
+        .hero-video-home .hero-scroll { color: rgba(255, 255, 255, 0.6); }
+
+        /* Multi-paragraph section-sub stacks */
+        .econ-para,
+        .ub-para {
+            max-width: 820px;
+            margin-bottom: 18px !important;
+            text-align: center;
+        }
+        .econ-para:last-of-type,
+        .ub-para:last-of-type {
+            margin-bottom: 60px !important;
+        }
+
+        /* Wider container for the UB intro so multi-paragraph content can breathe */
+        .ub-section-header {
+            max-width: 920px !important;
+        }
+        .ub-section-header .section-title {
+            max-width: 920px;
+        }
+
+        /* Balanced two-line title */
+        .ub-title-balanced {
+            line-height: 1.25;
+            max-width: 900px;
+        }
+
+        /* Multi-paragraph apartment description (data-i18n-html) */
+        .ub-apt-desc { color: var(--text-light); line-height: 1.8; }
+        .ub-apt-desc p { margin: 0 0 14px; }
+        .ub-apt-desc p:last-child { margin-bottom: 0; }
+        .ub-apt-desc ul { margin: 0 0 14px; padding-left: 20px; }
+        .ub-apt-desc ul li { margin-bottom: 6px; }
+
+        /* Wider container for the econ header so multi-paragraph content can breathe */
+        .global-map-header {
+            max-width: 920px !important;
+        }
+
+        /* ── GLOBAL MAP — header accent ── */
+        .global-map-header .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .global-map-header .section-title::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -16px;
+            width: 72px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, rgba(201,168,76,0), var(--gold) 50%, rgba(201,168,76,0));
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            transition: transform .9s .25s cubic-bezier(.16,1,.3,1);
+        }
+        .global-map-header .section-title.visible::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ── GLOBAL MAP — motion layer ── */
+        .map-container { overflow: visible; }
+        .map-overlay-svg text { text-rendering: geometricPrecision; }
+
+        /* Flight route draws in when the map scrolls into view */
+        .map-overlay-svg .route-base {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+        }
+        .map-container.visible .route-base {
+            animation: mapRouteDraw 1.5s cubic-bezier(.16,1,.3,1) forwards;
+        }
+        @keyframes mapRouteDraw { to { stroke-dashoffset: 0; } }
+
+        /* Bright pulse that keeps travelling along the route */
+        .map-overlay-svg .route-flow {
+            stroke-dasharray: 0.18 0.82;
+            stroke-dashoffset: 1;
+            opacity: 0;
+        }
+        .map-container.visible .route-flow {
+            opacity: 1;
+            animation: mapRouteFlow 2.8s linear 1.2s infinite;
+        }
+        @keyframes mapRouteFlow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+        /* Airplane follows the route via CSS motion path */
+        .map-overlay-svg .plane {
+            offset-path: path("M 1208 282 Q 1140 192 1078 232");
+            offset-rotate: auto;
+            offset-distance: 0%;
+            opacity: 0;
+        }
+        .map-container.visible .plane {
+            animation: mapPlaneFly 5.2s linear 1.2s infinite;
+        }
+        @keyframes mapPlaneFly {
+            0%   { offset-distance: 0%;   opacity: 0; }
+            8%   { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { offset-distance: 100%; opacity: 0; }
+        }
+
+        /* Soft glow + expanding pings under each node */
+        .map-overlay-svg .node-halo {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: mapHalo 4.5s ease-in-out infinite;
+        }
+        @keyframes mapHalo {
+            0%, 100% { transform: scale(1);    opacity: .9; }
+            50%      { transform: scale(1.14); opacity: .55; }
+        }
+        .map-overlay-svg .ping {
+            transform-box: fill-box;
+            transform-origin: center;
+            opacity: 0;
+        }
+        .map-container.visible .ping {
+            animation: mapPing 2.8s cubic-bezier(0,0,.2,1) 1.4s infinite;
+        }
+        .map-container.visible .ping-2 { animation-delay: 2.8s; }
+        @keyframes mapPing {
+            0%        { transform: scale(1);   opacity: .7; }
+            80%, 100% { transform: scale(3.4); opacity: 0; }
+        }
+
+        /* Pins + labels drop in after the route has drawn */
+        .map-overlay-svg .node-inner {
+            transform-box: fill-box;
+            transform-origin: center;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        .map-container.visible .node-inner {
+            animation: mapPinDrop .7s cubic-bezier(.16,1,.3,1) forwards;
+        }
+        .map-container.visible .node-japan .node-inner { animation-delay: .55s; }
+        .map-container.visible .node-nest  .node-inner { animation-delay: .85s; }
+        @keyframes mapPinDrop { to { opacity: 1; transform: translateY(0); } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .global-map-header .section-title::after { transition: none; transform: translateX(-50%) scaleX(1); }
+            .map-overlay-svg .route-base { stroke-dashoffset: 0; }
+            .map-overlay-svg .route-flow { opacity: .85; animation: none; stroke-dasharray: none; }
+            .map-overlay-svg .plane { opacity: 1; offset-distance: 60%; animation: none; }
+            .map-overlay-svg .node-inner { opacity: 1; transform: none; animation: none; }
+            .map-overlay-svg .node-halo { animation: none; }
+            .map-overlay-svg .ping { opacity: 0; animation: none; }
+        }
+
+        /* ── HOME PILLARS (4 чиглэл) ── */
+        .pillars-section {
+            background: var(--off-white);
+            padding: 80px 5%;
+        }
+
+        .pillars-section .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pillars-head {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 56px;
+        }
+
+        .pillars-head .section-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .pillars-head h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 3.6vw, 44px);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .pillars-head p {
+            color: var(--text-light);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .pillar-card {
+            position: relative;
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 36px 28px 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(36, 69, 86, 0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            min-height: 260px;
+            text-decoration: none;
+        }
+
+        .pillar-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gold);
+            border-top-left-radius: var(--radius-md);
+            border-top-right-radius: var(--radius-md);
+            transform: scaleX(0.25);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(201, 168, 76, 0.4);
+        }
+
+        .pillar-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pillar-card__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.12), rgba(201, 168, 76, 0.04));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            margin-bottom: 22px;
+        }
+
+        .pillar-card__num {
+            position: absolute;
+            top: 24px; right: 24px;
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(36, 69, 86, 0.25);
+            letter-spacing: 0.1em;
+        }
+
+        .pillar-card__title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .pillar-card__desc {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 18px;
+        }
+
+        .pillar-card__cta {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+        }
+
+        .pillar-card:hover .pillar-card__cta {
+            gap: 12px;
+        }
+
+        .pillar-card__badge {
+            position: absolute;
+            top: 24px; right: 24px;
+            background: var(--gold);
+            color: var(--primary-dark);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        @media (max-width: 980px) {
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 520px) {
+            .pillars-grid { grid-template-columns: 1fr; }
+            .pillars-section { padding: 60px 5%; }
+        }
+
+        /* ── ECON 3-CARD GRID (below map) ── */
+        .econ-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .econ-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 32px 28px 30px;
+            box-shadow: var(--shadow-md);
+            border-top: 3px solid var(--gold);
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .econ-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .econ-card__num {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.22em;
+            margin-bottom: 14px;
+        }
+
+        .econ-card__stat {
+            font-family: var(--font-display);
+            font-size: clamp(46px, 5vw, 58px);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .econ-card__stat .econ-num {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
+        }
+
+        .econ-card__stat .unit {
+            font-size: 0.5em;
+            color: var(--gold);
+            margin-left: 3px;
+            font-weight: 700;
+            transform: translateY(-0.15em);
+        }
+
+        .econ-card__label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .econ-card__body {
+            color: var(--text-light);
+            font-size: 14.5px;
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .econ-cards { grid-template-columns: 1fr; gap: 18px; }
+        }
+
+        /* ── UB SECTION POLISH ── */
+        .ub-eyebrow {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 0.22em;
+            margin-bottom: 10px;
+        }
+
+        .ub-row-heading {
+            font-family: var(--font-display);
+            font-size: 26px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        .ub-row-body {
+            color: var(--text-light);
+            line-height: 1.85;
+            font-size: 15.5px;
+        }
+        .ub-row-body p { margin: 0 0 14px; }
+        .ub-row-body p:last-child { margin-bottom: 0; }
+        .ub-row-body ul { margin: 4px 0 0; padding-left: 20px; }
+        .ub-row-body ul li { margin-bottom: 6px; }
+
+        /* ── UB CLOSING CALLOUT (philosophy panel) ── */
+        .ub-callout {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 64px 56px;
+            margin-top: 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ub-callout::before {
+            content: "\201C";
+            position: absolute;
+            top: -32px;
+            left: 28px;
+            font-family: var(--font-display);
+            font-size: 200px;
+            color: var(--gold);
+            opacity: 0.18;
+            line-height: 1;
+            pointer-events: none;
+            font-weight: 700;
+        }
+
+        .ub-callout__tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .ub-callout p {
+            font-size: 16px;
+            line-height: 1.85;
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.92);
+            max-width: 880px;
+            position: relative;
+        }
+
+        .ub-callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 720px) {
+            .ub-callout { padding: 44px 28px; }
+            .ub-callout::before { font-size: 140px; top: -20px; left: 12px; }
+            .ub-callout p { font-size: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR WRAPPER -->
+    <div id="navbar-wrapper"></div>
+
+    <!-- HERO -->
+    <section class="hero hero-video-home">
+        <div class="hero-video-wrap">
+            <video autoplay muted loop playsinline disablepictureinpicture>
+                <source src="assets/hero-video.mp4" type="video/mp4">
+            </video>
+            <div class="hero-video-overlay"></div>
+        </div>
+
+        <div class="hero-content" style="z-index: 10; position: relative;">
+            <h1 class="animate-letters aceternity-text aceternity-delay-1" data-i18n-html="hero_h1">Towards a More<br /><em>Amazing Tomorrow.</em></h1>
+            <p class="aceternity-text aceternity-delay-2" data-i18n="hero_p">NEST Group operates in investment, investment advisory, financial management, real estate, non-banking finance, tourism, food service, and labor placement.</p>
+            <div class="hero-actions" style="z-index: 10; position: relative; display:flex; gap:16px; flex-wrap:wrap;">
+                <a href="about.html" class="btn-primary" data-i18n="hero_btn1">Группийн тухай</a>
+                <a href="companies.html" class="btn-outline" data-i18n="hero_btn2">Дэлгэрэнгүй</a>
+            </div>
+        </div>
+        <div class="hero-scroll" style="z-index: 10; position: relative;">
+            <span>&#8595;</span>
+            <span data-i18n="hero_scroll">Discover More</span>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-strip">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-number"><span data-target="70">0</span><span style="color:var(--gold)">+</span></div>
+                <div class="stat-label" data-i18n="stat1">Investors</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number"><span data-target="7">0</span><span style="color:var(--gold)">+</span></div>
+                <div class="stat-label" data-i18n="stat2">Years of Excellence</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number"><span data-target="115">0</span><span style="color:var(--gold)">+</span></div>
+                <div class="stat-label" data-i18n="stat3">Assets Under Management (AUM)</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number"><span data-target="30">0</span><span style="color:var(--gold)">+</span></div>
+                <div class="stat-label" data-i18n="stat4">Team Members</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 PILLARS -->
+    <section class="pillars-section">
+        <div class="section-inner">
+            <div class="pillars-head reveal">
+                <span class="section-tag" data-i18n="pillars_tag">БИДНИЙ ҮЙЛЧИЛГЭЭ</span>
+                <h2 data-i18n-html="pillars_h2">4 үндсэн чиглэлээр<br/>үйл ажиллагаа явуулдаг</h2>
+                <p data-i18n="pillars_p">НЭСТ Групп нь үл хөдлөх хөрөнгө, банк бус санхүү, аялал жуулчлал болон хүнсний салбаруудад мэргэшсэн охин компаниудтай.</p>
+            </div>
+
+            <div class="pillars-grid" data-stagger>
+                <a href="companies.html#nest-property" class="pillar-card" data-tilt>
+                    <span class="pillar-card__num">01</span>
+                    <div class="pillar-card__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </div>
+                    <h3 class="pillar-card__title" data-i18n="pillar1_title">Үл хөдлөх хөрөнгө</h3>
+                    <p class="pillar-card__desc" data-i18n="pillar1_p">Зөвлөгөө, түрээс, зуучлал, менежмент, дотоод засал, шинэ орон сууцны борлуулалт зэрэг цогц үйлчилгээ.</p>
+                    <span class="pillar-card__cta" data-i18n="pillar_cta">Дэлгэрэнгүй →</span>
+                </a>
+
+                <a href="companies.html#nest-mirais" class="pillar-card" data-tilt>
+                    <span class="pillar-card__num">02</span>
+                    <div class="pillar-card__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2"/>
+                            <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+                            <line x1="12" y1="12" x2="12" y2="16"/>
+                            <line x1="10" y1="14" x2="14" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3 class="pillar-card__title" data-i18n="pillar2_title">Банк бус санхүү</h3>
+                    <p class="pillar-card__desc" data-i18n="pillar2_p">Үл хөдлөх, автомашин, дугаар барьцаалсан болон хэрэглээний зээлийн уян хатан нөхцөлтэй үйлчилгээ.</p>
+                    <span class="pillar-card__cta" data-i18n="pillar_cta">Дэлгэрэнгүй →</span>
+                </a>
+
+                <a href="companies.html#nest-travel" class="pillar-card" data-tilt>
+                    <span class="pillar-card__num">03</span>
+                    <div class="pillar-card__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="pillar-card__title" data-i18n="pillar3_title">Аялал жуулчлал</h3>
+                    <p class="pillar-card__desc" data-i18n="pillar3_p">Япон хөрөнгө оруулагчдад зориулсан бизнес аялал, тусгай аялал, байгалийн адал явдалт аяллын цогц үйлчилгээ.</p>
+                    <span class="pillar-card__cta" data-i18n="pillar_cta">Дэлгэрэнгүй →</span>
+                </a>
+
+                <a href="companies.html#nest-foods" class="pillar-card" data-tilt>
+                    <span class="pillar-card__badge" data-i18n="pillar4_badge">ТУН УДАХГҮЙ</span>
+                    <div class="pillar-card__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                            <path d="M11 6h2v6h-2z"/>
+                            <path d="M11 16h2v2h-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="pillar-card__title" data-i18n="pillar4_title">Хүнс үйлдвэрлэл</h3>
+                    <p class="pillar-card__desc" data-i18n="pillar4_p">Олон улсын стандартад нийцсэн өндөр чанартай хүнсний бүтээгдэхүүн — Wagyu beef стейк зэрэг тансаг сонголтууд.</p>
+                    <span class="pillar-card__cta" data-i18n="pillar_cta">Дэлгэрэнгүй →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL MAP SEC -->
+    <section class="section global-map">
+        <div class="section-inner global-map-inner">
+            <div class="global-map-header">
+                <div class="section-tag reveal" data-i18n="econ_tag">Growing Market</div>
+                <h2 class="section-title reveal" data-i18n-html="econ_h2">A High-Growth Opportunity Market</h2>
+            </div>
+
+            <div class="map-container reveal">
+                <img src="assets/watercolor_map.png" alt="World Map" class="world-svg-img" loading="lazy" decoding="async" />
+
+                <!-- Overlay for nodes & connections -->
+                <!-- Overlay uses equirectangular-style coords on 1400×700 ≈ lon (-180–180°), lat (90N–90S) -->
+                <svg viewBox="0 0 1400 700" class="map-overlay-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="mapLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#e6c66a"/>
+                            <stop offset="55%" stop-color="#c9a84c"/>
+                            <stop offset="100%" stop-color="#b8923a"/>
+                        </linearGradient>
+                        <radialGradient id="mapNodeGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.5"/>
+                            <stop offset="65%" stop-color="#c9a84c" stop-opacity="0.1"/>
+                            <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+                        </radialGradient>
+                        <filter id="mapGlow" x="-60%" y="-60%" width="220%" height="220%">
+                            <feGaussianBlur stdDeviation="3" result="b"/>
+                            <feMerge>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="mapPillShadow" x="-40%" y="-40%" width="180%" height="220%">
+                            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#173140" flood-opacity="0.3"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Flight route: faint base track that draws in on scroll -->
+                    <path class="route-base" pathLength="1" d="M 1208 282 Q 1140 192 1078 232"
+                          fill="none" stroke="url(#mapLineGradient)" stroke-width="2.5"
+                          stroke-linecap="round" opacity="0.7" filter="url(#mapGlow)"/>
+
+                    <!-- Bright pulse travelling along the same route -->
+                    <path class="route-flow" pathLength="1" d="M 1208 282 Q 1140 192 1078 232"
+                          fill="none" stroke="url(#mapLineGradient)" stroke-width="3.5"
+                          stroke-linecap="round" filter="url(#mapGlow)"/>
+
+                    <!-- Airplane following the route (Japan → Mongolia) — positioned by CSS offset-path -->
+                    <g class="plane">
+                        <path d="M 16 0 L 5 -1.7 L 2 -11 L -2 -11 L -5 -1.7 L -11 -1.7 L -13 -6.5 L -15.5 -4.5 L -15.5 4.5 L -13 6.5 L -11 1.7 L -5 1.7 L -2 11 L 2 11 L 5 1.7 Z"
+                              fill="#c9a84c" stroke="#244556" stroke-width="0.8" stroke-linejoin="round"
+                              filter="url(#mapGlow)"/>
+                    </g>
+
+                    <!-- JAPAN node -->
+                    <g class="map-node node-japan" transform="translate(1208, 282)">
+                        <circle class="node-halo" r="34" fill="url(#mapNodeGlow)"/>
+                        <circle class="ping" r="6" fill="none" stroke="#c9a84c" stroke-width="2"/>
+                        <circle class="ping ping-2" r="6" fill="none" stroke="#c9a84c" stroke-width="2"/>
+                        <g class="node-inner">
+                            <circle r="5" fill="#c9a84c" stroke="#fff" stroke-width="1.5"/>
+                            <g class="map-pill" transform="translate(16, -14)" filter="url(#mapPillShadow)">
+                                <rect x="0" y="0" width="70" height="28" rx="14" fill="#fff" stroke="#c9a84c" stroke-width="1.5"/>
+                                <text x="35" y="19" text-anchor="middle" fill="#244556" font-size="13.5" font-weight="700"
+                                      font-family="Inter, sans-serif" letter-spacing="0.14em">JAPAN</text>
+                            </g>
+                        </g>
+                    </g>
+
+                    <!-- NEST GROUP node (Mongolia location) -->
+                    <g class="map-node node-nest" transform="translate(1078, 232)">
+                        <circle class="node-halo" r="46" fill="url(#mapNodeGlow)"/>
+                        <circle class="ping" r="8" fill="none" stroke="#244556" stroke-width="2"/>
+                        <circle class="ping ping-2" r="8" fill="none" stroke="#244556" stroke-width="2"/>
+                        <g class="node-inner">
+                            <circle r="7" fill="#244556" stroke="#fff" stroke-width="2"/>
+                            <line x1="-10" y1="-4" x2="-1" y2="0" stroke="#244556" stroke-width="2" stroke-linecap="round"/>
+                            <g class="map-pill" transform="translate(-192, -49)" filter="url(#mapPillShadow)">
+                                <rect x="0" y="0" width="182" height="46" rx="23" fill="#244556" stroke="#c9a84c" stroke-width="2"/>
+                                <circle cx="24" cy="23" r="4.5" fill="#c9a84c"/>
+                                <text x="103" y="30" text-anchor="middle" fill="#fff" font-size="18" font-weight="700"
+                                      font-family="'Playfair Display', serif" letter-spacing="0.14em">NEST <tspan fill="#c9a84c">GROUP</tspan></text>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="econ-cards reveal">
+                <article class="econ-card">
+                    <div class="econ-card__num">01</div>
+                    <div class="econ-card__stat"><span class="econ-num" data-count="5" data-dec="0">5</span><span class="unit">h</span></div>
+                    <div class="econ-card__label" data-i18n="econ_card1_label">Япон ↔ Монгол</div>
+                    <p class="econ-card__body" data-i18n="econ_p1">Монгол Улс нь Япон Улстай найрсаг харилцаа, урт хугацааны стратегийн хамтын ажиллагаатай орон бөгөөд Улаанбаатар–Нарита чиглэлд ердөө 5 цагийн нислэгтэй ойр байршил нь бизнес, хөрөнгө оруулалтын харилцааг улам дэмжиж байна.</p>
+                </article>
+                <article class="econ-card">
+                    <div class="econ-card__num">02</div>
+                    <div class="econ-card__stat"><span class="econ-num" data-count="6.4" data-dec="1" data-prefix="+">+6.4</span><span class="unit">%</span></div>
+                    <div class="econ-card__label" data-i18n="econ_gdp">Эдийн засгийн өсөлт (2024)</div>
+                    <p class="econ-card__body" data-i18n="econ_p2">Хөгжиж буй эдийн засагтай Монгол Улс нь өндөр өсөлтийн потенциалтай зах зээлд тооцогддог бөгөөд сүүлийн жилүүдэд эдийн засгийн өсөлт 6–7% орчим хадгалагдаж, цаашид тогтвортой өсөх хүлээлттэй байна.</p>
+                </article>
+                <article class="econ-card">
+                    <div class="econ-card__num">03</div>
+                    <div class="econ-card__stat"><span class="econ-num" data-count="12.8" data-dec="1" data-prefix="+">+12.8</span><span class="unit">%</span></div>
+                    <div class="econ-card__label" data-i18n="econ_realestate">Үл хөдлөх хөрөнгийн дунд. өсөлт</div>
+                    <p class="econ-card__body" data-i18n="econ_p3">Хотжилт, дэд бүтэц, дундаж давхаргын өсөлт зэрэг хүчин зүйлсийн нөлөөгөөр үл хөдлөх хөрөнгө, санхүү, үйлчилгээ, аялал жуулчлалын салбаруудад хөрөнгө оруулалтын боломжууд идэвхтэй нэмэгдэж байна.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- MONGOLIA MARKET INSIGHTS -->
+    <section class="section" style="background:#fff;">
+        <div class="section-inner">
+            <div class="company-section-header center-auto ub-section-header">
+                <div class="section-tag reveal" data-i18n="ub_tag">Growing Market</div>
+                <h2 class="section-title reveal ub-title-balanced" data-i18n-html="ub_title">Investing in <br>Mongolia's Core</h2>
+                <p class="section-sub reveal center-auto ub-para" data-i18n="ub_sub">
+                    Strategic investments in Ulaanbaatar's ultra-central district, leveraging Japanese real estate
+                    expertise.
+                </p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:60px;">
+                <div class="reveal">
+                    <div class="v2-img" data-parallax="0.07" style="height:350px;">
+                        <img src="assets/strategy-map.jpg" alt="Ulaanbaatar Central" loading="lazy" />
+                    </div>
+                </div>
+                <div class="reveal">
+                    <span class="ub-eyebrow">01</span>
+                    <h3 class="ub-row-heading" data-i18n="ub_h3_1">The Potential of Ultra-Central Real Estate</h3>
+                    <div class="ub-row-body" data-i18n-html="ub_p_1"><p>With nearly half of the country's population residing in the capital, Ulaanbaatar holds immense development potential.</p></div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:60px;">
+                <div class="reveal" style="order:2;">
+                    <div class="v2-img" data-parallax="0.07" style="height:350px;">
+                        <img src="assets/ub1.png" alt="Inbound Tourism Growth" loading="lazy" />
+                    </div>
+                </div>
+                <div class="reveal" style="order:1;">
+                    <span class="ub-eyebrow">02</span>
+                    <h3 class="ub-row-heading" data-i18n="ub_h3_2">Expanding Inbound Tourism</h3>
+                    <div class="ub-row-body" data-i18n-html="ub_p_2"><p>The completion of the new international airport has significantly expanded passenger capacity.</p></div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+                <div class="reveal">
+                    <div class="v2-img" data-parallax="0.07" style="height:350px;">
+                        <img src="assets/renovations/g1.jpg" alt="High Value Apartments" loading="lazy" />
+                    </div>
+                </div>
+                <div class="reveal">
+                    <span class="ub-eyebrow">03</span>
+                    <h3 class="ub-row-heading" data-i18n="ub_h3_3">High Value-Added Apartments</h3>
+                    <div class="ub-apt-desc ub-row-body" data-i18n-html="ub_p_3"><p>Backed by steady economic growth, an expanding middle class seeks apartments that offer design, functionality, and comfort.</p></div>
+                </div>
+            </div>
+
+            <!-- Closing philosophy callout -->
+            <div class="ub-callout reveal">
+                <span class="ub-callout__tag" data-i18n="ub_callout_tag">МАНАЙ ХАНДЛАГА</span>
+                <p data-i18n="ub_sub_2">Манай компани үл хөдлөх хөрөнгөнд суурилсан олон төрлийн үйлчилгээг цогцоор нь хөгжүүлэхийн сацуу Монгол Улсын иргэдийн амьдралын шинэ хэв маяг болон тогтвортой хөгжлийн эргэлтийг өөрсдөө бий болгохыг зорин ажиллаж байна.</p>
+                <p data-i18n="ub_sub_3">Иймд нийгмийн ирээдүйтэй шууд холбогдох Монгол дахь хөрөнгө оруулалтын үнэ цэнийг биечлэн мэдэрч, өөрийн хөрөнгийн өсөлт, хуримтлалыг үр ашигтайгаар ашиглах боломжтой юм.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWS PREVIEW -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="news-header-flex">
+                <div>
+                    <div class="section-tag reveal" data-i18n="news_tag">Latest Updates</div>
+                    <h2 class="section-title reveal" data-i18n="news_h2">News & Updates</h2>
+                </div>
+                <a href="news.html" class="btn-outline reveal news-btn" data-i18n="news_view">View All &rarr;</a>
+            </div>
+            <div id="sanity-home-news-loader" class="news-loader" role="status" aria-label="Loading">
+                <div class="sk-grid" aria-hidden="true">
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                    <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w40"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div></div>
+                </div>
+            </div>
+            <div class="news-grid" id="sanity-home-news-grid" style="display:none;"></div>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner">
+        <div class="cta-banner-inner" style="text-align:center;">
+            <h2 data-i18n="cta_simple_h" style="font-family:var(--font-display); font-size:clamp(28px,3.5vw,40px); font-weight:600; letter-spacing:0.04em; color:var(--primary); margin:0 auto 28px;">Contact Us</h2>
+            <a href="contact.html" class="btn-primary" data-i18n="nav_contact">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- FOOTER WRAPPER -->
+    <div id="footer-wrapper"></div>
+
+    <script src="js/components.js?v=46"></script>
+    <script src="js/translations.js?v=46"></script>
+    <script src="js/sanity-client.js?v=46"></script>
+    <script src="js/home-news.js?v=46"></script>
+    <script src="js/main.js?v=46"></script>
+    <script src="js/edit-mode.js?v=46"></script>
+    <script src="js/glowing-effect.js?v=46"></script>
+    <script src="js/v2.js?v=46"></script>
+
+
+    <!-- Letter Animation Splitting Script -->
+    <script src="js/split-letters.js?v=46"></script>
+</body>
+
+</html>
+
+
+
+

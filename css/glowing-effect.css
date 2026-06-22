@@ -1,0 +1,42 @@
+/* ==========================================================================
+   GLOWING EFFECT (Vanilla JS Adaptation of React GlowingEffect)
+   ========================================================================== */
+
+.glowing-card {
+    position: relative;
+}
+
+.glowing-effect-container {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 10;
+
+    /* Use direct inline opacity in JS for smooth transitioning */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.glowing-effect-border {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 3px;
+    /* Width of the glowing inner border stroke */
+
+    /* The gradient angle rotates via inline --start variable */
+    background: repeating-conic-gradient(from calc(var(--start) * 1deg) at 50% 50%,
+            #244556 0%,
+            #4CA1AF 12.5%,
+            #244556 25%,
+            #152833 37.5%,
+            #244556 50%);
+    background-size: 100% 100%;
+
+    /* Cut out the inside perfectly to create the border ring */
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
