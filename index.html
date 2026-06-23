@@ -515,60 +515,6 @@
         .ub-row-body ul { margin: 4px 0 0; padding-left: 20px; }
         .ub-row-body ul li { margin-bottom: 6px; }
 
-        /* ── UB CLOSING CALLOUT (philosophy panel) ── */
-        .ub-callout {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            color: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 64px 56px;
-            margin-top: 72px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ub-callout::before {
-            content: "\201C";
-            position: absolute;
-            top: -32px;
-            left: 28px;
-            font-family: var(--font-display);
-            font-size: 200px;
-            color: var(--gold);
-            opacity: 0.18;
-            line-height: 1;
-            pointer-events: none;
-            font-weight: 700;
-        }
-
-        .ub-callout__tag {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .ub-callout p {
-            font-size: 16px;
-            line-height: 1.85;
-            margin-bottom: 18px;
-            color: rgba(255, 255, 255, 0.92);
-            max-width: 880px;
-            position: relative;
-        }
-
-        .ub-callout p:last-child {
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 720px) {
-            .ub-callout { padding: 44px 28px; }
-            .ub-callout::before { font-size: 140px; top: -20px; left: 12px; }
-            .ub-callout p { font-size: 15px; }
-        }
     </style>
 </head>
 
@@ -849,13 +795,6 @@
                     <h3 class="ub-row-heading" data-i18n="ub_h3_3">High Value-Added Apartments</h3>
                     <div class="ub-apt-desc ub-row-body" data-i18n-html="ub_p_3"><p>Backed by steady economic growth, an expanding middle class seeks apartments that offer design, functionality, and comfort.</p></div>
                 </div>
-            </div>
-
-            <!-- Closing philosophy callout -->
-            <div class="ub-callout reveal">
-                <span class="ub-callout__tag" data-i18n="ub_callout_tag">МАНАЙ ХАНДЛАГА</span>
-                <p data-i18n="ub_sub_2">Манай компани үл хөдлөх хөрөнгөнд суурилсан олон төрлийн үйлчилгээг цогцоор нь хөгжүүлэхийн сацуу Монгол Улсын иргэдийн амьдралын шинэ хэв маяг болон тогтвортой хөгжлийн эргэлтийг өөрсдөө бий болгохыг зорин ажиллаж байна.</p>
-                <p data-i18n="ub_sub_3">Иймд нийгмийн ирээдүйтэй шууд холбогдох Монгол дахь хөрөнгө оруулалтын үнэ цэнийг биечлэн мэдэрч, өөрийн хөрөнгийн өсөлт, хуримтлалыг үр ашигтайгаар ашиглах боломжтой юм.</p>
             </div>
         </div>
     </section>
