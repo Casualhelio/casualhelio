@@ -1304,53 +1304,56 @@ ul {
    CTA BANNER
    ============================================= */
 .cta-banner {
-    background: transparent;
-    padding: 100px 5%;
+    background:
+        linear-gradient(rgba(18, 32, 42, 0.55), rgba(18, 32, 42, 0.80)),
+        url('../assets/cta-bg.jpg') center center / cover no-repeat;
+    background-color: #142028;
+    padding: 104px 5%;
     text-align: center;
     position: relative;
     overflow: hidden;
-    border-top: 1px solid var(--light-gray);
-    border-bottom: 1px solid var(--light-gray);
+    border: none;
 }
 
+/* soft vignette for depth + text contrast */
 .cta-banner::before {
     content: '';
     position: absolute;
-    top: -80px;
-    right: -80px;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    border: 1px solid rgba(201, 168, 76, 0.12);
-}
-
-.cta-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -100px;
-    left: -60px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 1px solid rgba(36, 69, 86, 0.06);
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(18, 32, 42, 0) 35%, rgba(18, 32, 42, 0.45) 100%);
+    pointer-events: none;
 }
 
 .cta-banner h2 {
     font-family: var(--font-display);
-    font-size: clamp(32px, 4vw, 56px);
-    font-weight: 700;
-    color: #244556;
-    margin-bottom: 20px;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    margin: 0;
     position: relative;
 }
 
 .cta-banner p {
-    font-size: 18px;
-    color: var(--text-light);
-    max-width: 500px;
-    margin: 0 auto 40px;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 520px;
+    margin: 0 auto;
     line-height: var(--leading-relaxed);
     position: relative;
+}
+
+.cta-banner .btn-primary {
+    padding: 16px 42px;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    box-shadow: 0 10px 30px rgba(201, 168, 76, 0.28);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cta-banner .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 42px rgba(201, 168, 76, 0.45);
 }
 
 /* =============================================
@@ -2524,6 +2527,20 @@ footer {
 
 .cta-banner-inner {
     position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+}
+
+/* short gold accent line above the heading */
+.cta-banner-inner::before {
+    content: '';
+    width: 54px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
 }
 
 .cta-banner-tag {
