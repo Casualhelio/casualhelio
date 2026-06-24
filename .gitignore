@@ -10,6 +10,9 @@ deploy_key.pub
 *.DOCX
 1.docx.txt
 
+# ─── Source logo originals (processed copies live in assets/logo-*.png) ──
+assets/logos/
+
 # ─── Raw client source archive (huge originals, NOT for web/git) ──
 # Promo film originals here are 200–490 MB — over GitHub's 100 MB limit.
 # Curated web copies already live in assets/videos/ and assets/renovations/.
