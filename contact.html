@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Contact Us — Nest Group</title>
     <link rel="canonical" href="https://nest.mn/contact.html" />
@@ -200,7 +200,7 @@
                         business
                         days.</p>
                     <form id="contactForm">
-                        <!-- SECURITY: Restrict this key to nest.mn domain in Web3Forms dashboard. Enable reCAPTCHA and rate limits. -->
+                        <!-- SECURITY: access_key is public by design (submit-only). Spam protection = hCaptcha widget (below) + honeypot. Domain restriction is a Web3Forms Pro feature (optional). -->
                         <input type="hidden" name="access_key" value="684f67e5-3807-4e02-83eb-3697e95681ca">
                         <input type="hidden" name="botcheck" value="">
                         <input type="hidden" name="subject" value="New Submission from Nest Group Contact Form">
@@ -231,6 +231,8 @@
                                 placeholder="Дэлгэрэнгүй мэдээлэл оруулна уу..." data-i18n-ph="con_msg_ph"
                                 required></textarea>
                         </div>
+                        <!-- Zero-config hCaptcha: Web3Forms validates the token server-side (free plan). -->
+                        <div class="h-captcha" data-captcha="true" style="margin-bottom:20px;"></div>
                         <button type="submit" class="submit-btn" id="submitBtn" data-i18n="con_submit">Санал илгээх
                             &rarr;</button>
                         <div id="resultMsg"
@@ -249,6 +251,8 @@
     <script src="js/main.js?v=49"></script>
     <script src="js/edit-mode.js?v=49"></script>
     <script src="js/contact-form.js?v=49"></script>
+    <!-- Web3Forms client: renders the zero-config hCaptcha widget (does not intercept submit) -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
 
 </body>
 

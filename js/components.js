@@ -9,12 +9,12 @@
         m.httpEquiv = 'Content-Security-Policy';
         m.content = [
             "default-src 'self'",
-            "script-src 'self'",
+            "script-src 'self' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: https://cdn.sanity.io",
-            "connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com",
-            "frame-src https://maps.google.com https://www.google.com",
+            "connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
+            "frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com",
             "media-src 'self'",
             "object-src 'none'",
             "base-uri 'self'",
