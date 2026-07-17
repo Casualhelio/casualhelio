@@ -55,9 +55,9 @@ const NavbarHTML = `
             <li><a href="contact.html" class="nav-cta" data-i18n="nav_contact">Contact Us</a></li>
         </ul>
         <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="en">&#127482;&#127480;</button>
-            <button class="lang-btn" data-lang="mn">&#127474;&#127475;</button>
-            <button class="lang-btn" data-lang="ja">&#127471;&#127477;</button>
+            <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+            <button class="lang-btn" data-lang="mn" aria-label="Монгол">MN</button>
+            <button class="lang-btn" data-lang="ja" aria-label="日本語">JP</button>
         </div>
         <div class="hamburger" id="hamburger">
             <span></span><span></span><span></span>
@@ -170,9 +170,9 @@ function initInjectedComponents() {
         });
     }
 
-    // Initialize Tubelight Navbar
-    if (typeof initTubelightNavbar === 'function') {
-        initTubelightNavbar();
+    // Re-mark the current page's nav link (navbar was just injected)
+    if (typeof initActiveNavLink === 'function') {
+        initActiveNavLink();
     }
 
     // Language switcher bind (because it's rewritten)

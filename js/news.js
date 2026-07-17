@@ -91,6 +91,10 @@ function getExcerpt(blocks) {
     return text.length > 150 ? text.substring(0, 150) + '...' : text;
 }
 
+function readMoreLabel(lang) {
+    return (window.translations && window.translations[lang] && window.translations[lang].np_featured_link) || 'Read Full Story →';
+}
+
 function renderFeatured(article, container, lang) {
     if (!article) return;
     const esc = window.SanityAPI && window.SanityAPI.escapeHTML ? window.SanityAPI.escapeHTML : (s) => s;
@@ -111,7 +115,7 @@ function renderFeatured(article, container, lang) {
                      <div class="news-date">&#128197; <span>${formattedDate}</span></div>
                      <h4 style="font-size:20px;margin-bottom:14px;">${title}</h4>
                      <p>${excerpt}</p>
-                     <a href="article.html?id=${encodeURIComponent(articleId)}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">Read Full Story &rarr;</a>
+                     <a href="article.html?id=${encodeURIComponent(articleId)}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel(lang)}</a>
                  </div>
             </div>
         </div>
@@ -140,7 +144,7 @@ function renderGrid(articles, container, lang) {
                     <div class="news-date">&#128197; <span>${formattedDate}</span></div>
                     <h4>${title}</h4>
                     <p>${excerpt}</p>
-                     <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">Read Full Story &rarr;</a>
+                     <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel(lang)}</a>
                 </div>
             </div>
         `;

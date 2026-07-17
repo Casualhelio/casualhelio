@@ -15,131 +15,23 @@ if (hamburger && navLinks) {
     });
 }
 
-// Tubelight Navbar Logic
-function initTubelightNavbar() {
-    const navLinksContainer = document.querySelector('.nav-links');
-    if (!navLinksContainer) return;
-
-    const links = Array.from(navLinksContainer.querySelectorAll('a:not(.nav-cta)'));
-    if (links.length === 0) return;
-
-    // Remove any existing tubelight elements to prevent duplicates
-    const existing = navLinksContainer.querySelector('.nav-tubelight');
-    if (existing) existing.remove();
-
-    const tubelight = document.createElement('div');
-    tubelight.className = 'nav-tubelight';
-    tubelight.innerHTML = `
-        <div class="lamp-base">
-            <div class="glow-1"></div>
-            <div class="glow-2"></div>
-            <div class="glow-3"></div>
-        </div>
-    `;
-    navLinksContainer.appendChild(tubelight);
-
+// Highlight the nav link for the current page
+function initActiveNavLink() {
+    const links = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+    if (!links.length) return;
     const currentPage = location.pathname.split('/').pop() || 'index.html';
     // Article detail pages (article.html) live under News in the IA, so highlight News for them.
     const matchPage = currentPage === 'article.html' ? 'news.html' : currentPage;
-    let activeLink = links.find(l => l.getAttribute('href') === matchPage) || links[0];
-
-    // Set initial active status
-    links.forEach(l => l.classList.toggle('active', l === activeLink));
-
-    function updateLightPosition(targetLink) {
-        if (!targetLink) return;
-        const containerRect = navLinksContainer.getBoundingClientRect();
-        const linkRect = targetLink.getBoundingClientRect();
-
-        const left = linkRect.left - containerRect.left;
-        const width = linkRect.width;
-
-        tubelight.style.left = `${left}px`;
-        tubelight.style.width = `${width}px`;
-        tubelight.style.opacity = '1';
-    }
-
-    // Give layout a moment before calculating initial position
-    setTimeout(() => {
-        updateLightPosition(activeLink);
-    }, 50);
-
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => updateLightPosition(link));
-        link.addEventListener('mouseleave', () => updateLightPosition(activeLink));
-        link.addEventListener('click', (e) => {
-            // Let the browser navigate, but update visual state
-            activeLink = link;
-            links.forEach(l => l.classList.toggle('active', l === activeLink));
-            updateLightPosition(activeLink);
-        });
-    });
-
-    window.addEventListener('resize', () => updateLightPosition(activeLink));
-
-    // MutationObserver to handle font load resizing or element resizing
-    const observer = new ResizeObserver(() => updateLightPosition(activeLink));
-    observer.observe(navLinksContainer);
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === matchPage));
 }
 
-// Active nav link initialization replaced by tubelight logic
-initTubelightNavbar();
+initActiveNavLink();
 
 // Reveal on scroll
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Counter animation
-function animateCounter(el) {
-    const target = parseInt(el.dataset.target);
-    const step = target / (2000 / 16);
-    let current = 0;
-    const t = setInterval(() => {
-        current += step;
-        if (current >= target) { current = target; clearInterval(t); }
-        el.textContent = Math.floor(current).toLocaleString();
-    }, 16);
-}
-const counterObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-        if (e.isIntersecting && !e.target.classList.contains('counted')) {
-            e.target.classList.add('counted');
-            animateCounter(e.target);
-        }
-    });
-}, { threshold: 0.5 });
-document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
-
-// Econ stat count-up (homepage growth-market cards — supports decimals + a +/− prefix)
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function animateEconStat(el) {
-    const target = parseFloat(el.dataset.count);
-    const dec = parseInt(el.dataset.dec || '0', 10);
-    const prefix = el.dataset.prefix || '';
-    if (prefersReducedMotion || isNaN(target)) { el.textContent = prefix + target.toFixed(dec); return; }
-    const dur = 1600;
-    let start = null;
-    const tick = (ts) => {
-        if (start === null) start = ts;
-        const p = Math.min((ts - start) / dur, 1);
-        const eased = 1 - Math.pow(1 - p, 3);   // easeOutCubic
-        el.textContent = prefix + (target * eased).toFixed(dec);
-        if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = prefix + target.toFixed(dec);
-    };
-    requestAnimationFrame(tick);
-}
-const econObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-        if (e.isIntersecting && !e.target.classList.contains('counted')) {
-            e.target.classList.add('counted');
-            animateEconStat(e.target);
-        }
-    });
-}, { threshold: 0.6 });
-document.querySelectorAll('.econ-num[data-count]').forEach(el => econObs.observe(el));
 
 // =============================================
 // I18N ENGINE
@@ -159,10 +51,6 @@ function applyTranslations(lang) {
         const key = el.dataset.i18nHtml;
         if (t[key] !== undefined) {
             el.innerHTML = t[key];
-            if (el.classList.contains('animate-letters')) {
-                // Signal that this needs splitting immediately
-                typeof window.splitLetters === 'function' && window.splitLetters(el);
-            }
         }
     });
 

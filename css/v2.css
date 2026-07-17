@@ -11,18 +11,6 @@
     --v2-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- Scroll progress bar ---------- */
-.v2-progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--gold), #e0c070);
-    z-index: 2000;
-    pointer-events: none;
-    transition: width 0.08s linear;
-}
-
 /* ---------- Dark immersive band ---------- */
 .v2-dark {
     position: relative;
@@ -52,26 +40,6 @@
 .v2-dark h2, .v2-dark h3 { color: #fff; }
 
 .v2-dark p { color: rgba(255, 255, 255, 0.78); }
-
-/* ---------- Giant ghost numeral ---------- */
-.v2-ghost-num {
-    position: absolute;
-    top: -10px;
-    right: 2%;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(140px, 22vw, 320px);
-    line-height: 1;
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(201, 168, 76, 0.22);
-    user-select: none;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.section:not(.v2-dark) .v2-ghost-num {
-    -webkit-text-stroke: 1.5px rgba(36, 69, 86, 0.13);
-}
 
 /* ---------- Eyebrow chip ---------- */
 .v2-chip {

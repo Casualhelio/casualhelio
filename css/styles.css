@@ -62,12 +62,10 @@
 
 /* =============================================
    LANGUAGE SPECIFIC FONTS
+   Mongolian shares the Latin pair (both have full
+   Cyrillic support) so the brand reads identically
+   across EN and MN; Japanese needs its own faces.
    ============================================= */
-html[lang="mn"] {
-    --font-body: 'Roboto', sans-serif;
-    --font-display: 'Montserrat', sans-serif;
-}
-
 html[lang="ja"] {
     --font-body: 'Noto Sans JP', sans-serif;
     --font-display: 'Noto Serif JP', serif;
@@ -111,6 +109,14 @@ img {
 
 ul {
     list-style: none;
+}
+
+/* Content lists (inside body copy) keep their bullets —
+   the reset above is for nav/footer/component lists. */
+.ub-row-body ul,
+.ub-apt-desc ul,
+.article-body ul {
+    list-style: disc;
 }
 
 /* =============================================
@@ -178,7 +184,6 @@ ul {
     align-items: center;
     gap: 12px;
     position: relative;
-    /* important for tubelight absolute positioning */
 }
 
 .nav-links a {
@@ -201,69 +206,6 @@ ul {
     color: var(--gold);
     background: rgba(36, 69, 86, 0.05);
     /* very subtle background for active text */
-}
-
-/* Tubelight floating pill core container */
-.nav-tubelight {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    border-radius: 30px;
-    background: rgba(201, 168, 76, 0.05);
-    /* primary/5 equivalent */
-    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    /* hidden until js initializes */
-}
-
-/* The solid lamp base */
-.nav-tubelight .lamp-base {
-    position: absolute;
-    top: -4px;
-    /* offset upwards */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32px;
-    height: 4px;
-    background: var(--gold);
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-}
-
-/* The neon glows */
-.nav-tubelight .glow-1 {
-    position: absolute;
-    width: 48px;
-    height: 24px;
-    background: rgba(201, 168, 76, 0.2);
-    border-radius: 50%;
-    filter: blur(8px);
-    top: -8px;
-    left: -8px;
-}
-
-.nav-tubelight .glow-2 {
-    position: absolute;
-    width: 32px;
-    height: 24px;
-    background: rgba(201, 168, 76, 0.2);
-    border-radius: 50%;
-    filter: blur(8px);
-    top: -4px;
-    left: 0;
-}
-
-.nav-tubelight .glow-3 {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: rgba(201, 168, 76, 0.2);
-    border-radius: 50%;
-    filter: blur(4px);
-    top: 0;
-    left: 8px;
 }
 
 .nav-cta {
@@ -311,27 +253,6 @@ ul {
     display: flex;
     align-items: center;
     overflow: hidden;
-}
-
-@keyframes letterReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.96);
-        filter: blur(8px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-    }
-}
-
-.animate-letters .char {
-    display: inline-block;
-    opacity: 0;
-    animation: letterReveal 0.05s ease forwards;
-    animation-delay: calc(0.5s + var(--i) * 0.04s);
 }
 
 .hero-mesh {
@@ -515,27 +436,23 @@ ul {
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    gap: 24px;
 }
 
 .stat-item {
-    text-align: center;
-    padding: 20px;
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: left;
+    padding: 8px 20px 8px 24px;
+    border-left: 2px solid rgba(201, 168, 76, 0.45);
     position: relative;
-}
-
-.stat-item:last-child {
-    border-right: none;
 }
 
 .stat-number {
     font-family: var(--font-display);
-    font-size: 48px;
+    font-size: 44px;
     font-weight: 700;
     color: var(--gold);
     line-height: 1;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .stat-number span {
@@ -545,7 +462,7 @@ ul {
 .stat-label {
     font-size: 12px;
     font-weight: 500;
-    color: var(--white);
+    color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -1528,6 +1445,32 @@ footer {
     background: radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.1) 0%, transparent 65%);
 }
 
+/* Dark variant — solid brand ground for heroes with light text */
+.page-hero--dark {
+    background: var(--gradient-primary);
+    border-bottom: none;
+}
+
+.page-hero--dark h1 {
+    color: var(--white);
+}
+
+.page-hero--dark p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.page-hero--dark .breadcrumb {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.page-hero--dark .breadcrumb a {
+    color: var(--gold);
+}
+
+.page-hero--dark .breadcrumb span {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .page-hero-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -1674,8 +1617,7 @@ footer {
         transition: none !important;
     }
 
-    .animate-letters .char,
-    .aceternity-text {
+    .fade-in {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
@@ -1798,13 +1740,14 @@ footer {
 
 .lang-btn {
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 700;
-    color: var(--white);
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.75);
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 4px 9px;
+    padding: 5px 10px;
     border-radius: 100px;
     transition: var(--transition);
     white-space: nowrap;
@@ -1819,7 +1762,7 @@ footer {
 
 .lang-btn.active {
     background: var(--gold);
-    color: var(--white);
+    color: var(--primary-dark);
 }
 
 /* =============================================
@@ -1887,6 +1830,35 @@ footer {
 
     .lang-switcher {
         margin-top: auto;
+    }
+}
+
+/* =============================================
+   TABLET NAV (769–1024px)
+   The full horizontal link row doesn't fit at these
+   widths (labels overlap the logo), so keep the
+   hamburger menu until the sidebar takes over.
+   ============================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: var(--primary) !important;
+        padding: 24px 20px;
+        gap: 16px;
+        box-shadow: var(--shadow-md);
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
     }
 }
 
@@ -2056,32 +2028,32 @@ footer {
     margin: 0 auto;
 }
 
+/* Partner logos — static wrapped row (was an infinite marquee).
+   The duplicate aria-hidden group that fed the loop is hidden. */
 .partners-marquee {
     position: relative;
     width: 100%;
-    overflow: hidden;
     padding: 12px 0 8px;
-    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
 
 .partners-marquee__track {
     display: flex;
-    width: max-content;
-    animation: nest-partners-marquee 50s linear infinite;
-    will-change: transform;
-}
-
-.partners-marquee:hover .partners-marquee__track {
-    animation-play-state: paused;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .partners-marquee__group {
     display: flex;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     gap: 28px;
-    padding-right: 28px;
+}
+
+.partners-marquee__group[aria-hidden="true"] {
+    display: none;
 }
 
 .partners-marquee__logo {
@@ -2117,41 +2089,6 @@ footer {
     color: var(--primary);
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--light-gray);
-}
-
-@keyframes nest-partners-marquee {
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .partners-marquee {
-        mask-image: none;
-        -webkit-mask-image: none;
-    }
-
-    .partners-marquee__track {
-        animation: none;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        max-width: 960px;
-        margin: 0 auto;
-        gap: 16px;
-        padding: 0 16px;
-    }
-
-    .partners-marquee__group {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding-right: 0;
-        width: 100%;
-    }
-
-    .partners-marquee__group[aria-hidden="true"] {
-        display: none;
-    }
 }
 
 /* =============================================
@@ -2938,12 +2875,14 @@ html[lang="ja"] .section-tag {
 }
 
 /* =============================================
-   ACETERNITY MOTION UTILITIES
+   ENTRANCE FADE — the site's single motion idiom.
+   Page-load elements use .fade-in (+ optional delay step);
+   scroll-triggered elements use .reveal (main.js).
    ============================================= */
-@keyframes aceternity-fade-up {
+@keyframes fade-in-up {
     0% {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(24px);
     }
     100% {
         opacity: 1;
@@ -2951,20 +2890,20 @@ html[lang="ja"] .section-tag {
     }
 }
 
-.aceternity-text {
+.fade-in {
     opacity: 0;
-    animation: aceternity-fade-up 0.8s ease-in-out forwards;
+    animation: fade-in-up 0.8s ease-in-out forwards;
 }
 
-.aceternity-delay-1 {
+.fade-delay-1 {
     animation-delay: 0.3s;
 }
 
-.aceternity-delay-2 {
+.fade-delay-2 {
     animation-delay: 0.45s;
 }
 
-.aceternity-delay-3 {
+.fade-delay-3 {
     animation-delay: 0.6s;
 }
 

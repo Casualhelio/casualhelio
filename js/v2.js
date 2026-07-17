@@ -7,24 +7,6 @@
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ---------- Scroll progress bar ---------- */
-    function initProgress() {
-        const bar = document.createElement('div');
-        bar.className = 'v2-progress';
-        document.body.appendChild(bar);
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                const h = document.documentElement;
-                const max = h.scrollHeight - h.clientHeight;
-                bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-                ticking = false;
-            });
-        }, { passive: true });
-    }
-
     /* ---------- Before / After sliders ---------- */
     function initBASliders() {
         document.querySelectorAll('.ba-slider').forEach(slider => {
@@ -167,45 +149,6 @@
         els.forEach(el => obs.observe(el));
     }
 
-    /* ---------- Parallax ---------- */
-    function initParallax() {
-        if (reduceMotion) return;
-        const els = Array.from(document.querySelectorAll('[data-parallax]'));
-        if (!els.length) return;
-        let ticking = false;
-        function update() {
-            const vh = window.innerHeight;
-            els.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.bottom < 0 || rect.top > vh) return;
-                const speed = parseFloat(el.dataset.parallax) || 0.12;
-                const center = rect.top + rect.height / 2 - vh / 2;
-                el.style.transform = 'translateY(' + (-center * speed).toFixed(1) + 'px)';
-            });
-            ticking = false;
-        }
-        window.addEventListener('scroll', () => {
-            if (!ticking) { ticking = true; requestAnimationFrame(update); }
-        }, { passive: true });
-        update();
-    }
-
-    /* ---------- 3D tilt ---------- */
-    function initTilt() {
-        if (reduceMotion || !window.matchMedia('(hover: hover)').matches) return;
-        document.querySelectorAll('[data-tilt]').forEach(el => {
-            el.addEventListener('pointermove', (e) => {
-                const r = el.getBoundingClientRect();
-                const x = (e.clientX - r.left) / r.width - 0.5;
-                const y = (e.clientY - r.top) / r.height - 0.5;
-                el.style.transform = 'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 6).toFixed(2) + 'deg) translateY(-4px)';
-            });
-            el.addEventListener('pointerleave', () => {
-                el.style.transform = '';
-            });
-        });
-    }
-
     /* ---------- Lightbox for marquee ad images ---------- */
     function initLightbox() {
         const triggers = document.querySelectorAll('.v2-marquee--zoom img');
@@ -271,14 +214,11 @@
     }
 
     function init() {
-        initProgress();
         initBASliders();
         initVideos();
         initRail();
         initSegCharts();
         initStagger();
-        initParallax();
-        initTilt();
         initLightbox();
     }
 

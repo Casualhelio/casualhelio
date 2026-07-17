@@ -85,6 +85,7 @@ function safeArticleId(id) {
 
 function renderHomeGrid(articles, container, lang) {
     const esc = window.SanityAPI && window.SanityAPI.escapeHTML ? window.SanityAPI.escapeHTML : (s) => s;
+    const readMore = (window.translations && window.translations[lang] && window.translations[lang].np_featured_link) || 'Read Full Story →';
     const html = articles.map(article => {
         const title = esc(getLocalizedField(article, 'title', lang));
         const contentBlocks = getLocalizedField(article, 'content', lang);
@@ -100,7 +101,7 @@ function renderHomeGrid(articles, container, lang) {
                     <div class="news-date">&#128197; <span>${formattedDate}</span></div>
                     <h4>${title}</h4>
                     <p>${excerpt}</p>
-                    <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">Read Full Story &rarr;</a>
+                    <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMore}</a>
                 </div>
             </div>
         `;
