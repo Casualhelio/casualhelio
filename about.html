@@ -231,6 +231,113 @@
             .ap-letter__body p:first-child { padding-left: 18px; }
         }
 
+        /* ── Intro: text + NEST brand card side by side ── */
+        .ap-letter__grid {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+
+        .ap-nest-card {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            padding: 40px 34px;
+            position: sticky;
+            top: 130px;
+        }
+
+        .ap-nest-card img {
+            height: 56px;
+            width: auto;
+            margin-bottom: 22px;
+        }
+
+        .ap-nest-card p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 15.5px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .ap-nest-card::after {
+            content: "";
+            display: block;
+            width: 44px;
+            height: 2px;
+            background: var(--gold);
+            margin-top: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .ap-letter__grid { grid-template-columns: 1fr; gap: 36px; }
+            .ap-nest-card { position: static; }
+        }
+
+        /* ── Mission/Vision as a pair ── */
+        .v2-mvv--two {
+            grid-template-columns: 1fr 1fr;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 760px) {
+            .v2-mvv--two { grid-template-columns: 1fr; }
+        }
+
+        /* ── 5C values strip ── */
+        .ap-5c {
+            margin-top: 56px;
+        }
+
+        .ap-5c__title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .ap-5c__grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .ap-5c__item {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            border-top: 2px solid var(--gold);
+            padding: 22px 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ap-5c__c {
+            display: block;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .ap-5c__item p {
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .ap-5c__grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 560px) {
+            .ap-5c__grid { grid-template-columns: 1fr; }
+        }
+
         /* ============ MISC ============ */
         .ap-film-band .section-title { margin-bottom: 14px; }
 
@@ -287,14 +394,42 @@
     <!-- EDITORIAL INTRO -->
     <section class="ap-letter">
         <div class="ap-letter__inner reveal">
-            <div class="ap-letter__body ap-letter__cols" data-i18n-html="ap_p"><p>Our story is one of vision, resilience, and a relentless pursuit of sustainable value creation.</p></div>
+            <div class="ap-letter__grid">
+                <div class="ap-letter__body" data-i18n-html="ap_p"><p>Our story is one of vision, resilience, and a relentless pursuit of sustainable value creation.</p></div>
+                <aside class="ap-nest-card">
+                    <img src="assets/logo.png" alt="Nest Group" loading="lazy" decoding="async" />
+                    <p data-i18n="nest_meaning">The word 'NEST' represents a bird's nest built of twigs, symbolizing opportunities for the next new level in life.</p>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY FIGURES -->
+    <section class="stats-strip">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-number">115+</div>
+                <div class="stat-label" data-i18n="stat3">Properties Under Management</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number">10&times;</div>
+                <div class="stat-label" data-i18n="ab_growth_label">NBFI Portfolio Growth</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number">2,500+</div>
+                <div class="stat-label" data-i18n="ab_clients_label">NBFI Clients Served</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number">30+</div>
+                <div class="stat-label" data-i18n="stat4">Team Members</div>
+            </div>
         </div>
     </section>
 
     <!-- MISSION / VISION / VALUES -->
     <section class="section" style="background:var(--off-white); padding-top:90px; padding-bottom:90px;">
         <div class="section-inner">
-            <div class="v2-mvv" data-stagger>
+            <div class="v2-mvv v2-mvv--two" data-stagger>
                 <div class="v2-mvv__card">
                     <div class="v2-mvv__icon">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -317,16 +452,31 @@
                     <h3 data-i18n="ap_vision_title">Our Vision</h3>
                     <p data-i18n="ap_vision_p">ONE HEART, ONE TEAM &mdash; Towards a more amazing tomorrow than today. We aim to create 100 years of history, which will last for generations.</p>
                 </div>
-                <div class="v2-mvv__card">
-                    <div class="v2-mvv__icon">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon
-                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
+            </div>
+
+            <div class="ap-5c reveal">
+                <h3 class="ap-5c__title" data-i18n="ap_values_title">Our Principles (5C)</h3>
+                <div class="ap-5c__grid">
+                    <div class="ap-5c__item">
+                        <span class="ap-5c__c">Challenge</span>
+                        <p data-i18n="ap_5c_1">Be confident and strive to surpass your current self.</p>
                     </div>
-                    <h3 data-i18n="ap_values_title">Our Values</h3>
-                    <p data-i18n-html="ap_values_p" style="text-align:left;">Integrity, innovation, and impact &mdash; three pillars that guide every decision we make and every partnership we forge.</p>
+                    <div class="ap-5c__item">
+                        <span class="ap-5c__c">Cooperation</span>
+                        <p data-i18n="ap_5c_2">Mutual trust, teamwork, and pursuit of shared goals.</p>
+                    </div>
+                    <div class="ap-5c__item">
+                        <span class="ap-5c__c">Comfortable Place</span>
+                        <p data-i18n="ap_5c_3">Build a cozy second-home environment together.</p>
+                    </div>
+                    <div class="ap-5c__item">
+                        <span class="ap-5c__c">Customer Experience</span>
+                        <p data-i18n="ap_5c_4">Deliver comprehensive service tailored to customer needs.</p>
+                    </div>
+                    <div class="ap-5c__item">
+                        <span class="ap-5c__c">Cool NEST</span>
+                        <p data-i18n="ap_5c_5">One team creating positive impact in society.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -349,6 +499,57 @@
                         <span class="v2-video__play">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                         </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOURNEY TIMELINE -->
+    <section class="section" style="background:var(--off-white); padding-top:80px;">
+        <div class="section-inner">
+            <div style="text-align:center; margin-bottom:40px;">
+                <div class="v2-chip reveal" style="justify-content:center;" data-i18n="ap_journey_tag">Our Journey</div>
+                <h2 class="section-title reveal" data-i18n="ap_journey_h2">A Decade of Purposeful Growth</h2>
+                <p class="section-sub reveal" style="margin:0 auto;" data-i18n="ap_journey_p">From a bold idea to a multi-sector holding leader &mdash; here is the Nest Group story.</p>
+            </div>
+
+            <div class="timeline-container reveal">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-entry right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">2016 &middot; <span data-i18n="ap_t2_label">Real Estate</span></div>
+                        <h4 class="timeline-card-title" data-i18n="ap_t2_title">NEST PROPERTY SERVICE LLC Launched</h4>
+                        <div class="timeline-card-desc" data-i18n="ap_t2_p">Entered the real estate market with its first 7 managed properties, growing to 115+ properties by 2025 and setting new standards in property management.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">2018 &middot; <span data-i18n="ap_t1_label">Founded</span></div>
+                        <h4 class="timeline-card-title" data-i18n="ap_t1_title">VE-ST Holdings Mongolia LLC Established</h4>
+                        <div class="timeline-card-desc" data-i18n="ap_t1_p">The holding company was founded with a vision to build a diversified investment portfolio and foster growth opportunities across key sectors.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label">2018&ndash;2024 &middot; <span data-i18n="ap_t3_label">Finance</span></div>
+                        <h4 class="timeline-card-title" data-i18n="ap_t3_title">NEST MIRAIS NBFI LLC Established</h4>
+                        <div class="timeline-card-desc" data-i18n="ap_t3_p">Expanded the portfolio from 1.6B to 16.4B MNT by 2024, offering competitive JPY and MNT asset management rates.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-label"><span data-i18n="ap_t4_label">Today</span></div>
+                        <h4 class="timeline-card-title" data-i18n="ap_t4_title">Expanding the Legacy</h4>
+                        <div class="timeline-card-desc" data-i18n="ap_t4_p">Now home to three subsidiaries, continuously growing the portfolio and deepening community impact.</div>
                     </div>
                 </div>
             </div>
