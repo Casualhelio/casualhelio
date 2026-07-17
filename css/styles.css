@@ -1221,24 +1221,38 @@ ul {
    CTA BANNER
    ============================================= */
 .cta-banner {
-    background:
-        linear-gradient(rgba(18, 32, 42, 0.55), rgba(18, 32, 42, 0.80)),
-        url('../assets/cta-bg.jpg') center center / cover no-repeat;
-    background-color: #142028;
-    padding: 104px 5%;
-    text-align: center;
+    background: var(--gradient-primary);
+    padding: 96px 5%;
+    text-align: left;
     position: relative;
     overflow: hidden;
     border: none;
 }
 
-/* soft vignette for depth + text contrast */
+/* The team photo on the right, fading into the brand navy */
 .cta-banner::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, rgba(18, 32, 42, 0) 35%, rgba(18, 32, 42, 0.45) 100%);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 55%;
+    background:
+        linear-gradient(rgba(36, 69, 86, 0.18), rgba(36, 69, 86, 0.18)),
+        url('../assets/group.jpg') 50% 30% / cover no-repeat;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%);
+    mask-image: linear-gradient(90deg, transparent, #000 45%);
     pointer-events: none;
+}
+
+@media (max-width: 880px) {
+    .cta-banner {
+        text-align: center;
+    }
+
+    .cta-banner::before {
+        display: none;
+    }
 }
 
 .cta-banner h2 {
@@ -2465,10 +2479,27 @@ footer {
 .cta-banner-inner {
     position: relative;
     z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 26px;
+}
+
+/* keep the text on the navy side, clear of the photo */
+.cta-banner h2 {
+    max-width: 440px;
+}
+
+@media (max-width: 880px) {
+    .cta-banner-inner {
+        align-items: center;
+    }
+
+    .cta-banner h2 {
+        max-width: none;
+    }
 }
 
 /* short gold accent line above the heading */
