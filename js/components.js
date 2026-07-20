@@ -50,7 +50,7 @@ const NavbarHTML = `
             <li><a href="index.html" data-i18n="nav_home">Home</a></li>
             <li><a href="about.html" data-i18n="nav_about">About</a></li>
             <li><a href="companies.html" data-i18n="nav_companies">Our Companies</a></li>
-            <li><a href="investor-relations.html" data-i18n="nav_ir">Investor Relations</a></li>
+            <li><a href="investor-relations.html" data-i18n="nav_ir">Investment</a></li>
             <li><a href="news.html" data-i18n="nav_news">News</a></li>
             <li><a href="contact.html" class="nav-cta" data-i18n="nav_contact">Contact Us</a></li>
         </ul>
@@ -93,7 +93,7 @@ const FooterHTML = `
                 <ul>
                     <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                     <li><a href="companies.html" data-i18n="nav_companies">Our Companies</a></li>
-                    <li><a href="investor-relations.html" data-i18n="nav_ir">Investor Relations</a></li>
+                    <li><a href="investor-relations.html" data-i18n="nav_ir">Investment</a></li>
                     <li><a href="news.html" data-i18n="nav_news">News & Media</a></li>
                     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
                 </ul>
