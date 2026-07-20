@@ -1471,11 +1471,12 @@ footer {
     border-bottom: none;
 }
 
-.page-hero--dark h1 {
+/* Doubled class beats the later .page-hero h1/p color rules (equal specificity otherwise) */
+.page-hero.page-hero--dark h1 {
     color: var(--white);
 }
 
-.page-hero--dark p {
+.page-hero.page-hero--dark p {
     color: rgba(255, 255, 255, 0.8);
 }
 
