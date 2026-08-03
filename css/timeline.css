@@ -172,6 +172,71 @@
     grid-row: 1;
 }
 
+/* ==========================================================================
+   TIMELINE SIDE IMAGERY
+   Photos sit in the empty grid column opposite each card.
+   ========================================================================== */
+
+.tl-media {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    margin-top: 4px;
+}
+
+.tl-media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 32px rgba(36, 69, 86, 0.06);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.tl-media img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(36, 69, 86, 0.12);
+}
+
+/* Mosaic for entries with three photos: one wide, two below */
+.tl-media--grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+.tl-media--grid img:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+}
+
+/* Right entry: card sits right → photos fill the empty left column */
+.timeline-entry.right .tl-media {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 24px;
+}
+
+.timeline-entry.right .timeline-card {
+    grid-row: 1;
+}
+
+/* Left entry: card sits left → photos fill the empty right column */
+.timeline-entry.left .tl-media {
+    grid-column: 3;
+    grid-row: 1;
+    padding-left: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .tl-media img,
+    .tl-media img:hover {
+        transition: none;
+        transform: none;
+    }
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
     .timeline-entry {
@@ -216,5 +281,18 @@
 
     .timeline-card {
         padding: 24px;
+    }
+
+    /* Photos drop below the card and share its column */
+    .timeline-entry.right .tl-media,
+    .timeline-entry.left .tl-media {
+        grid-column: 2;
+        grid-row: auto;
+        padding: 0;
+        margin-top: 16px;
+    }
+
+    .timeline-entry.right .timeline-card {
+        grid-row: auto;
     }
 }

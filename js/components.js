@@ -110,7 +110,7 @@ const FooterHTML = `
             <div class="footer-col">
                 <h5 data-i18n="footer_col3">Contact</h5>
                 <div class="footer-contact-item"><span class="icon">&#128205;</span> <span data-i18n="con_office_addr">Ulaanbaatar, Mongolia</span></div>
-                <div class="footer-contact-item"><span class="icon">&#128222;</span> (+976) 7737-0770</div>
+                <div class="footer-contact-item"><span class="icon">&#128222;</span> (+976) 7707-6977</div>
                 <div class="footer-contact-item"><span class="icon">&#9993;</span> info@nest.mn</div>
             </div>
         </div>

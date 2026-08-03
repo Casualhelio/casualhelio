@@ -2523,51 +2523,55 @@ footer {
 }
 
 /* VERTICAL OVERLAPPING CARDS (ABOUT PAGE LEADERSHIP) */
+/* 2 x 2 grid — photos sit on the outer edges, text meets in the middle */
 .team-stack-container {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    margin-top: 40px;
-    padding-bottom: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px 48px;
+    margin-top: 48px;
 }
 
 .team-card-sticky {
-    position: sticky;
-    top: 100px;
+    position: relative;
     display: flex;
     flex-direction: row;
-    gap: 40px;
-    background: var(--white);
-    padding: 40px;
-    border-radius: var(--radius-md);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-    border-top: 4px solid var(--gold);
-    align-items: stretch;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    gap: 26px;
+    align-items: center;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
-.team-card-sticky:nth-child(1) {
-    top: 96px;
-    z-index: 10;
-}
-
-.team-card-sticky:nth-child(2) {
-    top: 112px;
-    z-index: 11;
+/* Right-hand column mirrors: photo on the outside */
+.team-stack-container > .team-card-sticky:nth-child(even) {
+    flex-direction: row-reverse;
 }
 
 .team-card-sticky.bg-primary {
-    background: var(--white);
-    border-top-color: #244556;
+    background: none;
     color: #244556;
 }
 
 .team-card-img-col {
-    flex: 0 0 300px;
-    border-radius: var(--radius-sm);
+    flex: 0 0 165px;
+    aspect-ratio: 3 / 4;
+    align-self: flex-start;
+    border-radius: 0;
     overflow: hidden;
     position: relative;
     background: var(--off-white);
+}
+
+/* Navy bar sitting under each portrait */
+.team-card-img-col::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 9px;
+    background: var(--primary);
 }
 
 .team-card-img-col img {
@@ -2585,10 +2589,24 @@ footer {
     justify-content: center;
 }
 
+/* Company → role → name */
+.team-card-content .team-company {
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.45;
+    color: var(--primary);
+    margin-bottom: 2px;
+}
+
 .team-card-content h4 {
-    font-size: 28px;
+    font-size: clamp(17px, 1.55vw, 22px);
     font-weight: 700;
-    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    margin-bottom: 0;
     font-family: var(--font-display);
 }
 
@@ -2597,12 +2615,12 @@ footer {
 }
 
 .team-card-content .team-role {
-    font-size: 14px;
-    color: var(--gold);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
+    font-size: 13.5px;
+    color: var(--primary-light);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.45;
+    margin-bottom: 16px;
 }
 
 .team-card-content .team-bio {
@@ -2619,24 +2637,18 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .team-card-sticky {
-        flex-direction: column;
-        padding: 24px;
-        top: 80px;
+    .team-stack-container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    /* single column — every photo back on the left */
+    .team-stack-container > .team-card-sticky:nth-child(even) {
+        flex-direction: row;
     }
 
     .team-card-img-col {
-        flex: none;
-        width: 100%;
-        aspect-ratio: 1 / 1.1;
-    }
-
-    .team-card-sticky:nth-child(1) {
-        top: 90px;
-    }
-
-    .team-card-sticky:nth-child(2) {
-        top: 100px;
+        flex: 0 0 130px;
     }
 
     .team-card-content h4 {

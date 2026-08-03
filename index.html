@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=54" />
-    <link rel="stylesheet" href="css/v2.css?v=54" />
+    <link rel="stylesheet" href="css/styles.css?v=66" />
+    <link rel="stylesheet" href="css/v2.css?v=66" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
@@ -306,7 +306,15 @@
 
         .division-row--soon {
             opacity: 0.8;
-            grid-template-columns: 1fr;
+            /* media + body only — this row has no arrow (not a link yet) */
+            grid-template-columns: 150px 1fr;
+        }
+
+        /* The Miyabi poster is portrait, so this row's media box matches its
+           aspect (150/260 ≈ 636/1104) — object-fit: cover then crops nothing. */
+        .division-row--soon .division-row__media {
+            width: 150px;
+            height: 260px;
         }
 
         @media (max-width: 780px) {
@@ -316,6 +324,9 @@
                 padding: 24px 0;
             }
             .division-row__media { width: 100%; height: 180px; }
+            /* keep the portrait poster's shape on mobile instead of a 180px crop */
+            .division-row--soon { grid-template-columns: 150px 1fr; gap: 20px; }
+            .division-row--soon .division-row__media { width: 150px; height: 260px; }
             .division-row__arrow { display: none; }
             .pillars-section { padding: 60px 5%; }
         }
@@ -513,6 +524,9 @@
                 </a>
 
                 <div class="division-row division-row--soon reveal">
+                    <div class="division-row__media">
+                        <img src="assets/miyabi-poster.jpg" alt="Miyabi — Japanese Wagyu Yakiniku, coming soon" loading="lazy" decoding="async" />
+                    </div>
                     <div class="division-row__body">
                         <h3 class="division-row__title"><span data-i18n="pillar4_title">Хүнс үйлдвэрлэл</span> <span class="division-row__badge" data-i18n="pillar4_badge">ТУН УДАХГҮЙ</span></h3>
                         <p class="division-row__desc" data-i18n="pillar4_p">Олон улсын стандартад нийцсэн өндөр чанартай хүнсний бүтээгдэхүүн — Wagyu beef стейк зэрэг тансаг сонголтууд.</p>
@@ -706,13 +720,13 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=54"></script>
-    <script src="js/translations.js?v=54"></script>
-    <script src="js/sanity-client.js?v=54"></script>
-    <script src="js/home-news.js?v=54"></script>
-    <script src="js/main.js?v=54"></script>
-    <script src="js/edit-mode.js?v=54"></script>
-    <script src="js/v2.js?v=54"></script>
+    <script src="js/components.js?v=66"></script>
+    <script src="js/translations.js?v=66"></script>
+    <script src="js/sanity-client.js?v=66"></script>
+    <script src="js/home-news.js?v=66"></script>
+    <script src="js/main.js?v=66"></script>
+    <script src="js/edit-mode.js?v=66"></script>
+    <script src="js/v2.js?v=66"></script>
 </body>
 
 </html>
