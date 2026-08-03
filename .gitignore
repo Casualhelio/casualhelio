@@ -82,3 +82,11 @@ countries.geo.json
 
 # ─── Sanity Studio runtime artifacts ──────────
 sanity-studio/.sanity/
+
+# local editing server backups (tools/edit-server.js)
+tools/backups/
+
+# On-page text editor — kept local only, never published
+js/edit-mode.js
+edit.html
+tools/
