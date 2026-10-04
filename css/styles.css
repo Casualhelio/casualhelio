@@ -2815,7 +2815,7 @@ footer {
 
 .calc-tab-btn.active {
     background: var(--gold);
-    color: var(--white);
+    color: var(--primary-dark); /* white on gold is 2.3:1; this is 5.8:1 */
     border-color: var(--gold);
 }
 

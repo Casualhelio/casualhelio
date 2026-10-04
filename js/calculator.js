@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.setAttribute('aria-pressed', String(isActive));
             if (isActive) {
                 btn.style.background = 'var(--gold)';
-                btn.style.color = 'var(--primary)';
+                btn.style.color = 'var(--primary-dark)';
                 btn.style.borderColor = 'var(--gold)';
             } else {
                 btn.style.background = 'transparent';
@@ -309,8 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     tr.innerHTML = `
                         <td style="padding:15px 10px;">${y}</td>
                         <td style="padding:15px 10px; text-align:right;">${formatResult(annualRent)}</td>
-                        <td style="padding:15px 10px; text-align:right; color:var(--gold);">${formatResult(yearInterest)}</td>
-                        <td style="padding:15px 10px; text-align:right; color:#E53935;">-${formatResult(yearTax)}</td>
+                        <td style="padding:15px 10px; text-align:right; color:var(--gold-light);">${formatResult(yearInterest)}</td>
+                        <td style="padding:15px 10px; text-align:right; color:#F4A6A6;">-${formatResult(yearTax)}</td>
                         <td style="padding:15px 10px; text-align:right; font-weight:700;">${formatResult(currentYearEndBalance)}</td>`;
                     tableBody.appendChild(tr);
                 }
@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'padding:8px 18px', 'border-radius:100px',
                     `border:1.5px solid ${isActive ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
                     `background:${isActive ? 'var(--gold)' : 'transparent'}`,
-                    `color:${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.8)'}`,
+                    `color:${isActive ? 'var(--primary-dark)' : 'rgba(255,255,255,0.8)'}`,
                     'font-weight:700', 'font-size:14px', 'cursor:pointer',
                     'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'padding:6px 14px', 'border-radius:100px',
                     `border:1.5px solid ${isActive ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
                     `background:${isActive ? 'var(--gold)' : 'transparent'}`,
-                    `color:${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.8)'}`,
+                    `color:${isActive ? 'var(--primary-dark)' : 'rgba(255,255,255,0.8)'}`,
                     'font-weight:700', 'font-size:13px', 'cursor:pointer',
                     'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
@@ -552,8 +552,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.innerHTML = `
                     <td style="padding:14px 10px;font-weight:700;">${r.year}</td>
                     <td style="padding:14px 10px;text-align:right;color:rgba(255,255,255,0.7);">${finFmt(r.principal)}</td>
-                    <td style="padding:14px 10px;text-align:right;color:var(--gold);">${finFmt(r.grossInterest)}</td>
-                    <td style="padding:14px 10px;text-align:right;color:#EF9A9A;">-${finFmt(r.tax)}</td>
+                    <td style="padding:14px 10px;text-align:right;color:var(--gold-light);">${finFmt(r.grossInterest)}</td>
+                    <td style="padding:14px 10px;text-align:right;color:#F4A6A6;">-${finFmt(r.tax)}</td>
                     <td style="padding:14px 10px;text-align:right;font-weight:700;">${finFmt(r.balance)}</td>`;
                 finTableBody.appendChild(tr);
             });

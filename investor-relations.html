@@ -168,7 +168,7 @@
     <!-- UNIFIED CALCULATOR -->
     <section class="section" id="calculator" style="background:var(--primary); color:var(--white);">
         <div class="section-inner">
-            <div class="section-tag reveal" style="color:var(--gold); border-color:var(--gold);" data-i18n="calc_tag">
+            <div class="section-tag reveal" style="color:var(--gold-light); border-color:var(--gold);" data-i18n="calc_tag">
                 Compounding Returns</div>
             <h2 class="section-title reveal" style="color:var(--white);" data-i18n="calc_title">Investment Calculator
             </h2>
@@ -204,7 +204,7 @@
                     <div
                         style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:40px;">
                         <h3
-                            style="font-size:20px; font-weight:700; margin-bottom:30px; color:var(--gold); display:flex; align-items:center; gap:10px;">
+                            style="font-size:20px; font-weight:700; margin-bottom:30px; color:var(--gold-light); display:flex; align-items:center; gap:10px;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -222,7 +222,7 @@
                                     data-i18n-ph="calc_amount_ph"
                                     style="width:100%; background:transparent; border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:24px; font-weight:700; padding:16px 60px 16px 20px; border-radius:8px; outline:none; transition:border-color 0.3s; box-sizing:border-box; font-family:inherit;" />
                                 <span id="currencySymbol"
-                                    style="position:absolute; right:20px; font-size:18px; color:var(--gold); font-weight:700;">MNT</span>
+                                    style="position:absolute; right:20px; font-size:18px; color:var(--gold-light); font-weight:700;">MNT</span>
                             </div>
                             <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;" id="currencySwitcher">
                             </div>
@@ -237,14 +237,14 @@
                                 <label for="investYears"
                                     style="display:block; font-size:14px; font-weight:600; color:rgba(255,255,255,0.8);"
                                     data-i18n="calc_years_label">Investment Horizon</label>
-                                <div style="font-size:20px; font-weight:700; color:var(--gold);"><span
+                                <div style="font-size:20px; font-weight:700; color:var(--gold-light);"><span
                                         id="yearValueDisplay">5</span> <span style="font-size:14px;"
                                         data-i18n="calc_years_unit">Years</span></div>
                             </div>
                             <input type="range" id="investYears" min="1" max="10" value="5"
                                 style="width:100%; -webkit-appearance:none; background:rgba(255,255,255,0.2); height:6px; border-radius:3px; outline:none;" />
                             <div
-                                style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.5); margin-top:10px;">
+                                style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.7); margin-top:10px;">
                                 <span data-i18n="calc_1_year">1 Year</span>
                                 <span data-i18n="calc_10_years">10 Years</span>
                             </div>
@@ -256,17 +256,17 @@
                             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="calc_prop_yield">Property Yield</span>
-                                <span id="lblPropYield" style="font-weight:700; color:var(--gold);">Loading...</span>
+                                <span id="lblPropYield" style="font-weight:700; color:var(--gold-light);">Loading...</span>
                             </div>
                             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="calc_nbfi_interest">Non-Banking Fin. Interest</span>
-                                <span id="lblNbInterest" style="font-weight:700; color:var(--gold);">Loading...</span>
+                                <span id="lblNbInterest" style="font-weight:700; color:var(--gold-light);">Loading...</span>
                             </div>
                             <div style="display:flex; justify-content:space-between;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="calc_tax_rate">Interest Tax Rate</span>
-                                <span id="lblTaxRate" style="font-weight:700; color:var(--gold);">Loading...</span>
+                                <span id="lblTaxRate" style="font-weight:700; color:var(--gold-light);">Loading...</span>
                             </div>
                         </div>
                     </div>
@@ -274,12 +274,12 @@
                     <!-- Calculator Results -->
                     <div style="display:flex; flex-direction:column;">
                         <div
-                            style="background:var(--gold); color:var(--primary); padding:40px; border-radius:12px 12px 0 0; text-align:center;">
-                            <h4 style="font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; opacity:0.9;"
+                            style="background:var(--gold); color:var(--primary-dark); padding:40px; border-radius:12px 12px 0 0; text-align:center;">
+                            <h4 style="font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;"
                                 data-i18n="calc_total_return">Total Expected Return</h4>
                             <div style="font-size:42px; font-weight:800; margin-bottom:10px; letter-spacing:-1px;"
                                 id="resTotalReturn">Loading...</div>
-                            <div style="font-size:15px; font-weight:600; opacity:0.8;"><span
+                            <div style="font-size:15px; font-weight:600;"><span
                                     data-i18n="calc_after">After</span> <span id="resYearCount">5</span> <span
                                     data-i18n="calc_years_post">Years (Post-Tax)</span></div>
                         </div>
@@ -347,7 +347,7 @@
                     <div
                         style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:40px;">
                         <h3
-                            style="font-size:20px; font-weight:700; margin-bottom:30px; color:var(--gold); display:flex; align-items:center; gap:10px;">
+                            style="font-size:20px; font-weight:700; margin-bottom:30px; color:var(--gold-light); display:flex; align-items:center; gap:10px;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <line x1="12" y1="1" x2="12" y2="23"></line>
@@ -366,7 +366,7 @@
                                     data-i18n-ph="calc_amount_ph"
                                     style="width:100%; background:transparent; border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:24px; font-weight:700; padding:16px 70px 16px 20px; border-radius:8px; outline:none; transition:border-color 0.3s; box-sizing:border-box; font-family:inherit;" />
                                 <span id="finCurrencySymbol"
-                                    style="position:absolute; right:20px; font-size:18px; color:var(--gold); font-weight:700;">MNT</span>
+                                    style="position:absolute; right:20px; font-size:18px; color:var(--gold-light); font-weight:700;">MNT</span>
                             </div>
                             <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;"
                                 id="finCurrencySwitcher"></div>
@@ -390,14 +390,14 @@
                                 <label for="finYears"
                                     style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.8);"
                                     data-i18n="fin_years_label">Investment Horizon</label>
-                                <div style="font-size:20px; font-weight:700; color:var(--gold);"><span
+                                <div style="font-size:20px; font-weight:700; color:var(--gold-light);"><span
                                         id="finYearDisplay">5</span> <span style="font-size:14px;"
                                         data-i18n="calc_years_unit">Years</span></div>
                             </div>
                             <input type="range" id="finYears" min="1" max="10" value="5"
                                 style="width:100%; -webkit-appearance:none; appearance:none; background:rgba(255,255,255,0.2); height:6px; border-radius:3px; outline:none;" />
                             <div
-                                style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.5); margin-top:10px;">
+                                style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.7); margin-top:10px;">
                                 <span data-i18n="calc_1_year">1 Year</span><span data-i18n="calc_10_years">10
                                     Years</span>
                             </div>
@@ -409,12 +409,12 @@
                             <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="fin_interest_rate">Interest Rate</span>
-                                <span id="finLblRate" style="font-weight:700; color:var(--gold);">13.0%</span>
+                                <span id="finLblRate" style="font-weight:700; color:var(--gold-light);">13.0%</span>
                             </div>
                             <div style="display:flex; justify-content:space-between;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="fin_withholding_tax">Withholding Tax</span>
-                                <span id="finLblTax" style="font-weight:700; color:var(--gold);">20%</span>
+                                <span id="finLblTax" style="font-weight:700; color:var(--gold-light);">20%</span>
                             </div>
                         </div>
                     </div>
@@ -422,12 +422,12 @@
                     <!-- Finance Calc Results -->
                     <div style="display:flex; flex-direction:column;">
                         <div
-                            style="background:var(--gold); color:var(--primary); padding:40px; border-radius:12px 12px 0 0; text-align:center;">
-                            <h4 style="font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; opacity:0.9;"
+                            style="background:var(--gold); color:var(--primary-dark); padding:40px; border-radius:12px 12px 0 0; text-align:center;">
+                            <h4 style="font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;"
                                 data-i18n="fin_total_return">Total Expected Return</h4>
                             <div style="font-size:42px; font-weight:800; margin-bottom:10px; letter-spacing:-1px;"
                                 id="finResTotalReturn">Loading...</div>
-                            <div style="font-size:15px; font-weight:600; opacity:0.8;"><span
+                            <div style="font-size:15px; font-weight:600;"><span
                                     data-i18n="calc_after">After</span> <span id="finResYearCount">5</span> <span
                                     data-i18n="calc_years_post">Years (Post-Tax)</span></div>
                         </div>
@@ -443,7 +443,7 @@
                                 <div style="text-align:right;">
                                     <div style="font-size:13px; color:var(--text-light); margin-bottom:4px;"
                                         data-i18n="fin_tax_paid">Tax Paid</div>
-                                    <div style="font-weight:700; color:#E53935; font-size:18px;" id="finResTax">0</div>
+                                    <div style="font-weight:700; color:#C62828; font-size:18px;" id="finResTax">0</div>
                                 </div>
                             </div>
                             <div
