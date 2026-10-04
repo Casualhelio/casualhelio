@@ -48,22 +48,23 @@
             gap: 15px;
             align-items: center;
             justify-content: center;
-            color: var(--gold);
+            color: var(--gold-light); /* 4.65:1 at this opacity on the navy hero */
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--gold);
+            color: var(--gold-light);
             text-decoration: none;
+            text-underline-offset: 4px;
             font-weight: 600;
             margin-bottom: 28px;
-            transition: opacity 0.3s;
         }
 
+        /* underline rather than fade: fading the gold drops it below 4.5:1 */
         .back-link:hover {
-            opacity: 0.8;
+            text-decoration: underline;
         }
 
         /* ── SLIDER ── */

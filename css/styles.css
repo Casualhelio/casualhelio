@@ -204,19 +204,20 @@ ul {
     z-index: 2;
 }
 
+/* Small text on the navy bar: --gold-light (5.8:1), since the brand gold is 4.46:1 there */
 .nav-links a:hover {
-    color: var(--gold);
+    color: var(--gold-light);
 }
 
 .nav-links a.active {
-    color: var(--gold);
+    color: var(--gold-light);
     background: rgba(36, 69, 86, 0.05);
     /* very subtle background for active text */
 }
 
 .nav-cta {
     background: var(--gold) !important;
-    color: #244556 !important;
+    color: var(--primary-dark) !important; /* 5.77:1 on gold; --primary was 4.46:1 */
     padding: 10px 22px !important;
     border-radius: var(--radius-sm) !important;
     font-weight: 600 !important;
@@ -1520,7 +1521,7 @@ footer {
 }
 
 .page-hero--dark .breadcrumb a {
-    color: var(--gold);
+    color: var(--gold-light);
 }
 
 .page-hero--dark .breadcrumb span {
@@ -1543,7 +1544,7 @@ footer {
 }
 
 .breadcrumb a {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .breadcrumb span {
@@ -1834,8 +1835,8 @@ footer {
 }
 
 .lang-btn:hover {
-    color: var(--gold);
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--gold-light);
+    background: rgba(255, 255, 255, 0.06); /* lighter tint keeps the gold at 4.87:1 */
 }
 
 .lang-btn:active {
