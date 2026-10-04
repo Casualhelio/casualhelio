@@ -9,13 +9,21 @@ document.addEventListener('languageChanged', (e) => {
     initArticle(e.detail.lang);
 });
 
-function isValidSanityId(id) {
-    return /^[a-zA-Z0-9_-]+$/.test(id);
+/** Replace the loader with a translated message and a link back to the news list. */
+function showArticleMessage(loader, key, fallback) {
+    if (!loader) return;
+    const text = document.createElement('p');
+    text.textContent = window.i18n(key, fallback);
+    const back = document.createElement('a');
+    back.href = 'news.html';
+    back.textContent = window.i18n('art_back', '← Back to News');
+    back.style.cssText = 'display:inline-block;margin-top:24px;color:var(--primary);text-decoration:underline;';
+    loader.replaceChildren(text, back);
 }
 
 async function initArticle(forceLang = null) {
     const urlParams = new URLSearchParams(window.location.search);
-    const articleId = urlParams.get('id');
+    const articleId = window.SanityAPI.safeDocId(urlParams.get('id') || '');
 
     const loader = document.getElementById('article-loader');
     const container = document.getElementById('article-container');
@@ -23,8 +31,8 @@ async function initArticle(forceLang = null) {
     const heroDate = document.getElementById('article-date');
     const bodyContent = document.getElementById('article-body');
 
-    if (!articleId || !isValidSanityId(articleId)) {
-        if (loader) loader.innerHTML = "Article not found. <br><br> <a href='news.html' style='color:var(--primary);text-decoration:underline;'>Return to News</a>";
+    if (!articleId) {
+        showArticleMessage(loader, 'art_not_found', 'This article could not be found. It may have been removed.');
         return;
     }
 
@@ -35,7 +43,8 @@ async function initArticle(forceLang = null) {
     if (container) container.style.display = 'none';
 
     try {
-        const query = `*[_type == "news" && _id == "${articleId}"][0] {
+        // The id is passed as a GROQ parameter, never spliced into the query text
+        const query = `*[_type == "news" && _id == $id][0] {
             _id,
             title_en, title_mn, title_ja,
             date,
@@ -44,36 +53,32 @@ async function initArticle(forceLang = null) {
             content_en, content_mn, content_ja
         }`;
 
-        const article = await window.SanityAPI.fetch(query);
+        const article = await window.SanityAPI.fetch(query, { id: articleId });
 
         if (loadId !== _articleLoadId) return;
 
         if (!article) {
-            if (loader) loader.innerHTML = "Article not found or has been removed. <br><br> <a href='news.html' style='color:var(--primary);text-decoration:underline;'>Return to News</a>";
+            showArticleMessage(loader, 'art_not_found', 'This article could not be found. It may have been removed.');
             return;
         }
 
-        const title = getLocalizedField(article, 'title', currentLang);
-        const contentBlocks = getLocalizedField(article, 'content', currentLang);
-
-        const dateObj = article.date ? new Date(article.date) : new Date();
-        const formattedDate = dateObj.toLocaleDateString(
-            currentLang === 'mn' ? 'mn-MN' : currentLang === 'ja' ? 'ja-JP' : 'en-US',
-            { year: 'numeric', month: 'long', day: 'numeric' }
-        );
+        const api = window.SanityAPI;
+        const title = api.localizedField(article, 'title', currentLang);
+        const contentBlocks = api.localizedField(article, 'content', currentLang);
+        const formattedDate = api.formatNewsDate(article.date, currentLang);
 
         if (heroTitle) heroTitle.textContent = title;
-        if (heroDate) heroDate.innerHTML = `&#128197; ${formattedDate}`;
+        if (heroDate) heroDate.innerHTML = formattedDate ? `&#128197; ${formattedDate}` : '';
 
         // Build slider images: cover image + gallery
         const slides = [];
-        const coverUrl = window.SanityAPI.urlFor(article.image);
+        const coverUrl = api.urlFor(article.image);
         if (coverUrl) {
             slides.push({ url: coverUrl, caption: '' });
         }
         if (Array.isArray(article.gallery)) {
             article.gallery.forEach(img => {
-                const url = window.SanityAPI.urlFor(img);
+                const url = api.urlFor(img);
                 if (url) {
                     slides.push({ url, caption: img.caption || '' });
                 }
@@ -83,7 +88,14 @@ async function initArticle(forceLang = null) {
         renderSlider(slides);
 
         if (bodyContent) {
-            bodyContent.innerHTML = window.SanityAPI.blocksToHTML(contentBlocks, currentLang) || "<p>No content available.</p>";
+            const html = api.blocksToHTML(contentBlocks, currentLang);
+            if (html) {
+                bodyContent.innerHTML = html;
+            } else {
+                const empty = document.createElement('p');
+                empty.textContent = window.i18n('art_no_content', 'This article has no text yet.');
+                bodyContent.replaceChildren(empty);
+            }
         }
 
         document.title = `${title} - Nest Group`;
@@ -93,14 +105,8 @@ async function initArticle(forceLang = null) {
 
     } catch (e) {
         if (loadId !== _articleLoadId) return;
-        if (loader) loader.innerHTML = "Failed to load article. Please check your connection.";
+        showArticleMessage(loader, 'art_error', "The article couldn't be loaded. Please check your connection and try again.");
     }
-}
-
-function getLocalizedField(article, fieldName, lang) {
-    if (article[`${fieldName}_${lang}`]) return article[`${fieldName}_${lang}`];
-    if (article[`${fieldName}_en`]) return article[`${fieldName}_en`];
-    return article[`${fieldName}_mn`] || article[`${fieldName}_ja`] || '';
 }
 
 function renderSlider(slides) {
@@ -122,14 +128,13 @@ function renderSlider(slides) {
     slides.forEach((s, i) => {
         const slide = document.createElement('div');
         slide.className = 'article-slide';
-        const captionHtml = s.caption ? `<div class="article-slide-caption">${escapeHTML(s.caption)}</div>` : '';
         // Build the image with createElement so the URL can never be interpreted as HTML/attribute syntax
         const img = document.createElement('img');
         img.src = s.url;
         img.alt = '';
         img.loading = i === 0 ? 'eager' : 'lazy';
         slide.appendChild(img);
-        if (captionHtml) {
+        if (s.caption) {
             const cap = document.createElement('div');
             cap.className = 'article-slide-caption';
             cap.textContent = s.caption;
@@ -139,7 +144,8 @@ function renderSlider(slides) {
 
         const dot = document.createElement('button');
         dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.type = 'button';
+        dot.setAttribute('aria-label', window.i18n('art_goto_img', 'Go to image {n}').replace('{n}', i + 1));
         dot.addEventListener('click', () => goToSlide(i));
         dotsContainer.appendChild(dot);
     });
@@ -222,7 +228,4 @@ function sliderKeyHandler(e) {
     else if (e.key === 'ArrowRight') goToSlide(_sliderState.index + 1);
 }
 
-function escapeHTML(str) {
-    if (!str) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+

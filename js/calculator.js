@@ -14,11 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabBtns = document.querySelectorAll('.calc-tab-btn');
     const paneProperty = document.getElementById('calcPaneProperty');
     const paneFinance = document.getElementById('calcPaneFinance');
-    const calcDescEl = document.getElementById('calcDescText');
 
     if (!tabBtns.length) return; // not on the right page
 
-    let activeTab = 'property'; // 'property' | 'finance'
     let propInitDone = false;
     let finInitDone = false;
 
@@ -55,11 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------------------------------------------
     // I18N HELPERS for strings built in JS
     // ---------------------------------------------------------------
-    function tr(key, fallback) {
-        const lang = document.documentElement.lang || 'en';
-        const t = window.translations && window.translations[lang];
-        return (t && t[key]) || fallback;
-    }
+    const tr = (key, fallback) => (window.i18n ? window.i18n(key, fallback) : fallback);
 
     function dateLocale() {
         const lang = document.documentElement.lang;
@@ -97,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadInvestmentRates();
 
     function switchTab(tab) {
-        activeTab = tab;
         tabBtns.forEach(btn => {
             const isActive = btn.dataset.tab === tab;
             btn.classList.toggle('active', isActive);
@@ -105,23 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (paneProperty) paneProperty.style.display = (tab === 'property') ? 'block' : 'none';
         if (paneFinance) paneFinance.style.display = (tab === 'finance') ? 'block' : 'none';
-
-        // Update description text
-        if (calcDescEl) {
-            if (tab === 'property') {
-                calcDescEl.setAttribute('data-i18n', 'calc_desc');
-                calcDescEl.textContent = calcDescEl.dataset.propDesc || calcDescEl.textContent;
-            } else {
-                calcDescEl.setAttribute('data-i18n', 'fin_desc');
-                calcDescEl.textContent = calcDescEl.dataset.finDesc || calcDescEl.textContent;
-            }
-            // Re-apply translations if available
-            if (typeof window.applyTranslationsAndTwemoji === 'function') {
-                window.applyTranslationsAndTwemoji(localStorage.getItem('nest-lang') || 'en');
-            } else if (window.applyTranslations) {
-                window.applyTranslations(localStorage.getItem('nest-lang') || 'en');
-            }
-        }
 
         // Lazy init
         if (tab === 'property' && !propInitDone) { propInitDone = true; setTimeout(initPropertyCalc, 50); }
@@ -155,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const tableBody = document.getElementById('yearlyTableBody');
 
         let currentCurrency = 'MNT';
-        let currentLang = document.documentElement.lang || 'en';
 
         const state = RATES; // shared with the finance tab
 
@@ -279,140 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return `${formatted} ${currentCurrency === 'MNT' ? 'MNT' : `${currentCurrency} (${sym})`}`;
         }
 
-        // --- Properties ---
-        async function fetchPropertiesFromSanity() {
-            const container = document.getElementById('dynamicPropertiesContainer');
-            if (!container) return;
-            try {
-                if (!window.SanityAPI || !window.SanityAPI.fetch) { renderPropertiesFallback(container); return; }
-                const query = '*[_type == "property" && isAvailable == true] | order(_createdAt desc)';
-                const fetchPromise = window.SanityAPI.fetch(query);
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Sanity fetch timeout')), 5000));
-                const properties = await Promise.race([fetchPromise, timeoutPromise]);
-                const t = window.translations && window.translations[currentLang] ? window.translations[currentLang] : {};
-                const fallbackProperties = [{
-                    title: t['ex_prop_title'] || "PJ Yado NP18-17",
-                    address: t['ex_prop_address'] || "41-35 second 40000 Chingeltei district, Ulaanbaatar",
-                    price: 315000000, layout: "1DK", totalArea: "55 m²", buildYear: 1980, targetRent: 1837000,
-                    coverImage: null, isAvailable: true,
-                    description: t['ex_prop_desc'] || "This renovated 1DK property in the heart of Chingeltei district offers stable rental yields."
-                }];
-                const propertiesToRender = (!properties || properties.length === 0) ? fallbackProperties : properties;
-                renderProperties(container, propertiesToRender, t);
-            } catch (err) {
-                // Error fetching properties — render fallback
-                renderPropertiesFallback(container);
-            }
-        }
-
-        function buildPropertyPriceDisplay(mntPrice) {
-            const mntFormatted = new Intl.NumberFormat('en-US').format(mntPrice);
-            let secondaryLine = '';
-            if (currentCurrency !== 'MNT' && window.ExchangeRate) {
-                const converted = window.ExchangeRate.convert(mntPrice, currentCurrency);
-                const formatted = window.ExchangeRate.format(converted, currentCurrency);
-                const sym = window.ExchangeRate.getSymbol(currentCurrency);
-                secondaryLine = `<div style="font-size:15px; font-weight:600; color:var(--gold); margin-top:2px;">≈ ${sym} ${formatted} ${currentCurrency}</div>`;
-            }
-            return `<div style="font-size:28px; font-weight:700; color:var(--primary);">${mntFormatted} <span style="font-size:16px;">MNT</span></div>${secondaryLine}`;
-        }
-
-        function renderProperties(container, propertiesToRender, t) {
-            const esc = window.SanityAPI && window.SanityAPI.escapeHTML ? window.SanityAPI.escapeHTML : (s) => String(s);
-            const availableText = t['invest_available'] || 'Available';
-            const valueText = t['invest_prop_price'] || 'Property Value';
-            const layoutText = t['invest_layout'] || 'Layout';
-            const areaText = t['invest_area'] || 'Total Area';
-            const builtText = t['invest_built'] || 'Built';
-            const targetRentText = t['invest_target_rent'] || 'Target Rent';
-            const simulateBtnText = t['invest_simulate_btn'] || 'Calculate Returns ->';
-            const formatNum = (num) => new Intl.NumberFormat('en-US').format(num);
-
-            let html = '';
-            propertiesToRender.forEach(prop => {
-                const imageUrl = prop.coverImage
-                    ? (window.SanityAPI && window.SanityAPI.urlFor ? window.SanityAPI.urlFor(prop.coverImage) : 'assets/renovations/p1-after.jpg')
-                    : 'assets/renovations/p1-after.jpg';
-                // CMS values land inside attributes/markup — force numerics to numbers
-                const price = Number(prop.price) || 0;
-                const buildYear = Number(prop.buildYear) || '';
-                const rentFormatted = formatNum(Number(prop.targetRent) || 0);
-                const desc = document.createElement('div');
-                desc.innerText = prop.description || '';
-
-                html += `
-                <div class="card property-card" data-price="${price}"
-                    style="display:flex; flex-direction:column; background:var(--white); border-radius:12px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.06); cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; margin-bottom: 20px;">
-                    <div style="width:100%; height:300px; background:url('${imageUrl}') center/cover no-repeat; background-color:var(--primary); position:relative;">
-                        <div style="position:absolute; top:20px; right:20px; background:var(--gold); color:var(--primary); font-weight:700; padding:8px 16px; border-radius:30px; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-                            ${availableText}</div>
-                    </div>
-                    <div style="padding:40px;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 24px;">
-                            <div>
-                                <h3 style="font-size:24px; font-weight:700; color:var(--primary); margin-bottom:8px;">${esc(prop.title)}</h3>
-                                <p style="color:var(--text-light); font-size:15px; display:flex; align-items:center; gap:6px;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                    ${esc(prop.address)}
-                                </p>
-                            </div>
-                            <div style="text-align:right;">
-                                <div style="font-size:14px; color:var(--text-light); margin-bottom:4px;">${valueText}</div>
-                                <div class="prop-price-display">${buildPropertyPriceDisplay(price)}</div>
-                            </div>
-                        </div>
-                        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; margin-bottom:30px; padding:24px; background:var(--off-white); border-radius:8px;">
-                            <div><div style="font-size:13px; color:var(--text-light); margin-bottom:4px;">${layoutText}</div><div style="font-weight:700; color:var(--primary); font-size:16px;">${esc(prop.layout)}</div></div>
-                            <div><div style="font-size:13px; color:var(--text-light); margin-bottom:4px;">${areaText}</div><div style="font-weight:700; color:var(--primary); font-size:16px;">${esc(prop.totalArea)}</div></div>
-                            <div><div style="font-size:13px; color:var(--text-light); margin-bottom:4px;">${builtText}</div><div style="font-weight:700; color:var(--primary); font-size:16px;">${buildYear}</div></div>
-                            <div><div style="font-size:13px; color:var(--text-light); margin-bottom:4px;">${targetRentText}</div><div style="font-weight:700; color:var(--primary); font-size:16px;">${rentFormatted} MNT/mo</div></div>
-                        </div>
-                        <p style="color:var(--text-light); line-height:1.7; font-size:15px; margin-bottom: 24px;">${desc.innerHTML}</p>
-                        <div style="text-align:right;">
-                            <button class="select-property-btn" style="background:var(--primary); color:var(--gold); font-weight:700; padding:12px 24px; border:none; border-radius:8px; font-size:15px; cursor:pointer; transition: opacity 0.3s; font-family:inherit;">
-                                ${simulateBtnText}
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
-            });
-
-            container.innerHTML = html;
-
-            const cards = container.querySelectorAll('.property-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-5px)'; card.style.boxShadow = '0 20px 50px rgba(0,0,0,0.1)'; });
-                card.addEventListener('mouseleave', () => { card.style.transform = 'none'; card.style.boxShadow = '0 15px 40px rgba(0,0,0,0.06)'; });
-                card.addEventListener('click', () => {
-                    if (amountInput) {
-                        const rawPrice = parseInt(card.dataset.price, 10);
-                        _internalMntValue = rawPrice;
-                        const displayAmount = convertFromMnt(rawPrice);
-                        amountInput.value = formatAmount(displayAmount);
-                        calculateReturns();
-                        // Switch to property tab and scroll
-                        switchTab('property');
-                        const calcSection = document.getElementById('calculator');
-                        if (calcSection) calcSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-        }
-
-        function renderPropertiesFallback(container) {
-            const t = window.translations && window.translations[currentLang] ? window.translations[currentLang] : {};
-            const prop = {
-                title: t['ex_prop_title'] || "PJ Yado NP18-17",
-                address: t['ex_prop_address'] || "41-35 second 40000 Chingeltei district, Ulaanbaatar",
-                price: 315000000, layout: "1DK", totalArea: "55 m²", buildYear: 1980, targetRent: 1837000,
-                description: t['ex_prop_desc'] || "This renovated 1DK property in the heart of Chingeltei district offers stable rental yields."
-            };
-            renderProperties(container, [prop], t);
-        }
-
         // --- Assumptions Labels ---
         function updateAssumptionsLabels(suffix = '') {
             if (lblPropYield) lblPropYield.textContent = `${state.yieldPercent.toFixed(1)}%${suffix}`;
@@ -486,12 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (resRoi) resRoi.textContent = `${totalROI.toFixed(1)}%`;
         }
 
-        // --- Language / Currency Sync ---
-        function updateLanguageCurrency() {
-            currentLang = document.documentElement.lang || 'en';
-            if (currentLang === 'ja' && currentCurrency === 'MNT') selectCurrency('JPY');
-        }
-
         // --- Event Listeners (property amount: edit raw while focused; format on blur — fixes USD/CNY/EUR typing) ---
         if (amountInput) {
             amountInput.addEventListener('focus', () => {
@@ -523,38 +358,16 @@ document.addEventListener('DOMContentLoaded', () => {
             yearsSlider.addEventListener('change', updateYearDisplays);
         }
 
-        // MutationObserver for lang changes
-        try {
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-                        currentLang = document.documentElement.lang || 'en';
-                        if (window.SanityAPI) fetchPropertiesFromSanity();
-                        calculateReturns();
-                    }
-                });
-            });
-            observer.observe(document.documentElement, { attributes: true });
-        } catch (err) { }
-
         // --- Init ---
         if (amountInput) amountInput.value = formatAmount(convertFromMnt(_internalMntValue));
         buildCurrencySwitcher();
         if (window.ExchangeRate) {
             window.ExchangeRate.init().then(() => {
                 updateExchangeRateInfo();
-                const container = document.getElementById('dynamicPropertiesContainer');
-                if (container) {
-                    container.querySelectorAll('.property-card').forEach(card => {
-                        const priceDisplay = card.querySelector('.prop-price-display');
-                        if (priceDisplay) priceDisplay.innerHTML = buildPropertyPriceDisplay(parseInt(card.dataset.price, 10));
-                    });
-                }
                 calculateReturns();
             });
         }
         applySharedRates();
-        fetchPropertiesFromSanity();
 
         // Shared rates arrived from Sanity
         _propRecalc = applySharedRates;

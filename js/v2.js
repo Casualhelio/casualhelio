@@ -142,8 +142,8 @@
                 btn.innerHTML = paused ? ICON_PLAY : ICON_PAUSE;
                 // main.js re-applies the label from this key whenever the language changes
                 btn.dataset.i18nAria = paused ? 'video_bg_play' : 'video_bg_pause';
-                const t = window.translations && window.translations[document.documentElement.lang];
-                btn.setAttribute('aria-label', (t && t[btn.dataset.i18nAria]) || (paused ? 'Play background video' : 'Pause background video'));
+                const fallback = paused ? 'Play background video' : 'Pause background video';
+                btn.setAttribute('aria-label', window.i18n ? window.i18n(btn.dataset.i18nAria, fallback) : fallback);
             };
 
             btn.addEventListener('click', () => {
@@ -228,7 +228,8 @@
             closeBtn = document.createElement('button');
             closeBtn.type = 'button';
             closeBtn.className = 'v2-lightbox__close';
-            closeBtn.setAttribute('aria-label', 'Close');
+            closeBtn.setAttribute('aria-label', window.i18n ? window.i18n('lightbox_close', 'Close') : 'Close');
+            closeBtn.dataset.i18nAria = 'lightbox_close'; // follows language changes
             closeBtn.textContent = '×';
 
             inner.appendChild(boxImg);

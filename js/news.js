@@ -36,7 +36,7 @@ async function initNewsContent(forceLang = null) {
         if (loadId !== _newsLoadId) return;
 
         if (!articles || articles.length === 0) {
-            loader.innerHTML = "No news articles found.";
+            loader.textContent = window.i18n('news_empty', 'No news has been published yet.');
             return;
         }
 
@@ -60,51 +60,28 @@ async function initNewsContent(forceLang = null) {
 
     } catch (error) {
         if (loadId !== _newsLoadId) return;
-        loader.innerHTML = "Failed to load news articles. Please try again later.";
+        loader.textContent = window.i18n('news_error', "News couldn't be loaded. Please try again later.");
     }
 }
 
-function getLocalizedField(article, fieldName, lang) {
-    // Try requested language first, fallback to English, then whatever exists
-    if (article[`${fieldName}_${lang}`]) return article[`${fieldName}_${lang}`];
-    if (article[`${fieldName}_en`]) return article[`${fieldName}_en`];
-    return article[`${fieldName}_mn`] || article[`${fieldName}_ja`] || '';
+function readMoreLabel() {
+    return window.i18n('np_featured_link', 'Read Full Story →');
 }
 
-// Sanity ids are interpolated into hrefs — only allow plain id characters
-function safeArticleId(id) {
-    return /^[a-zA-Z0-9._-]+$/.test(String(id)) ? String(id) : '';
-}
-
-function formatNewsDate(dateStr, lang) {
-    const d = dateStr ? new Date(dateStr) : new Date();
-    const locale = lang === 'mn' ? 'mn-MN' : lang === 'ja' ? 'ja-JP' : 'en-US';
-    return d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-function getExcerpt(blocks) {
-    if (!blocks || !Array.isArray(blocks)) return '';
-    const firstParagraph = blocks.find(b => b.style === 'normal' || !b.style);
-    if (!firstParagraph || !firstParagraph.children) return '';
-
-    const text = firstParagraph.children.map(c => c.text).join(' ');
-    return text.length > 150 ? text.substring(0, 150) + '...' : text;
-}
-
-function readMoreLabel(lang) {
-    return (window.translations && window.translations[lang] && window.translations[lang].np_featured_link) || 'Read Full Story →';
+/** Date row, or nothing when the article has no date. */
+function dateRow(article, lang) {
+    const formatted = window.SanityAPI.formatNewsDate(article.date, lang);
+    return formatted ? `<div class="news-date">&#128197; <span>${formatted}</span></div>` : '';
 }
 
 function renderFeatured(article, container, lang) {
     if (!article) return;
-    const esc = window.SanityAPI && window.SanityAPI.escapeHTML ? window.SanityAPI.escapeHTML : (s) => s;
+    const api = window.SanityAPI;
 
-    const title = esc(getLocalizedField(article, 'title', lang));
-    const contentBlocks = getLocalizedField(article, 'content', lang);
-    const excerpt = esc(getExcerpt(contentBlocks));
-    const imageUrl = window.SanityAPI.urlFor(article.image);
-    const formattedDate = formatNewsDate(article.date, lang);
-    const articleId = safeArticleId(article._id);
+    const title = api.escapeHTML(api.localizedField(article, 'title', lang));
+    const excerpt = api.escapeHTML(api.newsExcerpt(api.localizedField(article, 'content', lang), 150));
+    const imageUrl = api.urlFor(article.image);
+    const articleId = api.safeDocId(article._id);
 
     container.innerHTML = `
         <div class="reveal" style="display:grid;grid-template-columns:2fr;gap:28px;margin-bottom:28px;">
@@ -112,10 +89,10 @@ function renderFeatured(article, container, lang) {
                  <div class="news-card-img" style="height:100%;min-height:320px;${imageUrl ? "background-image:url('" + imageUrl + "');" : ''} background-color:#f4f5f7; background-size:contain; background-position:center; background-repeat:no-repeat;">
                  </div>
                  <div class="news-card-body" style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center;">
-                     <div class="news-date">&#128197; <span>${formattedDate}</span></div>
+                     ${dateRow(article, lang)}
                      <h4 style="font-size:20px;margin-bottom:14px;">${title}</h4>
                      <p>${excerpt}</p>
-                     <a href="article.html?id=${encodeURIComponent(articleId)}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel(lang)}</a>
+                     <a href="article.html?id=${encodeURIComponent(articleId)}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                  </div>
             </div>
         </div>
@@ -128,23 +105,21 @@ function renderGrid(articles, container, lang) {
         return;
     }
 
-    const esc = window.SanityAPI && window.SanityAPI.escapeHTML ? window.SanityAPI.escapeHTML : (s) => s;
+    const api = window.SanityAPI;
     const html = articles.map(article => {
-        const title = esc(getLocalizedField(article, 'title', lang));
-        const contentBlocks = getLocalizedField(article, 'content', lang);
-        const excerpt = esc(getExcerpt(contentBlocks));
-        const imageUrl = window.SanityAPI.urlFor(article.image);
-        const formattedDate = formatNewsDate(article.date, lang);
-        const articleId = encodeURIComponent(safeArticleId(article._id));
+        const title = api.escapeHTML(api.localizedField(article, 'title', lang));
+        const excerpt = api.escapeHTML(api.newsExcerpt(api.localizedField(article, 'content', lang), 150));
+        const imageUrl = api.urlFor(article.image);
+        const articleId = encodeURIComponent(api.safeDocId(article._id));
 
         return `
             <div class="news-card reveal" style="cursor:pointer;" data-article-id="${articleId}">
                 <div class="news-card-img" style="${imageUrl ? "background-image:url('" + imageUrl + "');" : ''} background-color:#f4f5f7; background-size:contain; background-position:center; background-repeat:no-repeat;"></div>
                 <div class="news-card-body">
-                    <div class="news-date">&#128197; <span>${formattedDate}</span></div>
+                    ${dateRow(article, lang)}
                     <h4>${title}</h4>
                     <p>${excerpt}</p>
-                     <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel(lang)}</a>
+                     <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                 </div>
             </div>
         `;

@@ -152,6 +152,7 @@ function initBackToTop() {
     btn.className = 'back-to-top';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Back to top');
+    btn.dataset.i18nAria = 'back_to_top'; // translated by main.js applyTranslations
     btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>';
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     document.body.appendChild(btn);

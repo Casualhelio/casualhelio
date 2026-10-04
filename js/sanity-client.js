@@ -8,23 +8,23 @@ const SANITY_URL = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VER
 
 /**
  * Fetch data from Sanity using a GROQ query.
+ * Throws on network/HTTP failure so callers can tell "failed" apart from "empty".
  * @param {string} query - The GROQ query to execute.
+ * @param {Object} [params] - GROQ parameters, e.g. { id } for `$id` in the query.
  * @returns {Promise<any>} - The queried data.
  */
-async function fetchSanity(query) {
-    const encodedQuery = encodeURIComponent(query);
-    const url = `${SANITY_URL}?query=${encodedQuery}`;
+async function fetchSanity(query, params = {}) {
+    let url = `${SANITY_URL}?query=${encodeURIComponent(query)}`;
+    Object.keys(params).forEach(name => {
+        url += `&${encodeURIComponent('$' + name)}=${encodeURIComponent(JSON.stringify(params[name]))}`;
+    });
 
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Sanity fetch failed: ${response.statusText}`);
-        }
-        const json = await response.json();
-        return json.result;
-    } catch (error) {
-        return null;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Sanity fetch failed: ${response.status} ${response.statusText}`);
     }
+    const json = await response.json();
+    return json.result;
 }
 
 /**
@@ -69,10 +69,46 @@ function sanityBlocksToHTML(blocks, lang) {
     }).join("");
 }
 
-// Export functions to window so main.js/news.js can use them
+// ---------------------------------------------------------------
+// News helpers shared by news.js, home-news.js and article.js
+// ---------------------------------------------------------------
+
+/** field_<lang>, falling back to English, then any language that has it. */
+function localizedField(doc, fieldName, lang) {
+    return doc[`${fieldName}_${lang}`] || doc[`${fieldName}_en`] || doc[`${fieldName}_mn`] || doc[`${fieldName}_ja`] || '';
+}
+
+/** Long-form date in the page language; '' when the article has no date. */
+function formatNewsDate(dateStr, lang) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    if (isNaN(d)) return '';
+    const locale = lang === 'mn' ? 'mn-MN' : lang === 'ja' ? 'ja-JP' : 'en-US';
+    return d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+/** Plain-text excerpt of the first paragraph, cut at maxChars characters. */
+function newsExcerpt(blocks, maxChars) {
+    if (!Array.isArray(blocks)) return '';
+    const first = blocks.find(b => b.style === 'normal' || !b.style);
+    if (!first || !first.children) return '';
+    const chars = Array.from(first.children.map(c => c.text).join(' ')); // code points, so CJK/emoji never split
+    return chars.length > maxChars ? chars.slice(0, maxChars).join('') + '…' : chars.join('');
+}
+
+// Sanity ids end up in hrefs — only allow plain id characters
+function safeDocId(id) {
+    return /^[A-Za-z0-9._-]+$/.test(String(id)) ? String(id) : '';
+}
+
+// Export functions to window so the page scripts can use them
 window.SanityAPI = {
     fetch: fetchSanity,
     urlFor: urlForSanityImage,
     blocksToHTML: sanityBlocksToHTML,
-    escapeHTML: escapeHTML
+    escapeHTML: escapeHTML,
+    localizedField: localizedField,
+    formatNewsDate: formatNewsDate,
+    newsExcerpt: newsExcerpt,
+    safeDocId: safeDocId
 };

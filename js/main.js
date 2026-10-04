@@ -54,7 +54,7 @@ function applyTranslations(lang) {
         if (t[key] !== undefined) el.textContent = t[key];
     });
 
-    // Apply to data-i18n-html (innerHTML â€” for bold/italic/br)
+    // Apply to data-i18n-html (innerHTML — for bold/italic/br)
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
         const key = el.dataset.i18nHtml;
         if (t[key] !== undefined) {
@@ -93,35 +93,32 @@ function applyTranslations(lang) {
 
 window.applyTranslations = applyTranslations;
 
-window.applyTranslationsAndTwemoji = function (lang) {
-    if (!lang) return;
-    applyTranslations(lang);
-    if (window.twemoji) setTimeout(() => twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }), 50);
-    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
+/** Translated string for the current page language, for text built in JS. */
+window.i18n = function (key, fallback) {
+    const t = window.translations && window.translations[document.documentElement.lang];
+    return (t && t[key]) || fallback;
 };
 
+/** Switch language and tell JS-rendered sections (news, calculator…) to re-render. */
+function setLanguage(lang) {
+    if (!lang) return;
+    applyTranslations(lang);
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
+}
+
 function initLang() {
-    const saved = localStorage.getItem('nest-lang') || 'mn';
-    window.applyTranslationsAndTwemoji(saved);
+    setLanguage(localStorage.getItem('nest-lang') || 'mn');
 }
 
 // Language switcher click handler
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.lang-btn');
-    if (btn) {
-        window.applyTranslationsAndTwemoji(btn.dataset.lang);
-    }
+    if (btn) setLanguage(btn.dataset.lang);
 });
 
 // Init on DOM ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        initLang();
-        if (window.twemoji) twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
-    });
+    document.addEventListener('DOMContentLoaded', initLang);
 } else {
     initLang();
-    if (window.twemoji) twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
 }
-
-// SVG Observer removed per user request
