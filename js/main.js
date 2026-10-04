@@ -44,9 +44,32 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // =============================================
 // I18N ENGINE
 // =============================================
+// The Japanese web fonts come as a ~180 KB stylesheet (700+ @font-face rules).
+// Linked in <head> it held up the first paint of every page in every language,
+// so it is added only once a page is shown in Japanese.
+const JA_FONTS_URL = 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap';
+
+function loadJapaneseFonts() {
+    if (document.getElementById('fonts-ja')) return;
+    const link = document.createElement('link');
+    link.id = 'fonts-ja';
+    link.rel = 'stylesheet';
+    link.href = JA_FONTS_URL;
+    document.head.appendChild(link);
+}
+
+// Start the download when someone reaches for the JP button, so the fonts are
+// usually in hand by the time the click lands.
+['pointerover', 'focusin'].forEach(type => {
+    document.addEventListener(type, (e) => {
+        if (e.target.closest && e.target.closest('.lang-btn[data-lang="ja"]')) loadJapaneseFonts();
+    });
+});
+
 function applyTranslations(lang) {
     if (!window.translations || !window.translations[lang]) return;
     const t = window.translations[lang];
+    if (lang === 'ja') loadJapaneseFonts();
 
     // Apply to data-i18n (text content)
     document.querySelectorAll('[data-i18n]').forEach(el => {
