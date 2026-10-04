@@ -9,7 +9,7 @@
         m.httpEquiv = 'Content-Security-Policy';
         m.content = [
             "default-src 'self'",
-            "script-src 'self' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
+            "script-src 'self' https://static.cloudflareinsights.com https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: https://cdn.sanity.io",
