@@ -101,7 +101,7 @@
 }
 
 .timeline-card-label {
-    color: var(--gold, #C9A84C);
+    color: var(--gold-text, #816c31); /* on white cards */
     text-transform: uppercase;
     font-weight: 700;
     font-size: 13px;

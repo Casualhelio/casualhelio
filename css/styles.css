@@ -41,10 +41,13 @@
     /* Primary reading color (use over --text-light for body copy) */
     --text-body: #3a4a57;
 
-    /* Quiet text on white: the lightest brand-tinted grey and the darkest-needed
-       gold that still pass WCAG AA for small text (4.85:1 and 4.65:1). */
+    /* Quiet text on white: the lightest brand-tinted grey and a deeper gold that
+       pass WCAG AA for small text (grey 4.85:1; gold 5.09:1 on white and 4.79:1
+       on the --off-white sections).
+       Use --gold for lines, fills and text on dark sections; --gold-text for
+       gold-coloured text on white or light grey (the brand gold is 2.3:1 there). */
     --text-muted: #5d7582;
-    --gold-text: #897234;
+    --gold-text: #816c31;
 
     --gradient-primary: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     --gradient-gold: linear-gradient(135deg, #E6C875 0%, #C9A84C 100%);
@@ -496,7 +499,7 @@ ul {
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: 14px;
 }
 
@@ -1229,7 +1232,7 @@ ul {
 
 .news-card:hover h2,
 .news-card:hover h3 {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .news-card-body p {

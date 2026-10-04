@@ -54,6 +54,9 @@
     margin-bottom: 18px;
 }
 
+/* gold text on light sections needs the deeper gold to stay readable */
+.section:not(.v2-dark) .v2-chip { color: var(--gold-text); }
+
 .v2-chip::before {
     content: "";
     width: 34px;
@@ -111,6 +114,7 @@
 }
 
 .section:not(.v2-dark) .v2-stat span { color: var(--text-light); }
+.section:not(.v2-dark) .v2-stat b { color: var(--gold-text); }
 
 /* ---------- BEFORE / AFTER comparison slider ---------- */
 .ba-wrap { position: relative; }
@@ -508,6 +512,8 @@
     padding-top: 3px;
 }
 
+.section:not(.v2-dark) .v2-row__num { color: var(--gold-text); }
+
 .v2-row__title {
     font-family: var(--font-display);
     font-size: 19px;
@@ -594,7 +600,7 @@
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.14em;
-    color: var(--gold);
+    color: var(--gold-text); /* tickets are always white cards */
 }
 
 /* ---------- Image hover card (UB rows / about) ---------- */

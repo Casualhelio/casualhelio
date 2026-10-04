@@ -92,7 +92,7 @@ function renderFeatured(article, container, lang) {
                      ${dateRow(article, lang)}
                      <h2 style="font-size:20px;margin-bottom:14px;">${title}</h2>
                      <p>${excerpt}</p>
-                     <a href="${api.escapeHTML(window.withLang('article.html?id=' + encodeURIComponent(articleId)))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
+                     <a href="${api.escapeHTML(window.withLang('article.html?id=' + encodeURIComponent(articleId)))}" style="color:var(--gold-text);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                  </div>
             </div>
         </div>
@@ -119,7 +119,7 @@ function renderGrid(articles, container, lang) {
                     ${dateRow(article, lang)}
                     <h2>${title}</h2>
                     <p>${excerpt}</p>
-                     <a href="${api.escapeHTML(window.withLang('article.html?id=' + articleId))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
+                     <a href="${api.escapeHTML(window.withLang('article.html?id=' + articleId))}" style="color:var(--gold-text);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                 </div>
             </div>
         `;
