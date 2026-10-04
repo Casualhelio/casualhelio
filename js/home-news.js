@@ -72,7 +72,7 @@ function renderHomeGrid(articles, container, lang) {
                 <div class="news-card-img" style="${imageUrl ? "background-image:url('" + imageUrl + "');" : ''} background-color:#f4f5f7; background-size:contain; background-position:center; background-repeat:no-repeat;"></div>
                 <div class="news-card-body">
                     ${formattedDate ? `<div class="news-date">&#128197; <span>${formattedDate}</span></div>` : ''}
-                    <h4>${title}</h4>
+                    <h3>${title}</h3>
                     <p>${excerpt}</p>
                     <a href="${api.escapeHTML(window.withLang('article.html?id=' + articleId))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMore}</a>
                 </div>

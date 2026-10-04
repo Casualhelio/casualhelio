@@ -90,7 +90,7 @@ const FooterHTML = `
                 </div>
             </div>
             <div class="footer-col">
-                <h5 data-i18n="footer_col1">Company</h5>
+                <h2 data-i18n="footer_col1">Company</h2>
                 <ul>
                     <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
                     <li><a href="companies.html" data-i18n="nav_companies">Our Companies</a></li>
@@ -100,7 +100,7 @@ const FooterHTML = `
                 </ul>
             </div>
             <div class="footer-col">
-                <h5 data-i18n="footer_col2">Subsidiaries</h5>
+                <h2 data-i18n="footer_col2">Subsidiaries</h2>
                 <ul>
                     <li><a href="companies.html" data-i18n="footer_sub_c1">VE-ST PROPERTY SERVICE LLC</a></li>
                     <li><a href="companies.html" data-i18n="footer_sub_c2">VE-ST MIRAIS NBFI LLC</a></li>
@@ -109,7 +109,7 @@ const FooterHTML = `
                 </ul>
             </div>
             <div class="footer-col">
-                <h5 data-i18n="footer_col3">Contact</h5>
+                <h2 data-i18n="footer_col3">Contact</h2>
                 <div class="footer-contact-item"><span class="icon">&#128205;</span> <span data-i18n="con_office_addr">Ulaanbaatar, Mongolia</span></div>
                 <div class="footer-contact-item"><span class="icon">&#128222;</span> (+976) 7707-6977</div>
                 <div class="footer-contact-item"><span class="icon">&#9993;</span> info@nest.mn</div>

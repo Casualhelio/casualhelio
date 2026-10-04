@@ -90,7 +90,7 @@ function renderFeatured(article, container, lang) {
                  </div>
                  <div class="news-card-body" style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center;">
                      ${dateRow(article, lang)}
-                     <h4 style="font-size:20px;margin-bottom:14px;">${title}</h4>
+                     <h2 style="font-size:20px;margin-bottom:14px;">${title}</h2>
                      <p>${excerpt}</p>
                      <a href="${api.escapeHTML(window.withLang('article.html?id=' + encodeURIComponent(articleId)))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                  </div>
@@ -117,7 +117,7 @@ function renderGrid(articles, container, lang) {
                 <div class="news-card-img" style="${imageUrl ? "background-image:url('" + imageUrl + "');" : ''} background-color:#f4f5f7; background-size:contain; background-position:center; background-repeat:no-repeat;"></div>
                 <div class="news-card-body">
                     ${dateRow(article, lang)}
-                    <h4>${title}</h4>
+                    <h2>${title}</h2>
                     <p>${excerpt}</p>
                      <a href="${api.escapeHTML(window.withLang('article.html?id=' + articleId))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMoreLabel()}</a>
                 </div>
