@@ -442,7 +442,10 @@
     <section class="hero hero-video-home">
         <div class="hero-video-wrap">
             <video autoplay muted loop playsinline disablepictureinpicture data-ambient>
-                <source src="assets/hero-video.mp4" type="video/mp4">
+                <!-- Phones get the 720p encode (6.7 MB), everything else 1080p (12 MB).
+                     Browsers that ignore `media` take the first source, i.e. the smaller one. -->
+                <source src="assets/hero-video-720.mp4" type="video/mp4" media="(max-width: 768px)">
+                <source src="assets/hero-video-1080.mp4" type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
         </div>
