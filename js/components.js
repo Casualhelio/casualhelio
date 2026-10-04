@@ -117,7 +117,7 @@ const FooterHTML = `
         </div>
         <div class="footer-bottom">
             <span data-i18n="footer_copy">&copy; 2026 Nest Group. All rights reserved.</span>
-            <span data-i18n="footer_legal">Privacy Policy &middot; Terms of Use</span>
+            <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
         </div>
     </footer>
 `;

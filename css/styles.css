@@ -1453,6 +1453,23 @@ footer {
     color: rgba(36, 69, 86, 0.3);
 }
 
+/* The faded row colour above is too light for a link (WCAG 1.4.3), so the
+   privacy link uses the readable footer text colour. */
+.footer-bottom a {
+    display: inline-block;
+    padding: 4px 0;
+    color: var(--text-light);
+    text-decoration: underline;
+    text-decoration-color: rgba(86, 101, 115, 0.4);
+    text-underline-offset: 3px;
+    transition: color 200ms ease-out, text-decoration-color 200ms ease-out;
+}
+
+.footer-bottom a:hover {
+    color: var(--primary);
+    text-decoration-color: currentColor;
+}
+
 /* =============================================
    PAGE HERO (inner pages)
    ============================================= */

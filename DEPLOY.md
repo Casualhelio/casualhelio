@@ -12,6 +12,7 @@ contact.html
 index.html
 investor-relations.html
 news.html
+privacy.html
 robots.txt
 sitemap.xml
 

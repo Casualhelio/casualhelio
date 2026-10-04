@@ -10,4 +10,4 @@ deployment:
     - /bin/cp -RfT css "$DEPLOYPATH/css"
     - /bin/cp -RfT js "$DEPLOYPATH/js"
     - /bin/cp -RfT assets "$DEPLOYPATH/assets"
-    - /bin/cp -f index.html about.html companies.html contact.html investor-relations.html news.html article.html 404.html robots.txt sitemap.xml .htaccess "$DEPLOYPATH/"
+    - /bin/cp -f index.html about.html companies.html contact.html investor-relations.html news.html article.html privacy.html 404.html robots.txt sitemap.xml .htaccess "$DEPLOYPATH/"

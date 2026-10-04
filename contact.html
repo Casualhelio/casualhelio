@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=69" />
+    <link rel="stylesheet" href="css/styles.css?v=70" />
     <style>
         .contact-grid {
             display: grid;
@@ -122,6 +122,19 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
+        }
+
+        .form-privacy {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin: 4px 0 20px;
+        }
+
+        .form-privacy a {
+            color: var(--primary);
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
 
         .submit-btn {
@@ -230,6 +243,7 @@
                                 placeholder="Дэлгэрэнгүй мэдээлэл оруулна уу..." data-i18n-ph="con_msg_ph"
                                 required></textarea>
                         </div>
+                        <p class="form-privacy" data-i18n-html="con_privacy_note">We use these details to reply to your message. See our <a href="privacy.html">Privacy Policy</a>.</p>
                         <!-- Zero-config hCaptcha: Web3Forms validates the token server-side (free plan). -->
                         <div class="h-captcha" data-captcha="true" style="margin-bottom:20px;"></div>
                         <button type="submit" class="submit-btn" id="submitBtn" data-i18n="con_submit">Санал илгээх
@@ -248,10 +262,10 @@
 
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=69"></script>
-    <script src="js/translations.js?v=69"></script>
-    <script src="js/main.js?v=69"></script>
-    <script src="js/contact-form.js?v=69"></script>
+    <script src="js/components.js?v=70"></script>
+    <script src="js/translations.js?v=70"></script>
+    <script src="js/main.js?v=70"></script>
+    <script src="js/contact-form.js?v=70"></script>
     <!-- Web3Forms client: renders the zero-config hCaptcha widget (does not intercept submit) -->
     <script src="https://web3forms.com/client/script.js" async defer></script>
 
