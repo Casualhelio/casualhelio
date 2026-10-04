@@ -134,17 +134,15 @@ ul {
     align-items: center;
     justify-content: space-between;
     height: 80px;
-    transition: var(--transition);
+    transition: height 250ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 250ms cubic-bezier(0.22, 1, 0.36, 1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Compact bar once the page scrolls (main.js). The background stays the
+   solid brand colour (!important above), so no backdrop blur is needed. */
 .navbar.scrolled {
     height: 70px;
     box-shadow: var(--shadow-md);
-    background: rgba(36, 69, 86, 0.95);
-    /* More transparent */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
 }
 
 .nav-logo {
@@ -230,9 +228,17 @@ ul {
 .hamburger {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width: 44px;
+    min-height: 44px;
+    margin-right: -10px; /* keep the bars on the original right edge despite the larger hit area */
+    padding: 10px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
     cursor: pointer;
-    padding: 4px;
 }
 
 .hamburger span {
@@ -1683,7 +1689,7 @@ footer {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 80px;
+        top: 100%; /* sits under the bar at either height (80px, or 70px when scrolled) */
         left: 0;
         right: 0;
         background: var(--primary) !important;
@@ -1865,7 +1871,7 @@ footer {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 80px;
+        top: 100%;
         left: 0;
         right: 0;
         background: var(--primary) !important;
@@ -2788,83 +2794,33 @@ footer {
 }
 
 /* =============================================
-   BANK SELECTOR DROPDOWN
+   CALCULATOR — exchange-rate source + disclaimer
    ============================================= */
-.calc-bank-selector {
+.calc-rate-source {
     text-align: center;
-    margin-bottom: 30px;
-    margin-top: -10px;
+    margin: -10px auto 30px;
+    min-height: 1.6em;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.65);
 }
 
-.bank-select {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 8px 32px 8px 14px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.3s ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(36, 69, 86, 0.5)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-}
-
-.bank-select:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    background-color: rgba(255, 255, 255, 0.12);
-}
-
-.bank-select:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 2px rgba(196, 164, 105, 0.2);
-}
-
-.bank-select option {
-    background: #1a2a3a;
-    color: var(--white);
-    padding: 8px;
-}
-
-/* Buy / Sell Rate Toggle */
-.rate-type-toggle {
-    display: inline-flex;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(36, 69, 86, 0.2);
-}
-
-.rate-type-btn {
-    padding: 6px 16px;
+.calc-disclaimer {
+    max-width: var(--measure);
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: 13px;
-    font-weight: 700;
-    font-family: inherit;
-    border: none;
-    background: transparent;
-    color: rgba(36, 69, 86, 0.5);
-    cursor: pointer;
-    transition: all 0.25s ease;
-    letter-spacing: 0.03em;
+    line-height: var(--leading-normal);
+    color: rgba(255, 255, 255, 0.7);
+    text-wrap: pretty;
 }
 
-.rate-type-btn:first-child {
-    border-right: 1px solid rgba(36, 69, 86, 0.15);
-}
-
-.rate-type-btn:hover:not(.active) {
-    background: rgba(36, 69, 86, 0.06);
-    color: rgba(36, 69, 86, 0.8);
-}
-
-.rate-type-btn.active {
-    background: var(--gold);
-    color: #244556;
+/* Calculator figures change as you type — keep digits from jittering */
+#calculator [id^="res"],
+#calculator [id^="finRes"],
+#calculator tbody {
+    font-variant-numeric: tabular-nums;
 }
 
 /* =============================================
@@ -2882,46 +2838,6 @@ html[lang="ja"] h3,
 html[lang="ja"] .section-title,
 html[lang="ja"] .section-tag {
     font-family: 'Meiryo', 'メイリオ', 'Noto Serif JP', 'Playfair Display', serif !important;
-}
-
-/* =============================================
-   MOBILE RESPONSIVE — BANK & RATE SELECTOR
-   ============================================= */
-@media (max-width: 768px) {
-    .calc-bank-selector {
-        margin-bottom: 20px;
-    }
-
-    .calc-bank-selector>div {
-        gap: 8px !important;
-    }
-
-    .bank-select {
-        font-size: 13px;
-        padding: 6px 28px 6px 10px;
-        max-width: 200px;
-    }
-
-    .rate-type-btn {
-        padding: 5px 12px;
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .calc-bank-selector>div {
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
-
-    .calc-bank-selector>div>span[style*="width:1px"] {
-        display: none;
-    }
-
-    .bank-select {
-        width: 100%;
-        max-width: none;
-    }
 }
 
 /* =============================================

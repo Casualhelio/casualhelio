@@ -78,27 +78,82 @@
         });
     }
 
-    /* ---------- Inline video cards ---------- */
+    /* ---------- Inline video cards ----------
+       The cover is a <button>; once a video starts, its native controls take
+       over (pause, seek, volume), so the card itself has no click handler. */
+    function resetVideoCard(card) {
+        const video = card.querySelector('video');
+        card.classList.remove('playing');
+        if (video) video.removeAttribute('controls');
+    }
+
     function initVideos() {
         document.querySelectorAll('.v2-video').forEach(card => {
             const video = card.querySelector('video');
-            if (!video) return;
-            card.addEventListener('click', () => {
-                if (video.paused) {
-                    document.querySelectorAll('.v2-video video').forEach(v => { if (v !== video) v.pause(); });
-                    document.querySelectorAll('.v2-video').forEach(c => { if (c !== card) c.classList.remove('playing'); });
-                    video.play();
-                    card.classList.add('playing');
-                    video.setAttribute('controls', '');
-                } else {
-                    video.pause();
-                }
+            const cover = card.querySelector('.v2-video__cover');
+            if (!video || !cover) return;
+            video.setAttribute('tabindex', '-1'); // focus target once playback starts
+
+            cover.addEventListener('click', () => {
+                document.querySelectorAll('.v2-video').forEach(other => {
+                    if (other === card) return;
+                    const v = other.querySelector('video');
+                    if (v) v.pause();
+                    resetVideoCard(other);
+                });
+                card.classList.add('playing');
+                video.setAttribute('controls', '');
+                video.play();
+                video.focus(); // the cover hides now; keep keyboard focus on the player
             });
+
             video.addEventListener('ended', () => {
-                card.classList.remove('playing');
-                video.removeAttribute('controls');
+                const hadFocus = document.activeElement === video;
+                resetVideoCard(card);
                 video.load();
+                if (hadFocus) cover.focus();
             });
+        });
+    }
+
+    /* ---------- Ambient hero videos (autoplay loops) ----------
+       WCAG 2.2.2: looping motion needs a pause control. Reduced-motion
+       visitors get no playback at all (CSS hides the video). */
+    function initAmbientVideos() {
+        const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="9" y1="5" x2="9" y2="19"></line><line x1="15" y1="5" x2="15" y2="19"></line></svg>';
+        const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><polygon points="7 4 19 12 7 20 7 4"></polygon></svg>';
+
+        document.querySelectorAll('video[data-ambient]').forEach(video => {
+            if (reduceMotion) {
+                video.removeAttribute('autoplay');
+                video.pause();
+                return;
+            }
+
+            const host = video.closest('section');
+            if (!host) return;
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'ambient-toggle';
+
+            const render = () => {
+                const paused = video.paused;
+                btn.innerHTML = paused ? ICON_PLAY : ICON_PAUSE;
+                // main.js re-applies the label from this key whenever the language changes
+                btn.dataset.i18nAria = paused ? 'video_bg_play' : 'video_bg_pause';
+                const t = window.translations && window.translations[document.documentElement.lang];
+                btn.setAttribute('aria-label', (t && t[btn.dataset.i18nAria]) || (paused ? 'Play background video' : 'Pause background video'));
+            };
+
+            btn.addEventListener('click', () => {
+                if (video.paused) video.play(); else video.pause();
+            });
+            video.addEventListener('play', render);
+            video.addEventListener('pause', render);
+
+            render();
+            host.appendChild(btn);
         });
     }
 
@@ -216,6 +271,7 @@
     function init() {
         initBASliders();
         initVideos();
+        initAmbientVideos();
         initRail();
         initSegCharts();
         initStagger();

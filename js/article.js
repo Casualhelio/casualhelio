@@ -1,5 +1,5 @@
 let _articleLoadId = 0;
-let _sliderState = null; // { index, total, autoplayId, track, dots, counter }
+let _sliderState = null; // { index, total, track, dots, counter }
 
 document.addEventListener('DOMContentLoaded', () => {
     initArticle();
@@ -111,11 +111,6 @@ function renderSlider(slides) {
     const prevBtn = document.getElementById('slider-prev');
     const nextBtn = document.getElementById('slider-next');
 
-    // Clear any previous slider state
-    if (_sliderState && _sliderState.autoplayId) {
-        clearInterval(_sliderState.autoplayId);
-    }
-
     if (!slider || !track || !slides.length) {
         if (slider) slider.style.display = 'none';
         return;
@@ -161,7 +156,6 @@ function renderSlider(slides) {
     _sliderState = {
         index: 0,
         total: slides.length,
-        autoplayId: null,
         track,
         dots: dotsContainer,
         counter
@@ -169,12 +163,13 @@ function renderSlider(slides) {
 
     updateSliderUI();
 
+    // No autoplay: an auto-advancing gallery needs a pause control (WCAG 2.2.2),
+    // and readers move through the photos themselves with buttons, dots, keys or swipe.
     if (!single) {
         prevBtn.onclick = () => goToSlide(_sliderState.index - 1);
         nextBtn.onclick = () => goToSlide(_sliderState.index + 1);
         attachSwipe(slider);
         attachKeyboard();
-        startAutoplay();
     }
 }
 
@@ -185,7 +180,6 @@ function goToSlide(targetIndex) {
     const i = ((targetIndex % total) + total) % total;
     _sliderState.index = i;
     updateSliderUI();
-    restartAutoplay();
 }
 
 function updateSliderUI() {
@@ -198,29 +192,11 @@ function updateSliderUI() {
     counter.textContent = `${index + 1} / ${total}`;
 }
 
-function startAutoplay() {
-    if (!_sliderState) return;
-    _sliderState.autoplayId = setInterval(() => {
-        goToSlideInternal(_sliderState.index + 1);
-    }, 5000);
-}
-
-function restartAutoplay() {
-    if (!_sliderState) return;
-    if (_sliderState.autoplayId) clearInterval(_sliderState.autoplayId);
-    startAutoplay();
-}
-
-function goToSlideInternal(targetIndex) {
-    // Same as goToSlide but doesn't reset autoplay (used by autoplay itself)
-    if (!_sliderState) return;
-    const total = _sliderState.total;
-    const i = ((targetIndex % total) + total) % total;
-    _sliderState.index = i;
-    updateSliderUI();
-}
-
 function attachSwipe(el) {
+    // The slider re-renders on every language change; bind the swipe only once
+    // so one swipe always moves one slide.
+    if (el.dataset.swipeBound) return;
+    el.dataset.swipeBound = '1';
     let startX = 0;
     let endX = 0;
     el.addEventListener('touchstart', (e) => {

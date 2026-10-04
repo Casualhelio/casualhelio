@@ -1,7 +1,10 @@
 // ===============================================================
 // UNIFIED INVESTMENT CALCULATOR — Two tabs:
 //   1) Property × Finance  (rent + NBFI compounding)
-//   2) Finance Only         (annual compounding, 20% withholding tax)
+//   2) Finance Only         (annual compounding)
+// Both tabs share one set of rates (Sanity `investmentRates`, else the
+// published defaults below) and withhold tax on interest before it is
+// reinvested, so the same product gives the same answer in either tab.
 // ===============================================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -19,71 +22,86 @@ document.addEventListener('DOMContentLoaded', () => {
     let propInitDone = false;
     let finInitDone = false;
 
+    // Recalc hooks, set by each tab's init; called when the shared rates arrive from Sanity
+    let _propRecalc = null;
+    let _finRecalc = null;
+
     // ---------------------------------------------------------------
-    // BANK SELECTOR
+    // SHARED RATES — Sanity `investmentRates`, falling back to the rates
+    // published in the site copy (MNT asset management ~13%).
     // ---------------------------------------------------------------
-    const bankSelector = document.getElementById('bankSelector');
-    const bankDateInfo = document.getElementById('bankDateInfo');
+    const RATES = {
+        yieldPercent: 7.0,   // property rental yield
+        nbfiPercent: 13.0,   // MNT non-bank finance product
+        taxPercent: 20.0,    // withholding tax on interest
+    };
 
-    // Expose recalc callbacks so bank/rate-type change can trigger them
-    let _propRecalc = null;  // set by initPropertyCalc
-    let _finRecalc = null;   // set by initFinanceCalc
-
-    function populateBankSelector() {
-        if (!bankSelector || !window.ExchangeRate) return;
-        const banks = window.ExchangeRate.getAvailableBanks();
-        const currentVal = bankSelector.value;
-        bankSelector.innerHTML = '<option value="best">🏦 Best Rate (Auto)</option>';
-        banks.forEach(b => {
-            const opt = document.createElement('option');
-            opt.value = b.name;
-            opt.textContent = b.displayName;
-            bankSelector.appendChild(opt);
-        });
-        if (currentVal && currentVal !== 'best') bankSelector.value = currentVal;
-        updateBankDateInfo();
-    }
-
-    function updateBankDateInfo() {
-        if (!bankDateInfo || !window.ExchangeRate) return;
-        if (window.ExchangeRate.isUsingFallback && window.ExchangeRate.isUsingFallback()) {
-            bankDateInfo.textContent = 'Live mid-market rates (moneyconvert.net)';
-            return;
-        }
-        const sel = window.ExchangeRate.getSelectedBank();
-        if (sel) {
-            const data = window.ExchangeRate.getBankData(sel);
-            if (data && data.date) {
-                bankDateInfo.textContent = `Updated: ${data.date}`;
-                return;
-            }
-        }
-        const latestDate = window.ExchangeRate.getLatestDate ? window.ExchangeRate.getLatestDate() : null;
-        bankDateInfo.textContent = latestDate ? `API data: ${latestDate}` : '';
-    }
-
-    if (bankSelector) {
-        bankSelector.addEventListener('change', () => {
-            if (!window.ExchangeRate) return;
-            window.ExchangeRate.setBank(bankSelector.value === 'best' ? null : bankSelector.value);
-        });
-    }
-
-
-
-    // Listen for any exchange rate changes (bank or rate type) and recalculate
-    if (window.ExchangeRate) {
-        window.ExchangeRate.onChange(() => {
-            updateBankDateInfo();
+    async function loadInvestmentRates() {
+        if (!window.SanityAPI || !window.SanityAPI.fetch) return;
+        try {
+            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Sanity fetch timeout')), 4000));
+            const rates = await Promise.race([window.SanityAPI.fetch('*[_type == "investmentRates"][0]'), timeout]);
+            if (!rates) return;
+            if (rates.propertyYieldPercent > 0) RATES.yieldPercent = rates.propertyYieldPercent;
+            if (rates.nonBankingInterestPercent > 0) RATES.nbfiPercent = rates.nonBankingInterestPercent;
+            if (rates.taxRatePercent >= 0) RATES.taxPercent = rates.taxRatePercent;
             if (propInitDone && _propRecalc) _propRecalc();
             if (finInitDone && _finRecalc) _finRecalc();
-        });
+        } catch (err) {
+            // Sanity unavailable — keep the published defaults
+        }
     }
+
+    // ---------------------------------------------------------------
+    // I18N HELPERS for strings built in JS
+    // ---------------------------------------------------------------
+    function tr(key, fallback) {
+        const lang = document.documentElement.lang || 'en';
+        const t = window.translations && window.translations[lang];
+        return (t && t[key]) || fallback;
+    }
+
+    function dateLocale() {
+        const lang = document.documentElement.lang;
+        return lang === 'mn' ? 'mn-MN' : lang === 'ja' ? 'ja-JP' : 'en-US';
+    }
+
+    /** "1 JPY ≈ 22.78 MNT" for the active currency, or '' for MNT. */
+    function rateLine(currency) {
+        if (currency === 'MNT' || !window.ExchangeRate) return '';
+        const rate = window.ExchangeRate.getRate(currency);
+        return rate ? `1 ${currency} ≈ ${rate.toLocaleString('en-US')} MNT` : '';
+    }
+
+    // ---------------------------------------------------------------
+    // EXCHANGE-RATE SOURCE LINE
+    // ---------------------------------------------------------------
+    const rateSourceInfo = document.getElementById('rateSourceInfo');
+
+    function updateRateSourceInfo() {
+        if (!rateSourceInfo || !window.ExchangeRate || !window.ExchangeRate.isLoaded()) return;
+        if (window.ExchangeRate.isApproximate()) {
+            rateSourceInfo.textContent = tr('calc_rate_fallback', 'Exchange rates: approximate. Live rates are unavailable right now.');
+            return;
+        }
+        const updated = window.ExchangeRate.getUpdatedAt();
+        const dateText = updated ? updated.toLocaleDateString(dateLocale(), { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        rateSourceInfo.textContent = tr('calc_rate_source', 'Exchange rates: mid-market (moneyconvert.net), updated {date}')
+            .replace('{date}', dateText);
+    }
+
+    // The source line is built in JS, so it has to follow the language switcher
+    document.addEventListener('languageChanged', updateRateSourceInfo);
+
+    if (window.ExchangeRate) window.ExchangeRate.init().then(updateRateSourceInfo);
+    loadInvestmentRates();
 
     function switchTab(tab) {
         activeTab = tab;
         tabBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.tab === tab);
+            const isActive = btn.dataset.tab === tab;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
         });
         if (paneProperty) paneProperty.style.display = (tab === 'property') ? 'block' : 'none';
         if (paneFinance) paneFinance.style.display = (tab === 'finance') ? 'block' : 'none';
@@ -139,11 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentCurrency = 'MNT';
         let currentLang = document.documentElement.lang || 'en';
 
-        let state = {
-            yieldPercent: 7.0,
-            nbfiPercent: 12.0,
-            taxPercent: 20.0,
-        };
+        const state = RATES; // shared with the finance tab
 
         let _internalMntValue = 100000000;
 
@@ -154,10 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             currencySwitcher.innerHTML = '';
             currencies.forEach(cur => {
                 const btn = document.createElement('button');
+                btn.type = 'button';
                 btn.textContent = cur.code;
                 btn.dataset.currency = cur.code;
                 btn.title = cur.label;
-                btn.style.cssText = `padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid rgba(255,255,255,0.25);font-family:inherit;letter-spacing:0.5px;`;
+                btn.style.cssText = `padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out;border:1px solid rgba(255,255,255,0.25);font-family:inherit;letter-spacing:0.5px;`;
                 applyBtnStyle(btn, cur.code === currentCurrency);
                 btn.addEventListener('click', () => selectCurrency(cur.code));
                 currencySwitcher.appendChild(btn);
@@ -165,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function applyBtnStyle(btn, isActive) {
+            btn.setAttribute('aria-pressed', String(isActive));
             if (isActive) {
                 btn.style.background = 'var(--gold)';
                 btn.style.color = 'var(--primary)';
@@ -199,16 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateExchangeRateInfo() {
-            if (!exchangeRateInfoEl) return;
-            if (currentCurrency === 'MNT') { exchangeRateInfoEl.textContent = ''; return; }
-            const rate = window.ExchangeRate && window.ExchangeRate.getRate(currentCurrency);
-            if (rate) {
-                const isFallback = window.ExchangeRate.isUsingFallback && window.ExchangeRate.isUsingFallback();
-                const source = isFallback ? 'Mid-market' : (window.ExchangeRate.getSelectedBankDisplayName ? window.ExchangeRate.getSelectedBankDisplayName() : 'Best Rate');
-                exchangeRateInfoEl.textContent = `Live rate: 1 ${currentCurrency} ≈ ${rate.toLocaleString('en-US')} MNT  (${source})`;
-            } else {
-                exchangeRateInfoEl.textContent = 'Using approximate fallback rate';
-            }
+            if (exchangeRateInfoEl) exchangeRateInfoEl.textContent = rateLine(currentCurrency);
         }
 
         // --- Amount ---
@@ -270,27 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const formatted = formatAmount(displayAmount);
             const sym = window.ExchangeRate ? window.ExchangeRate.getSymbol(currentCurrency) : currentCurrency;
             return `${formatted} ${currentCurrency === 'MNT' ? 'MNT' : `${currentCurrency} (${sym})`}`;
-        }
-
-        // --- Sanity Rates ---
-        async function fetchRatesFromSanity() {
-            useDefaultRates();
-            try {
-                if (!window.SanityAPI || !window.SanityAPI.fetch) return;
-                const query = '*[_type == "investmentRates"][0]';
-                const fetchPromise = window.SanityAPI.fetch(query);
-                const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Sanity fetch timeout')), 4000));
-                const rates = await Promise.race([fetchPromise, timeoutPromise]);
-                if (rates) {
-                    if (rates.propertyYieldPercent) state.yieldPercent = rates.propertyYieldPercent;
-                    if (rates.nonBankingInterestPercent) state.nbfiPercent = rates.nonBankingInterestPercent;
-                    if (rates.taxRatePercent) state.taxPercent = rates.taxRatePercent;
-                    updateAssumptionsLabels('');
-                    calculateReturns();
-                }
-            } catch (err) {
-                // Sanity fetch error or timeout — keep default rates
-            }
         }
 
         // --- Properties ---
@@ -434,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lblTaxRate) lblTaxRate.textContent = `${state.taxPercent.toFixed(1)}%${suffix}`;
         }
 
-        function useDefaultRates() {
+        function applySharedRates() {
             updateAssumptionsLabels('');
             calculateReturns();
         }
@@ -457,20 +443,24 @@ document.addEventListener('DOMContentLoaded', () => {
             let cumulativeTax = 0;
             let totalCashPool = 0;
 
+            // Rent goes into the NBFI product monthly; each month's interest has
+            // withholding tax deducted before it is reinvested (as in the finance tab).
             for (let y = 1; y <= years; y++) {
                 const annualRent = initialInvestment * (state.yieldPercent / 100);
                 totalPropertyRent += annualRent;
                 let yearInterest = 0;
+                let yearTax = 0;
                 for (let m = 1; m <= 12; m++) {
                     totalCashPool += annualRent / 12;
                     const monthInterest = totalCashPool * ((state.nbfiPercent / 100) / 12);
+                    const monthTax = monthInterest * (state.taxPercent / 100);
                     yearInterest += monthInterest;
-                    totalCashPool += monthInterest;
+                    yearTax += monthTax;
+                    totalCashPool += monthInterest - monthTax;
                 }
                 cumulativeInterest += yearInterest;
-                const yearTax = yearInterest * (state.taxPercent / 100);
                 cumulativeTax += yearTax;
-                const currentYearEndBalance = initialInvestment + totalCashPool - cumulativeTax;
+                const currentYearEndBalance = initialInvestment + totalCashPool;
 
                 if (tableBody) {
                     const tr = document.createElement('tr');
@@ -485,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            const finalNetProfit = totalCashPool - cumulativeTax;
+            const finalNetProfit = totalCashPool;
             const totalReturn = initialInvestment + finalNetProfit;
             const totalROI = initialInvestment > 0 ? (finalNetProfit / initialInvestment) * 100 : 0;
 
@@ -553,7 +543,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.ExchangeRate) {
             window.ExchangeRate.init().then(() => {
                 updateExchangeRateInfo();
-                populateBankSelector();
                 const container = document.getElementById('dynamicPropertiesContainer');
                 if (container) {
                     container.querySelectorAll('.property-card').forEach(card => {
@@ -564,17 +553,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 calculateReturns();
             });
         }
-        fetchRatesFromSanity();
+        applySharedRates();
         fetchPropertiesFromSanity();
 
-        // Register recalc callback for bank changes
-        _propRecalc = () => {
-            buildCurrencySwitcher();
-            updateCurrencySymbol();
-            updateExchangeRateInfo();
-            reformatAmountInput();
-            calculateReturns();
-        };
+        // Shared rates arrived from Sanity
+        _propRecalc = applySharedRates;
     }
 
     // ===============================================================
@@ -595,21 +578,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const finResRoi = document.getElementById('finResRoi');
         const finResYearCount = document.getElementById('finResYearCount');
         const finLblRate = document.getElementById('finLblRate');
+        const finLblTax = document.getElementById('finLblTax');
         const finTableBody = document.getElementById('finYearlyTableBody');
 
         if (!finAmountInput) return;
 
         const MNT_RATES = [0.12, 0.13, 0.14, 0.15];
         const FOREIGN_RATES = [0.04, 0.05, 0.06];
-        const TAX_RATE = 0.20;
+        const FOREIGN_DEFAULT = 0.05; // published JPY asset-management rate (~5%)
         const DEFAULT_MNT = 100000000;
 
         let finCurrency = 'MNT';
-        let finRate = 0.14;
+        let finRate = RATES.nbfiPercent / 100;
+        let userPickedRate = false;
         let finYears = 5;
         let finInternalMnt = DEFAULT_MNT;
 
         const ER = () => window.ExchangeRate;
+        const taxRate = () => RATES.taxPercent / 100;
+        const defaultRate = () => (finCurrency === 'MNT' ? RATES.nbfiPercent / 100 : FOREIGN_DEFAULT);
+        const pct = (r) => `${+(r * 100).toFixed(1)}%`;
 
         function finFromMnt(mnt) {
             if (finCurrency === 'MNT' || !ER()) return mnt;
@@ -637,25 +625,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return num.toLocaleString('en-US', { minimumFractionDigits: isJpyKrw ? 0 : 2, maximumFractionDigits: isJpyKrw ? 0 : 2 });
         }
 
-        function getRateList() { return (finCurrency === 'MNT') ? MNT_RATES : FOREIGN_RATES; }
+        // The chip list always contains the default rate, so a Sanity rate outside the presets still shows
+        function getRateList() {
+            const base = (finCurrency === 'MNT') ? MNT_RATES : FOREIGN_RATES;
+            const def = defaultRate();
+            return base.includes(def) ? base : [...base, def].sort((a, b) => a - b);
+        }
 
         function buildRateChips() {
             if (!finRateChipsEl) return;
             finRateChipsEl.innerHTML = '';
             const rates = getRateList();
-            if (!rates.includes(finRate)) finRate = rates[Math.floor(rates.length / 2)];
+            if (!rates.includes(finRate)) finRate = defaultRate();
             rates.forEach(r => {
                 const btn = document.createElement('button');
-                btn.textContent = (r * 100).toFixed(0) + '%';
+                btn.type = 'button';
+                btn.textContent = pct(r);
                 const isActive = r === finRate;
+                btn.setAttribute('aria-pressed', String(isActive));
                 btn.style.cssText = [
                     'padding:8px 18px', 'border-radius:100px',
                     `border:1.5px solid ${isActive ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
                     `background:${isActive ? 'var(--gold)' : 'transparent'}`,
                     `color:${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.8)'}`,
-                    'font-weight:700', 'font-size:14px', 'cursor:pointer', 'transition:all 0.2s', 'font-family:inherit',
+                    'font-weight:700', 'font-size:14px', 'cursor:pointer',
+                    'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
-                btn.addEventListener('click', () => { finRate = r; buildRateChips(); finCalculate(); });
+                btn.addEventListener('click', () => { finRate = r; userPickedRate = true; buildRateChips(); finCalculate(); });
                 finRateChipsEl.appendChild(btn);
             });
             if (finLblRate) finLblRate.textContent = (finRate * 100).toFixed(1) + '%';
@@ -668,17 +664,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const currencies = ['MNT', ...foreignCodes];
             currencies.forEach(code => {
                 const btn = document.createElement('button');
+                btn.type = 'button';
                 btn.textContent = code;
                 const isActive = code === finCurrency;
+                btn.setAttribute('aria-pressed', String(isActive));
                 btn.style.cssText = [
                     'padding:6px 14px', 'border-radius:100px',
                     `border:1.5px solid ${isActive ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
                     `background:${isActive ? 'var(--gold)' : 'transparent'}`,
                     `color:${isActive ? 'var(--primary)' : 'rgba(255,255,255,0.8)'}`,
-                    'font-weight:700', 'font-size:13px', 'cursor:pointer', 'transition:all 0.2s', 'font-family:inherit',
+                    'font-weight:700', 'font-size:13px', 'cursor:pointer',
+                    'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
                 btn.addEventListener('click', () => {
+                    if (code === finCurrency) return;
                     finCurrency = code;
+                    finRate = defaultRate(); // MNT and foreign products have different rates
+                    userPickedRate = false;
                     buildFinCurrSwitcher(); buildRateChips();
                     if (finAmountInput) finAmountInput.value = fmtInput(finFromMnt(finInternalMnt));
                     if (finCurrSymbol) finCurrSymbol.textContent = code;
@@ -689,19 +691,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateFinExchInfo() {
-            if (!finExchInfo) return;
-            if (finCurrency === 'MNT' || !ER()) { finExchInfo.textContent = ''; return; }
-            const rate = ER().getRate(finCurrency);
-            const isFallback = ER().isUsingFallback && ER().isUsingFallback();
-            const source = isFallback ? 'Mid-market' : (ER().getSelectedBankDisplayName ? ER().getSelectedBankDisplayName() : 'Best Rate');
-            if (rate) finExchInfo.textContent = `Live rate: 1 ${finCurrency} ≈ ${rate.toLocaleString('en-US')} MNT (${source})`;
+            if (finExchInfo) finExchInfo.textContent = rateLine(finCurrency);
         }
 
         function finCalculate() {
             const years = finYears;
+            const TAX_RATE = taxRate();
             if (finYearDisplay) finYearDisplay.textContent = years;
             if (finResYearCount) finResYearCount.textContent = years;
             if (finLblRate) finLblRate.textContent = (finRate * 100).toFixed(1) + '%';
+            if (finLblTax) finLblTax.textContent = pct(TAX_RATE);
 
             const P0 = finInternalMnt;
             if (!P0 || P0 <= 0) { clearFinResults(); return; }
@@ -778,10 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Init ---
-        finInternalMnt = DEFAULT_MNT;
-        finCurrency = 'MNT';
-        finRate = 0.14;
-        finYears = 5;
         buildFinCurrSwitcher();
         buildRateChips();
         if (finAmountInput) finAmountInput.value = fmtInput(finInternalMnt);
@@ -790,15 +785,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (finYearDisplay) finYearDisplay.textContent = 5;
 
         if (ER()) {
-            ER().init().then(() => { buildFinCurrSwitcher(); updateFinExchInfo(); populateBankSelector(); finCalculate(); });
+            ER().init().then(() => { buildFinCurrSwitcher(); updateFinExchInfo(); finCalculate(); });
         }
         finCalculate();
 
-        // Register recalc callback for bank changes
+        // Shared rates arrived from Sanity: move to the new default unless the visitor picked a rate
         _finRecalc = () => {
-            buildFinCurrSwitcher();
-            updateFinExchInfo();
-            if (finAmountInput) finAmountInput.value = fmtInput(finFromMnt(finInternalMnt));
+            if (!userPickedRate) finRate = defaultRate();
+            buildRateChips();
             finCalculate();
         };
     }

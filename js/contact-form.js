@@ -9,11 +9,13 @@ form.addEventListener("submit", function (e) {
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
 
-    const lang = localStorage.getItem('nest-lang') || 'en';
+    const lang = document.documentElement.lang || 'mn';
     const tr = window.translations && window.translations[lang] || {};
     submitBtn.textContent = tr.con_wait || "Please wait...";
     submitBtn.disabled = true;
+    // Clear the old result so the live region announces the next one
     result.style.display = "none";
+    result.textContent = "";
 
     fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -47,11 +49,9 @@ form.addEventListener("submit", function (e) {
             result.style.color = "#dc3545";
         })
         .finally(function () {
+            // Stays visible until the next submit, so nobody misses the confirmation
             result.style.display = "block";
             submitBtn.textContent = tr.con_submit || "Санал илгээх →";
             submitBtn.disabled = false;
-            setTimeout(() => {
-                result.style.display = "none";
-            }, 5000);
         });
 });

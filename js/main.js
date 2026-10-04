@@ -1,17 +1,25 @@
-﻿// Navbar scroll effect
+﻿// Navbar scroll effect (components.js has already injected the navbar)
 const navbar = document.querySelector('.navbar');
 if (navbar) {
-    window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
+    const syncNavbar = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', syncNavbar, { passive: true });
+    syncNavbar();
 }
 
 // Hamburger menu
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
+    const setMenuOpen = (open) => {
+        navLinks.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+    };
+    hamburger.addEventListener('click', () => setMenuOpen(!navLinks.classList.contains('open')));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            setMenuOpen(false);
+            hamburger.focus();
+        }
     });
 }
 
@@ -60,12 +68,20 @@ function applyTranslations(lang) {
         if (t[key] !== undefined) el.placeholder = t[key];
     });
 
+    // Apply to data-i18n-aria (accessible names of icon-only buttons)
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.dataset.i18nAria;
+        if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+    });
+
     // Update html lang attribute
     document.documentElement.lang = lang === 'mn' ? 'mn' : lang === 'ja' ? 'ja' : 'en';
 
     // Update switcher buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
+        const isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
     });
 
     // Save preference

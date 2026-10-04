@@ -13,7 +13,7 @@
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: https://cdn.sanity.io",
-            "connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
+            "connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com",
             "frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com",
             "media-src 'self'",
             "object-src 'none'",
@@ -46,7 +46,7 @@ const NavbarHTML = `
                 <span class="sub" data-i18n="brand_sub">Group</span>
             </div>
         </a>
-        <ul class="nav-links">
+        <ul class="nav-links" id="primary-nav">
             <li><a href="index.html" data-i18n="nav_home">Home</a></li>
             <li><a href="about.html" data-i18n="nav_about">About</a></li>
             <li><a href="companies.html" data-i18n="nav_companies">Our Companies</a></li>
@@ -55,13 +55,14 @@ const NavbarHTML = `
             <li><a href="contact.html" class="nav-cta" data-i18n="nav_contact">Contact Us</a></li>
         </ul>
         <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
-            <button class="lang-btn" data-lang="mn" aria-label="Монгол">MN</button>
-            <button class="lang-btn" data-lang="ja" aria-label="日本語">JP</button>
+            <button type="button" class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+            <button type="button" class="lang-btn" data-lang="mn" aria-label="Монгол">MN</button>
+            <button type="button" class="lang-btn" data-lang="ja" aria-label="日本語">JP</button>
         </div>
-        <div class="hamburger" id="hamburger">
-            <span></span><span></span><span></span>
-        </div>
+        <button type="button" class="hamburger" id="hamburger" aria-label="Menu" data-i18n-aria="nav_menu"
+            aria-expanded="false" aria-controls="primary-nav">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
     </nav>
 `;
 
@@ -121,8 +122,10 @@ const FooterHTML = `
     </footer>
 `;
 
-// Inject components
-document.addEventListener('DOMContentLoaded', () => {
+// Inject components as soon as this script runs. Every page loads it at the end
+// of <body>, after #navbar-wrapper / #footer-wrapper, so the navbar exists before
+// main.js runs — main.js owns all navbar behavior (scroll state, menu, language).
+function injectComponents() {
     const navContainer = document.getElementById('navbar-wrapper');
     if (navContainer) {
         navContainer.innerHTML = NavbarHTML;
@@ -133,10 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
         footerContainer.innerHTML = FooterHTML;
     }
 
-    // Re-initialize Main JS elements if they exist now
-    initInjectedComponents();
     initBackToTop();
-});
+}
+
+if (document.body) {
+    injectComponents();
+} else {
+    document.addEventListener('DOMContentLoaded', injectComponents);
+}
 
 // Icon-only back-to-top button, shown after the first viewport of scrolling
 function initBackToTop() {
@@ -158,31 +165,4 @@ function initBackToTop() {
             ticking = false;
         });
     }, { passive: true });
-}
-
-function initInjectedComponents() {
-    // Hamburger menu bind
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
-    }
-
-    // Re-mark the current page's nav link (navbar was just injected)
-    if (typeof initActiveNavLink === 'function') {
-        initActiveNavLink();
-    }
-
-    // Language switcher bind (because it's rewritten)
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            if (window.applyTranslationsAndTwemoji) {
-                window.applyTranslationsAndTwemoji(e.target.dataset.lang);
-            } else if (window.applyTranslations) {
-                window.applyTranslations(e.target.dataset.lang);
-            }
-        });
-    });
 }

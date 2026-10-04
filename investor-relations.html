@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Investment — Nest Group</title>
     <link rel="canonical" href="https://nest.mn/investor-relations.html" />
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=66" />
+    <link rel="stylesheet" href="css/styles.css?v=67" />
     <style>
         /* ── IR hero ── */
         .ir-hero {
@@ -168,7 +168,7 @@
                 Compounding Returns</div>
             <h2 class="section-title reveal" style="color:var(--white);" data-i18n="calc_title">Investment Calculator
             </h2>
-            <p class="section-sub reveal" style="color:rgba(255,255,255,0.75); max-width:640px; margin-bottom:44px;" data-i18n="calc_intro">The simulator runs on live data — current yields from our own products and daily exchange rates from Mongolian banks.</p>
+            <p class="section-sub reveal" style="color:rgba(255,255,255,0.75); max-width:640px; margin-bottom:44px;" data-i18n="calc_intro">The simulator uses our current product rates and daily mid-market exchange rates.</p>
 
             <!-- TAB BAR -->
             <div class="calc-tabs reveal">
@@ -190,26 +190,8 @@
                 </button>
             </div>
 
-            <!-- BANK & RATE TYPE SELECTOR -->
-            <div class="calc-bank-selector reveal" id="bankSelectorRow">
-                <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;">
-                    <!-- Bank dropdown -->
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="2" style="flex-shrink:0;">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                        <select id="bankSelector" class="bank-select">
-                            <option value="best" data-i18n="calc_best_rate">★ Best Rate (Auto)</option>
-                        </select>
-                    </div>
-
-
-                    <!-- Date info -->
-                    <span id="bankDateInfo" style="font-size:11px; color:rgba(255,255,255,0.35);"></span>
-                </div>
-            </div>
+            <!-- EXCHANGE-RATE SOURCE (filled in by calculator.js) -->
+            <p class="calc-rate-source reveal" id="rateSourceInfo"></p>
 
             <!-- ===== PANE 1: Property × Finance ===== -->
             <div id="calcPaneProperty">
@@ -266,7 +248,7 @@
 
                         <div style="background:rgba(0,0,0,0.2); border-radius:8px; padding:20px;">
                             <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px;"
-                                data-i18n="calc_assumptions">Assumptions (Fetched Live)</div>
+                                data-i18n="calc_assumptions">Assumptions</div>
                             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="calc_prop_yield">Property Yield</span>
@@ -343,7 +325,7 @@
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
                                     data-i18n="calc_tbl_interest">Interest Earned</th>
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
-                                    data-i18n="calc_tbl_tax">Tax (20%)</th>
+                                    data-i18n="calc_tbl_tax">Tax</th>
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
                                     data-i18n="calc_tbl_cumul">Cumulative Balance</th>
                             </tr>
@@ -423,12 +405,12 @@
                             <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="fin_interest_rate">Interest Rate</span>
-                                <span id="finLblRate" style="font-weight:700; color:var(--gold);">14.0%</span>
+                                <span id="finLblRate" style="font-weight:700; color:var(--gold);">13.0%</span>
                             </div>
                             <div style="display:flex; justify-content:space-between;">
                                 <span style="color:rgba(255,255,255,0.8); font-size:14px;"
                                     data-i18n="fin_withholding_tax">Withholding Tax</span>
-                                <span style="font-weight:700; color:var(--gold);">20%</span>
+                                <span id="finLblTax" style="font-weight:700; color:var(--gold);">20%</span>
                             </div>
                         </div>
                     </div>
@@ -456,7 +438,7 @@
                                 </div>
                                 <div style="text-align:right;">
                                     <div style="font-size:13px; color:var(--text-light); margin-bottom:4px;"
-                                        data-i18n="fin_tax_paid">Tax Paid (20%)</div>
+                                        data-i18n="fin_tax_paid">Tax Paid</div>
                                     <div style="font-weight:700; color:#E53935; font-size:18px;" id="finResTax">0</div>
                                 </div>
                             </div>
@@ -492,7 +474,7 @@
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
                                     data-i18n="fin_tbl_gross_interest">Gross Interest</th>
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
-                                    data-i18n="calc_tbl_tax">Tax (20%)</th>
+                                    data-i18n="calc_tbl_tax">Tax</th>
                                 <th style="padding:15px 10px; font-weight:600; text-align:right;"
                                     data-i18n="calc_tbl_cumul">Balance</th>
                             </tr>
@@ -501,6 +483,8 @@
                     </table>
                 </div>
             </div>
+
+            <p class="calc-disclaimer" data-i18n="calc_disclaimer">For illustration only. These figures are estimates based on the assumptions shown, not a forecast or a guarantee of future returns. Actual returns depend on occupancy, interest rates, taxes and exchange rates. Please speak with our team before making an investment decision.</p>
 
         </div>
     </section>
@@ -513,12 +497,12 @@
 
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=66"></script>
-    <script src="js/translations.js?v=66"></script>
-    <script src="js/sanity-client.js?v=66"></script>
-    <script src="js/exchange-rate.js?v=66"></script>
-    <script src="js/calculator.js?v=66"></script>
-    <script src="js/main.js?v=66"></script>
+    <script src="js/components.js?v=67"></script>
+    <script src="js/translations.js?v=67"></script>
+    <script src="js/sanity-client.js?v=67"></script>
+    <script src="js/exchange-rate.js?v=67"></script>
+    <script src="js/calculator.js?v=67"></script>
+    <script src="js/main.js?v=67"></script>
 
 </body>
 

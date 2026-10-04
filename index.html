@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Nest Group — Towards a More Amazing Tomorrow</title>
     <link rel="canonical" href="https://nest.mn/" />
@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=66" />
-    <link rel="stylesheet" href="css/v2.css?v=66" />
+    <link rel="stylesheet" href="css/styles.css?v=67" />
+    <link rel="stylesheet" href="css/v2.css?v=67" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
@@ -189,6 +189,8 @@
             .map-overlay-svg .route-base { stroke-dashoffset: 0; }
             .map-overlay-svg .plane { opacity: 1; offset-distance: 60%; animation: none; }
             .map-overlay-svg .node-inner { opacity: 1; transform: none; animation: none; }
+            /* no looping hero video; the dark hero background shows instead */
+            .hero-video-wrap video { display: none; }
         }
 
         /* ── HOME DIVISIONS (4 чиглэл) — photo-led editorial rows ── */
@@ -438,7 +440,7 @@
     <!-- HERO -->
     <section class="hero hero-video-home">
         <div class="hero-video-wrap">
-            <video autoplay muted loop playsinline disablepictureinpicture>
+            <video autoplay muted loop playsinline disablepictureinpicture data-ambient>
                 <source src="assets/hero-video.mp4" type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
@@ -720,12 +722,12 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=66"></script>
-    <script src="js/translations.js?v=66"></script>
-    <script src="js/sanity-client.js?v=66"></script>
-    <script src="js/home-news.js?v=66"></script>
-    <script src="js/main.js?v=66"></script>
-    <script src="js/v2.js?v=66"></script>
+    <script src="js/components.js?v=67"></script>
+    <script src="js/translations.js?v=67"></script>
+    <script src="js/sanity-client.js?v=67"></script>
+    <script src="js/home-news.js?v=67"></script>
+    <script src="js/main.js?v=67"></script>
+    <script src="js/v2.js?v=67"></script>
 </body>
 
 </html>

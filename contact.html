@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://mongolian-bank-exchange-rate-6620c122ff22.herokuapp.com https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Contact Us — Nest Group</title>
     <link rel="canonical" href="https://nest.mn/contact.html" />
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=66" />
+    <link rel="stylesheet" href="css/styles.css?v=67" />
     <style>
         .contact-grid {
             display: grid;
@@ -169,7 +169,7 @@
             <img src="assets/logo.png" alt="Nest Group" style="width:96px; height:96px; margin:24px auto 18px; display:block; filter:brightness(0) invert(1); opacity:0.95;" />
             <h1 data-i18n-html="con_h1" style="font-family:var(--font-display); font-size:clamp(36px,5vw,56px); max-width:none; margin:0 auto 6px; line-height:1.1; font-weight:600; letter-spacing:0.12em; color:#fff;">НЭСТ Групп</h1>
             <div style="width:60px; height:2px; background:var(--gold); margin:18px auto 22px; opacity:0.8;"></div>
-            <p data-i18n="con_p" style="font-size:16px; margin:0 auto; max-width:680px; color:rgba(255,255,255,0.85); letter-spacing:0.02em;">+976 7737-0770 | info@nest.mn | www.nest.mn</p>
+            <p data-i18n="con_p" style="font-size:16px; margin:0 auto; max-width:680px; color:rgba(255,255,255,0.85); letter-spacing:0.02em;">+976 7707-6977 | info@nest.mn | www.nest.mn</p>
             <p data-i18n="con_addr" style="font-size:14px; margin:10px auto 0; max-width:780px; color:rgba(255,255,255,0.65); line-height:1.6;">Монгол Улс, Улаанбаатар хот, Чингэлтэй дүүрэг, 1-р хороо, Бага тойруу гудамж 46-р байр</p>
         </div>
     </section>
@@ -234,8 +234,11 @@
                         <div class="h-captcha" data-captcha="true" style="margin-bottom:20px;"></div>
                         <button type="submit" class="submit-btn" id="submitBtn" data-i18n="con_submit">Санал илгээх
                             &rarr;</button>
-                        <div id="resultMsg"
-                            style="display:none; margin-top:20px; padding:18px 24px; border-radius:var(--radius-sm); font-size:15px; font-weight:600;">
+                        <!-- Always-present live region so screen readers announce the result -->
+                        <div role="status" aria-live="polite">
+                            <div id="resultMsg"
+                                style="display:none; margin-top:20px; padding:18px 24px; border-radius:var(--radius-sm); font-size:15px; font-weight:600;">
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -245,10 +248,10 @@
 
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=66"></script>
-    <script src="js/translations.js?v=66"></script>
-    <script src="js/main.js?v=66"></script>
-    <script src="js/contact-form.js?v=66"></script>
+    <script src="js/components.js?v=67"></script>
+    <script src="js/translations.js?v=67"></script>
+    <script src="js/main.js?v=67"></script>
+    <script src="js/contact-form.js?v=67"></script>
     <!-- Web3Forms client: renders the zero-config hCaptcha widget (does not intercept submit) -->
     <script src="https://web3forms.com/client/script.js" async defer></script>
 
