@@ -78,6 +78,7 @@ Local lead generation and recruiting are not primary goals for the site.
   - An independent board, governance framework or ESG claims. The governance section was removed because the company is pre-IPO.
   - Investor testimonials, case studies, realized-return figures and press coverage.
   - Property listings in Sanity. The "PJ Yado NP18-17" example property was hardcoded in early calculator code, not Sanity data, and has been removed.
+  - Sources for the home page market figures. "+6.4% economic growth (2024)" and "+12.8% average real estate growth" had no source or period and are held back (October 2026); restore them only with a cited source. The econ_p2 paragraph still says growth has been "around 6–7% in recent years" and needs the same check.
 
 ## Product Principles
 
@@ -89,4 +90,4 @@ Local lead generation and recruiting are not primary goals for the site.
 
 ## Accessibility & Inclusion
 
-Three languages, three scripts (Latin, Cyrillic and Japanese) must lay out and read correctly. The site already honors `prefers-reduced-motion` for its hero videos and animations, and that support must be kept. In October 2026 the site was brought to WCAG 2.1 AA for text contrast, focus visibility, keyboard access (skip link, `<main>` landmark, 44 px-tall tap areas on the language switch) and heading structure on every page; keep that bar. The About page still has two skipped heading levels and one low-contrast caption, pending the team-card fix on another branch.
+Three languages, three scripts (Latin, Cyrillic and Japanese) must lay out and read correctly. The site already honors `prefers-reduced-motion` for its hero videos and animations, and that support must be kept. In October 2026 the site was brought to WCAG 2.1 AA for text contrast, focus visibility, keyboard access (skip link, `<main>` landmark, 44 px-tall tap areas on the language switch) and heading structure on every page; keep that bar. The About page's heading outline was fixed in October 2026 (no skipped levels on any page).
