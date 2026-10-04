@@ -2571,8 +2571,21 @@ footer {
 }
 
 /* keep the text on the navy side, clear of the photo */
-.cta-banner h2 {
+.cta-banner h2,
+.cta-banner-inner p {
     max-width: 440px;
+}
+
+/* The line under the heading follows the heading's left edge, not the
+   centred rule above (margin: 0 auto would centre it in the column) */
+.cta-banner-inner p {
+    margin: -8px 0 0;
+}
+
+/* Japanese headings set wider per character: keep 「投資家向けお問い合わせ」
+   on one line inside the navy side */
+html[lang="ja"] .cta-banner h2 {
+    font-size: clamp(26px, 3vw, 38px);
 }
 
 @media (max-width: 880px) {
@@ -2580,8 +2593,10 @@ footer {
         align-items: center;
     }
 
-    .cta-banner h2 {
+    .cta-banner h2,
+    .cta-banner-inner p {
         max-width: none;
+        text-align: center;
     }
 }
 
@@ -2884,6 +2899,15 @@ footer {
     line-height: var(--leading-normal);
     color: rgba(255, 255, 255, 0.7);
     text-wrap: pretty;
+}
+
+/* Result card → contact form, carrying the simulation along */
+.calc-discuss {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 24px;
+    text-align: center;
 }
 
 /* Calculator figures change as you type — keep digits from jittering */

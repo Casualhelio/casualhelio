@@ -3,10 +3,23 @@ const form = document.getElementById("contactForm");
 const result = document.getElementById("resultMsg");
 const submitBtn = document.getElementById("submitBtn");
 
+// Arriving from the calculator or the Investment page (?topic=ir&msg=…):
+// pick the inquiry type and start the message with the simulation.
+(function prefillFromLink() {
+    const params = new URLSearchParams(window.location.search);
+    const type = document.getElementById("inquiryType");
+    const message = document.getElementById("message");
+    if (type && params.get("topic") === "ir") type.value = "Investment";
+    const msg = params.get("msg");
+    if (message && msg && !message.value) message.value = msg.slice(0, 1000); // .value, never HTML
+})();
+
 form.addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(form);
     const object = Object.fromEntries(formData);
+    // The inquiry type leads the email subject, so the team can sort at a glance
+    if (object["Inquiry Type"]) object.subject = `[${object["Inquiry Type"]}] ${object.subject}`;
     const json = JSON.stringify(object);
 
     const lang = document.documentElement.lang || 'mn';

@@ -244,6 +244,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="inquiryType" data-i18n="con_type_label">Хүсэлтийн төрөл</label>
+                            <!-- Values stay in English so the team's inbox reads the same in every language -->
+                            <select id="inquiryType" name="Inquiry Type">
+                                <option value="Investment" data-i18n="con_type_ir">Хөрөнгө оруулалт</option>
+                                <option value="Partnership" data-i18n="con_type_partner">Хамтын ажиллагаа</option>
+                                <option value="Our services" data-i18n="con_type_services">Үйлчилгээ</option>
+                                <option value="Other" data-i18n="con_type_other" selected>Бусад</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="message" data-i18n="con_msg">Дэлгэрэнгүй мэдээлэл</label>
                             <textarea id="message" name="message"
                                 placeholder="Дэлгэрэнгүй мэдээлэл оруулна уу..." data-i18n-ph="con_msg_ph"

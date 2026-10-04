@@ -104,6 +104,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /** Point a result card's button at the contact form, with this simulation as the message. */
+    function setDiscussLink(link, { tabKey, tabFallback, amount, years, total }) {
+        if (!link) return;
+        let url = 'contact.html?topic=ir';
+        if (amount) {
+            const msg = tr('calc_discuss_msg', "I'd like to discuss this simulation ({tab}): {amount} over {years} years, projected total return {total}.")
+                .replace('{tab}', tr(tabKey, tabFallback))
+                .replace('{amount}', amount)
+                .replace('{years}', years)
+                .replace('{total}', total);
+            url += '&msg=' + encodeURIComponent(msg);
+        }
+        link.href = window.withLang ? window.withLang(url) : url;
+    }
+
     /** Keep only an amount: digits and, for currencies with cents, one decimal point. */
     function sanitizeAmount(raw, code) {
         let val = raw.replace(/[^0-9.,]/g, '').replace(/,/g, '');
@@ -183,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resNetProfit = document.getElementById('resNetProfit');
         const resRoi = document.getElementById('resRoi');
         const tableBody = document.getElementById('yearlyTableBody');
+        const discussLink = document.getElementById('calcDiscuss');
 
         let currentCurrency = langCurrency();
         let currencyTouched = false; // the visitor picked a currency themselves
@@ -359,6 +375,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (resNetProfit) resNetProfit.textContent = formatResult(finalNetProfit);
             if (resTotalReturn) resTotalReturn.textContent = formatResult(totalReturn);
             if (resRoi) resRoi.textContent = `${totalROI.toFixed(1)}%`;
+
+            setDiscussLink(discussLink, {
+                tabKey: 'calc_tab_property', tabFallback: 'Property × Finance',
+                amount: initialInvestment > 0 ? formatMoney(displayAmount, currentCurrency) : '',
+                years, total: formatResult(totalReturn),
+            });
         }
 
         // --- Event Listeners (property amount: edit raw while focused; format on blur — fixes USD/CNY/EUR typing) ---
@@ -437,6 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const finLblRate = document.getElementById('finLblRate');
         const finLblTax = document.getElementById('finLblTax');
         const finTableBody = document.getElementById('finYearlyTableBody');
+        const finDiscussLink = document.getElementById('finCalcDiscuss');
 
         if (!finAmountInput) return;
 
@@ -558,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (finLblTax) finLblTax.textContent = pct(TAX_RATE);
 
             const P0 = finToMnt(finAmount);
-            if (!P0 || P0 <= 0) { clearFinResults(); return; }
+            if (!P0 || P0 <= 0) { clearFinResults(); setDiscussLink(finDiscussLink, {}); return; }
 
             let principal = P0;
             let totalGrossInterest = 0;
@@ -584,6 +607,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (finResTax) finResTax.textContent = '-' + finFmt(totalTax);
             if (finResNet) finResNet.textContent = finFmt(netProfit);
             if (finResRoi) finResRoi.textContent = roi + '%';
+
+            setDiscussLink(finDiscussLink, {
+                tabKey: 'calc_tab_finance', tabFallback: 'Finance',
+                amount: formatMoney(finAmount, finCurrency), years, total: finFmt(totalReturn),
+            });
 
             if (!finTableBody) return;
             finTableBody.innerHTML = '';
