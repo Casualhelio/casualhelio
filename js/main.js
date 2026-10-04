@@ -97,6 +97,12 @@ function applyTranslations(lang) {
         if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
     });
 
+    // Apply to data-i18n-content (<meta name="description">, read by search engines)
+    document.querySelectorAll('[data-i18n-content]').forEach(el => {
+        const key = el.dataset.i18nContent;
+        if (t[key] !== undefined) el.setAttribute('content', t[key]);
+    });
+
     // Update html lang attribute
     document.documentElement.lang = lang === 'mn' ? 'mn' : lang === 'ja' ? 'ja' : 'en';
 
@@ -107,8 +113,8 @@ function applyTranslations(lang) {
         btn.setAttribute('aria-pressed', String(isActive));
     });
 
-    // Save preference
-    localStorage.setItem('nest-lang', lang);
+    // Save preference (storage can be blocked; the page still works without it)
+    try { localStorage.setItem('nest-lang', lang); } catch (e) { /* not remembered */ }
 
     document.body.classList.toggle('lang-mn', lang === 'mn');
     document.body.classList.toggle('lang-ja', lang === 'ja');
@@ -122,15 +128,85 @@ window.i18n = function (key, fallback) {
     return (t && t[key]) || fallback;
 };
 
+// =============================================
+// LANGUAGE URLS
+// Every language has its own address so search engines can index all three:
+// the plain URL is Mongolian (the default), ?lang=en and ?lang=ja the others.
+// Each page's <head> lists the three as hreflang alternates. Here we keep the
+// address bar and the canonical URL in step with the language on screen.
+// =============================================
+const LANGS = ['mn', 'en', 'ja'];
+const DEFAULT_LANG = 'mn';
+const SITE_ORIGIN = 'https://nest.mn';
+
+/** The language named in the address (?lang=…), if it is one we have. */
+function urlLang() {
+    const lang = new URLSearchParams(location.search).get('lang');
+    return LANGS.includes(lang) ? lang : null;
+}
+
+/** The live-site address of this page in `lang`. Only ?id (articles) is kept, so
+    tracking parameters never end up in the canonical URL. */
+function pageUrl(lang) {
+    const params = new URLSearchParams();
+    const id = new URLSearchParams(location.search).get('id');
+    if (id) params.set('id', id);
+    if (lang !== DEFAULT_LANG) params.set('lang', lang);
+    const query = params.toString();
+    return SITE_ORIGIN + location.pathname.replace(/\/index\.html$/, '/') + (query ? '?' + query : '');
+}
+
+/** Address bar and <link rel="canonical"> follow the language being shown. */
+function syncLanguageUrl(lang) {
+    const url = new URL(location.href);
+    if (lang === DEFAULT_LANG) url.searchParams.delete('lang');
+    else url.searchParams.set('lang', lang);
+    if (url.href !== location.href) history.replaceState(history.state, '', url);
+
+    // The canonical is created here rather than written in the HTML: a static one
+    // could only name a single language, and Google advises against JS editing one.
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        document.head.appendChild(canonical);
+    }
+    canonical.href = pageUrl(lang);
+
+    // Static pages list their alternates in the HTML; article pages only know
+    // their address once loaded, so they get them here.
+    if (!document.querySelector('link[rel="alternate"][hreflang]')) {
+        LANGS.concat('x-default').forEach(code => {
+            const alt = document.createElement('link');
+            alt.rel = 'alternate';
+            alt.hreflang = code;
+            alt.href = pageUrl(code === 'x-default' ? DEFAULT_LANG : code);
+            document.head.appendChild(alt);
+        });
+    }
+}
+
+/** An internal link that keeps the current language, e.g. for news → article links. */
+window.withLang = function (href) {
+    const lang = document.documentElement.lang;
+    if (!LANGS.includes(lang) || lang === DEFAULT_LANG) return href;
+    return href + (href.includes('?') ? '&' : '?') + 'lang=' + lang;
+};
+
 /** Switch language and tell JS-rendered sections (news, calculator…) to re-render. */
 function setLanguage(lang) {
-    if (!lang) return;
+    if (!LANGS.includes(lang)) return;
     applyTranslations(lang);
+    syncLanguageUrl(lang);
     document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
 }
 
 function initLang() {
-    setLanguage(localStorage.getItem('nest-lang') || 'mn');
+    // An explicit ?lang= wins (someone followed a Japanese search result), then the
+    // visitor's saved choice, then Mongolian.
+    let saved = null;
+    try { saved = localStorage.getItem('nest-lang'); } catch (e) { /* storage blocked */ }
+    setLanguage(urlLang() || (LANGS.includes(saved) ? saved : DEFAULT_LANG));
 }
 
 // Language switcher click handler

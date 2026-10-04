@@ -99,6 +99,9 @@ async function initArticle(forceLang = null) {
         }
 
         document.title = `${title} - Nest Group`;
+        // Search results show this, so describe the article itself in its language
+        const description = document.querySelector('meta[name="description"]');
+        if (description) description.setAttribute('content', api.newsExcerpt(contentBlocks, 160).replace(/\s+/g, ' ').trim() || title);
 
         if (loader) loader.style.display = 'none';
         if (container) container.style.display = 'block';

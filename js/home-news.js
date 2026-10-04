@@ -74,7 +74,7 @@ function renderHomeGrid(articles, container, lang) {
                     ${formattedDate ? `<div class="news-date">&#128197; <span>${formattedDate}</span></div>` : ''}
                     <h4>${title}</h4>
                     <p>${excerpt}</p>
-                    <a href="article.html?id=${articleId}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMore}</a>
+                    <a href="${api.escapeHTML(window.withLang('article.html?id=' + articleId))}" style="color:var(--gold);font-weight:700;font-size:14px;margin-top:16px;display:inline-flex;align-items:center;gap:6px;">${readMore}</a>
                 </div>
             </div>
         `;
@@ -85,7 +85,7 @@ function renderHomeGrid(articles, container, lang) {
     container.querySelectorAll('.news-card[data-article-id]').forEach(card => {
         card.addEventListener('click', () => {
             const id = card.getAttribute('data-article-id');
-            if (id) window.location.href = 'article.html?id=' + id;
+            if (id) window.location.href = window.withLang('article.html?id=' + id);
         });
     });
 }
