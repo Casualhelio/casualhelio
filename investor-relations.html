@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=70" />
+    <link rel="stylesheet" href="css/styles.css?v=71" />
     <style>
         /* ── IR hero ── */
         .ir-hero {
@@ -220,7 +220,7 @@
                                 style="display:block; font-size:14px; font-weight:600; margin-bottom:10px; color:rgba(255,255,255,0.8);"
                                 data-i18n="calc_amount_label">Initial Investment Amount</label>
                             <div style="position:relative; display:flex; align-items:center;">
-                                <input type="text" id="investAmount" value="" placeholder="e.g. 100,000,000"
+                                <input type="text" id="investAmount" inputmode="decimal" autocomplete="off" value="" placeholder="e.g. 100,000,000"
                                     data-i18n-ph="calc_amount_ph"
                                     style="width:100%; background:transparent; border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:24px; font-weight:700; padding:16px 60px 16px 20px; border-radius:8px; transition:border-color 0.3s; box-sizing:border-box; font-family:inherit;" />
                                 <span id="currencySymbol"
@@ -364,7 +364,7 @@
                                 style="display:block; font-size:14px; font-weight:600; margin-bottom:10px; color:rgba(255,255,255,0.8);"
                                 data-i18n="fin_amount_label">Investment Amount</label>
                             <div style="position:relative; display:flex; align-items:center;">
-                                <input type="text" id="finAmount" placeholder="e.g. 100,000,000"
+                                <input type="text" id="finAmount" inputmode="decimal" autocomplete="off" placeholder="e.g. 100,000,000"
                                     data-i18n-ph="calc_amount_ph"
                                     style="width:100%; background:transparent; border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:24px; font-weight:700; padding:16px 70px 16px 20px; border-radius:8px; transition:border-color 0.3s; box-sizing:border-box; font-family:inherit;" />
                                 <span id="finCurrencySymbol"
@@ -505,12 +505,12 @@
 
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=70"></script>
-    <script src="js/translations.js?v=70"></script>
-    <script src="js/sanity-client.js?v=70"></script>
-    <script src="js/exchange-rate.js?v=70"></script>
-    <script src="js/calculator.js?v=70"></script>
-    <script src="js/main.js?v=70"></script>
+    <script src="js/components.js?v=71"></script>
+    <script src="js/translations.js?v=71"></script>
+    <script src="js/sanity-client.js?v=71"></script>
+    <script src="js/exchange-rate.js?v=71"></script>
+    <script src="js/calculator.js?v=71"></script>
+    <script src="js/main.js?v=71"></script>
 
 </body>
 

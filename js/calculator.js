@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!rates) return;
             if (rates.propertyYieldPercent > 0) RATES.yieldPercent = rates.propertyYieldPercent;
             if (rates.nonBankingInterestPercent > 0) RATES.nbfiPercent = rates.nonBankingInterestPercent;
-            if (rates.taxRatePercent >= 0) RATES.taxPercent = rates.taxRatePercent;
+            // typeof: `null >= 0` is true, so a cleared Studio field would otherwise pass
+            if (typeof rates.taxRatePercent === 'number' && rates.taxRatePercent >= 0) RATES.taxPercent = rates.taxRatePercent;
             if (propInitDone && _propRecalc) _propRecalc();
             if (finInitDone && _finRecalc) _finRecalc();
         } catch (err) {
@@ -69,6 +70,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------------------------------------------------------------
+    // CURRENCY HELPERS shared by both tabs
+    // ---------------------------------------------------------------
+    // Each visitor starts in their own currency: Japanese pages in yen,
+    // English in US dollars, Mongolian in tögrög.
+    function langCurrency() {
+        const lang = document.documentElement.lang;
+        return lang === 'ja' ? 'JPY' : lang === 'en' ? 'USD' : 'MNT';
+    }
+
+    // A round starting amount in each currency, used until the visitor types one
+    const DEFAULT_AMOUNTS = { MNT: 100000000, JPY: 10000000, USD: 50000, EUR: 50000, CNY: 300000, KRW: 50000000 };
+
+    // No digits beyond this: a 13-digit amount is already about $3 billion in tögrög
+    const MAX_INT_DIGITS = 13;
+
+    const isWholeCurrency = (code) => code === 'MNT' || code === 'JPY' || code === 'KRW';
+
+    /** "￥647,309" (ja), "¥647,309" (en), "647 309 ¥" (mn): the page's own money format. */
+    function formatMoney(amount, code) {
+        const decimals = isWholeCurrency(code) ? 0 : 2;
+        try {
+            return new Intl.NumberFormat(dateLocale(), {
+                style: 'currency',
+                currency: code,
+                // ₮ rather than "MNT"; other currencies keep their unambiguous symbol (CN¥ vs ¥)
+                currencyDisplay: code === 'MNT' ? 'narrowSymbol' : 'symbol',
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals,
+            }).format(amount);
+        } catch (e) {
+            return `${amount.toFixed(decimals)} ${code}`;
+        }
+    }
+
+    /** Keep only an amount: digits and, for currencies with cents, one decimal point. */
+    function sanitizeAmount(raw, code) {
+        let val = raw.replace(/[^0-9.,]/g, '').replace(/,/g, '');
+        const firstDot = val.indexOf('.');
+        if (firstDot !== -1) {
+            val = val.slice(0, firstDot + 1) + val.slice(firstDot + 1).replace(/\./g, '');
+        }
+        let [int, frac] = val.split('.');
+        int = int.replace(/^0+(?=\d)/, '').slice(0, MAX_INT_DIGITS);
+        if (frac === undefined) return int;
+        // Whole-number currencies keep the typed point but take no digits after it,
+        // so "1234.5" never turns into 12345
+        return `${int}.${frac.slice(0, isWholeCurrency(code) ? 0 : 2)}`;
+    }
+
+    // ---------------------------------------------------------------
     // EXCHANGE-RATE SOURCE LINE
     // ---------------------------------------------------------------
     const rateSourceInfo = document.getElementById('rateSourceInfo');
@@ -80,9 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const updated = window.ExchangeRate.getUpdatedAt();
-        const dateText = updated ? updated.toLocaleDateString(dateLocale(), { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-        rateSourceInfo.textContent = tr('calc_rate_source', 'Exchange rates: mid-market (moneyconvert.net), updated {date}')
-            .replace('{date}', dateText);
+        const template = tr('calc_rate_source', 'Exchange rates: mid-market (moneyconvert.net), updated {date}');
+        rateSourceInfo.textContent = updated
+            ? template.replace('{date}', updated.toLocaleDateString(dateLocale(), { year: 'numeric', month: 'short', day: 'numeric' }))
+            // No timestamp in the feed: drop the "updated {date}" clause rather than end on "updated "
+            : template.replace(/\s*[,、・][^,、・]*\{date\}[^,、・]*$/, '');
     }
 
     // The source line is built in JS, so it has to follow the language switcher
@@ -131,11 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const resRoi = document.getElementById('resRoi');
         const tableBody = document.getElementById('yearlyTableBody');
 
-        let currentCurrency = 'MNT';
+        let currentCurrency = langCurrency();
+        let currencyTouched = false; // the visitor picked a currency themselves
+        let amountTouched = false;   // the visitor typed an amount themselves
 
         const state = RATES; // shared with the finance tab
 
-        let _internalMntValue = 100000000;
+        // The amount as typed, in the selected currency (not converted to MNT)
+        let displayAmount = DEFAULT_AMOUNTS[currentCurrency];
 
         // --- Currency ---
         function buildCurrencySwitcher() {
@@ -150,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.title = cur.label;
                 btn.style.cssText = `padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out;border:1px solid rgba(255,255,255,0.25);font-family:inherit;letter-spacing:0.5px;`;
                 applyBtnStyle(btn, cur.code === currentCurrency);
-                btn.addEventListener('click', () => selectCurrency(cur.code));
+                btn.addEventListener('click', () => { currencyTouched = true; selectCurrency(cur.code); });
                 currencySwitcher.appendChild(btn);
             });
         }
@@ -178,6 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
         function selectCurrency(code) {
             if (code === currentCurrency) return;
             currentCurrency = code;
+            // A typed amount keeps its number and takes the new currency label
+            // (10,000,000 stays 10,000,000); the untouched default becomes the
+            // round default for the new currency.
+            if (!amountTouched) displayAmount = DEFAULT_AMOUNTS[code];
             updateSwitcherActiveState();
             updateCurrencySymbol();
             updateExchangeRateInfo();
@@ -186,8 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateCurrencySymbol() {
-            if (!currencySymbolEl || !window.ExchangeRate) return;
-            currencySymbolEl.textContent = window.ExchangeRate.getSymbol(currentCurrency);
+            if (!currencySymbolEl) return;
+            // The code, as on the finance tab: "¥" alone would not tell JPY from CNY
+            currencySymbolEl.textContent = currentCurrency;
         }
 
         function updateExchangeRateInfo() {
@@ -197,38 +258,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Amount ---
         function reformatAmountInput() {
             if (!amountInput) return;
-            const displayAmount = convertFromMnt(_internalMntValue);
             amountInput.value = formatAmount(displayAmount);
         }
 
         /** Plain string for editing (no thousands separators); avoids per-keystroke format locking for USD/EUR/CNY. */
-        function toEditableAmountString(mntVal) {
-            const n = convertFromMnt(mntVal);
-            if (currentCurrency === 'MNT' || currentCurrency === 'JPY' || currentCurrency === 'KRW') {
-                return String(Math.round(n));
-            }
+        function toEditableAmountString(n) {
+            if (isWholeCurrency(currentCurrency)) return String(Math.round(n));
             const rounded = Math.round(n * 100) / 100;
             if (!Number.isFinite(rounded)) return '0';
             if (Math.abs(rounded - Math.round(rounded)) < 1e-9) return String(Math.round(rounded));
             return String(rounded);
-        }
-
-        function sanitizeAmountTyping(raw) {
-            let val = raw.replace(/[^0-9.,]/g, '').replace(/,/g, '');
-            const firstDot = val.indexOf('.');
-            if (firstDot !== -1) {
-                val = val.slice(0, firstDot + 1) + val.slice(firstDot + 1).replace(/\./g, '');
-            }
-            const intOnly = currentCurrency === 'MNT' || currentCurrency === 'JPY' || currentCurrency === 'KRW';
-            if (intOnly) {
-                val = val.split('.')[0];
-            } else {
-                const parts = val.split('.');
-                if (parts[1] !== undefined) {
-                    val = parts[0] + '.' + parts[1].slice(0, 2);
-                }
-            }
-            return val;
         }
 
         function convertFromMnt(mntAmount) {
@@ -249,10 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function formatResult(mntAmount) {
-            const displayAmount = convertFromMnt(mntAmount);
-            const formatted = formatAmount(displayAmount);
-            const sym = window.ExchangeRate ? window.ExchangeRate.getSymbol(currentCurrency) : currentCurrency;
-            return `${formatted} ${currentCurrency === 'MNT' ? 'MNT' : `${currentCurrency} (${sym})`}`;
+            return formatMoney(convertFromMnt(mntAmount), currentCurrency);
         }
 
         // --- Assumptions Labels ---
@@ -270,10 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Core Calc ---
         function calculateReturns() {
             if (!amountInput || !yearsSlider) return;
-            const rawDisplay = amountInput.value.replace(/[^0-9.,]/g, '').replace(/,/g, '');
-            const displayParsed = parseFloat(rawDisplay) || 0;
-            const initialInvestment = convertToMnt(displayParsed);
-            _internalMntValue = initialInvestment;
+            const initialInvestment = convertToMnt(displayAmount);
 
             const years = parseInt(yearsSlider.value, 10) || 5;
             yearValueDisplays.forEach(el => el.textContent = years);
@@ -331,17 +364,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Event Listeners (property amount: edit raw while focused; format on blur — fixes USD/CNY/EUR typing) ---
         if (amountInput) {
             amountInput.addEventListener('focus', () => {
-                amountInput.value = toEditableAmountString(_internalMntValue);
+                amountInput.value = toEditableAmountString(displayAmount);
             });
             amountInput.addEventListener('blur', () => {
                 reformatAmountInput();
                 calculateReturns();
             });
             amountInput.addEventListener('input', (e) => {
-                const sanitized = sanitizeAmountTyping(e.target.value);
+                const sanitized = sanitizeAmount(e.target.value, currentCurrency);
                 e.target.value = sanitized;
                 const parsed = sanitized === '' || sanitized === '.' ? 0 : parseFloat(sanitized);
-                _internalMntValue = convertToMnt(Number.isFinite(parsed) ? parsed : 0);
+                displayAmount = Number.isFinite(parsed) ? parsed : 0;
+                amountTouched = true;
                 calculateReturns();
             });
         }
@@ -360,8 +394,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Init ---
-        if (amountInput) amountInput.value = formatAmount(convertFromMnt(_internalMntValue));
+        if (amountInput) amountInput.value = formatAmount(displayAmount);
         buildCurrencySwitcher();
+        updateCurrencySymbol();
+        updateExchangeRateInfo();
+
+        // Follow the language switch to its currency until the visitor picks one;
+        // either way the results take the new language's number format.
+        document.addEventListener('languageChanged', () => {
+            if (!currencyTouched && langCurrency() !== currentCurrency) selectCurrency(langCurrency());
+            else calculateReturns();
+        });
         if (window.ExchangeRate) {
             window.ExchangeRate.init().then(() => {
                 updateExchangeRateInfo();
@@ -400,18 +443,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const MNT_RATES = [0.12, 0.13, 0.14, 0.15];
         const FOREIGN_RATES = [0.04, 0.05, 0.06];
         const FOREIGN_DEFAULT = 0.05; // published JPY asset-management rate (~5%)
-        const DEFAULT_MNT = 100000000;
-
-        let finCurrency = 'MNT';
-        let finRate = RATES.nbfiPercent / 100;
+        let finCurrency = langCurrency();
+        let finCurrencyTouched = false;
+        let finAmountTouched = false;
         let userPickedRate = false;
         let finYears = 5;
-        let finInternalMnt = DEFAULT_MNT;
+        let finAmount = DEFAULT_AMOUNTS[finCurrency]; // as typed, in finCurrency
 
         const ER = () => window.ExchangeRate;
         const taxRate = () => RATES.taxPercent / 100;
         const defaultRate = () => (finCurrency === 'MNT' ? RATES.nbfiPercent / 100 : FOREIGN_DEFAULT);
         const pct = (r) => `${+(r * 100).toFixed(1)}%`;
+        let finRate = defaultRate();
 
         function finFromMnt(mnt) {
             if (finCurrency === 'MNT' || !ER()) return mnt;
@@ -425,18 +468,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function finFmt(mnt) {
-            const isJpyKrw = finCurrency === 'JPY' || finCurrency === 'KRW';
-            if (finCurrency === 'MNT' || !ER()) return Math.round(mnt).toLocaleString('en-US') + ' MNT';
-            const converted = ER().convert(mnt, finCurrency);
-            const sym = ER().getSymbol(finCurrency);
-            const dec = isJpyKrw ? 0 : 2;
-            return converted.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + ` ${finCurrency} (${sym})`;
+            return formatMoney(finFromMnt(mnt), finCurrency);
         }
 
         function fmtInput(num) {
-            const isJpyKrw = finCurrency === 'JPY' || finCurrency === 'KRW';
-            if (finCurrency === 'MNT') return Math.round(num).toLocaleString('en-US');
-            return num.toLocaleString('en-US', { minimumFractionDigits: isJpyKrw ? 0 : 2, maximumFractionDigits: isJpyKrw ? 0 : 2 });
+            const dec = isWholeCurrency(finCurrency) ? 0 : 2;
+            return num.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
         }
 
         // The chip list always contains the default rate, so a Sanity rate outside the presets still shows
@@ -490,18 +527,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     'font-weight:700', 'font-size:13px', 'cursor:pointer',
                     'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
-                btn.addEventListener('click', () => {
-                    if (code === finCurrency) return;
-                    finCurrency = code;
-                    finRate = defaultRate(); // MNT and foreign products have different rates
-                    userPickedRate = false;
-                    buildFinCurrSwitcher(); buildRateChips();
-                    if (finAmountInput) finAmountInput.value = fmtInput(finFromMnt(finInternalMnt));
-                    if (finCurrSymbol) finCurrSymbol.textContent = code;
-                    updateFinExchInfo(); finCalculate();
-                });
+                btn.addEventListener('click', () => { finCurrencyTouched = true; selectFinCurrency(code); });
                 finCurrSwitcher.appendChild(btn);
             });
+        }
+
+        function selectFinCurrency(code) {
+            if (code === finCurrency) return;
+            finCurrency = code;
+            finRate = defaultRate(); // MNT and foreign products have different rates
+            userPickedRate = false;
+            // A typed amount keeps its number under the new label; the default becomes the new currency's default
+            if (!finAmountTouched) finAmount = DEFAULT_AMOUNTS[code];
+            buildFinCurrSwitcher(); buildRateChips();
+            if (finAmountInput) finAmountInput.value = fmtInput(finAmount);
+            if (finCurrSymbol) finCurrSymbol.textContent = code;
+            updateFinExchInfo(); finCalculate();
         }
 
         function updateFinExchInfo() {
@@ -516,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (finLblRate) finLblRate.textContent = (finRate * 100).toFixed(1) + '%';
             if (finLblTax) finLblTax.textContent = pct(TAX_RATE);
 
-            const P0 = finInternalMnt;
+            const P0 = finToMnt(finAmount);
             if (!P0 || P0 <= 0) { clearFinResults(); return; }
 
             let principal = P0;
@@ -569,16 +610,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Event Listeners ---
         if (finAmountInput) {
             finAmountInput.addEventListener('input', (e) => {
-                const raw = e.target.value.replace(/[^0-9.,]/g, '').replace(/,/g, '');
-                const parsed = parseFloat(raw) || 0;
-                finInternalMnt = finToMnt(parsed);
+                const sanitized = sanitizeAmount(e.target.value, finCurrency);
+                e.target.value = sanitized;
+                finAmount = parseFloat(sanitized) || 0;
+                finAmountTouched = true;
                 finCalculate();
             });
             finAmountInput.addEventListener('focus', (e) => {
                 e.target.value = e.target.value.replace(/[^0-9.,]/g, '').replace(/,/g, '');
             });
             finAmountInput.addEventListener('blur', () => {
-                if (finAmountInput) finAmountInput.value = fmtInput(finFromMnt(finInternalMnt));
+                if (finAmountInput) finAmountInput.value = fmtInput(finAmount);
             });
         }
 
@@ -593,8 +635,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Init ---
         buildFinCurrSwitcher();
         buildRateChips();
-        if (finAmountInput) finAmountInput.value = fmtInput(finInternalMnt);
-        if (finCurrSymbol) finCurrSymbol.textContent = 'MNT';
+        if (finAmountInput) finAmountInput.value = fmtInput(finAmount);
+        if (finCurrSymbol) finCurrSymbol.textContent = finCurrency;
+        updateFinExchInfo();
+
+        document.addEventListener('languageChanged', () => {
+            if (!finCurrencyTouched && langCurrency() !== finCurrency) selectFinCurrency(langCurrency());
+            else finCalculate();
+        });
         if (finYearsSlider) finYearsSlider.value = 5;
         if (finYearDisplay) finYearDisplay.textContent = 5;
 
