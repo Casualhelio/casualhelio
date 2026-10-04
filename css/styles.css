@@ -1783,25 +1783,51 @@ footer {
 }
 
 .lang-btn {
+    position: relative;
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.08em;
     color: rgba(255, 255, 255, 0.75);
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 100px;
-    transition: var(--transition);
+    transition: color 200ms ease-out, background-color 200ms ease-out, transform 120ms ease-out;
     white-space: nowrap;
     line-height: 1;
     letter-spacing: 0.04em;
 }
 
+/* The pills are only 18–22px tall, too small to tap reliably. This invisible
+   layer gives each one a 44px-tall hit area. Sideways it stops halfway across
+   the 4px gap (and at the switcher's outer edge), so neighbours never overlap
+   and a tap always lands on the nearest language. */
+.lang-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    right: -2px;
+    height: 44px;
+    transform: translateY(-50%);
+}
+
+.lang-btn:first-child::before {
+    left: -5px;
+}
+
+.lang-btn:last-child::before {
+    right: -5px;
+}
+
 .lang-btn:hover {
     color: var(--gold);
     background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn:active {
+    transform: scale(0.96);
 }
 
 .lang-btn.active {
