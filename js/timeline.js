@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clamp between 0% and 100%
         percentage = Math.max(0, Math.min(100, percentage));
 
-        // Apply the height dynamically to the fill bar
-        progressBar.style.height = `${percentage}%`;
+        // Grow the fill bar (a transform, so no layout work per frame)
+        progressBar.style.transform = `scaleY(${percentage / 100})`;
 
         // Optionally, make the line glow hotter as it gets closer to 100% 
         // by mapping opacity from 0.4 to 1

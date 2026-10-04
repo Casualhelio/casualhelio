@@ -26,17 +26,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=70" />
-    <link rel="stylesheet" href="css/v2.css?v=70" />
+    <link rel="stylesheet" href="css/styles.css?v=71" />
+    <link rel="stylesheet" href="css/v2.css?v=71" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
 
+        /* A still from the film fills the hero while the video downloads
+           (6.5-12 MB), instead of an empty navy block. The video covers it
+           once it plays; reduced-motion visitors keep only the still. */
         .hero-video-wrap {
             position: absolute;
             inset: 0;
             z-index: 0;
             overflow: hidden;
+            background: url('assets/hero-poster.jpg') center / cover no-repeat;
         }
 
         .hero-video-wrap video {
@@ -203,8 +207,7 @@
             .map-overlay-svg .route-base { stroke-dashoffset: 0; }
             .map-overlay-svg .plane { opacity: 1; offset-distance: 60%; animation: none; }
             .map-overlay-svg .node-inner { opacity: 1; transform: none; animation: none; }
-            /* no looping hero video; a still from the film shows instead */
-            .hero-video-wrap { background: url('assets/hero-poster.jpg') center / cover no-repeat; }
+            /* no looping hero video; the still from the film shows instead */
             .hero-video-wrap video { display: none; }
         }
 
@@ -746,12 +749,12 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=70"></script>
-    <script src="js/translations.js?v=70"></script>
-    <script src="js/sanity-client.js?v=70"></script>
-    <script src="js/home-news.js?v=70"></script>
-    <script src="js/main.js?v=70"></script>
-    <script src="js/v2.js?v=70"></script>
+    <script src="js/components.js?v=71"></script>
+    <script src="js/translations.js?v=71"></script>
+    <script src="js/sanity-client.js?v=71"></script>
+    <script src="js/home-news.js?v=71"></script>
+    <script src="js/main.js?v=71"></script>
+    <script src="js/v2.js?v=71"></script>
 </body>
 
 </html>
