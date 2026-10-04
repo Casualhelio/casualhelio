@@ -47,13 +47,14 @@ Local lead generation and recruiting are not primary goals for the site.
 - Every user-facing string goes through `js/translations.js` in all three languages. Mongolian headers use sentence case, not English-style Title Case.
 - Content from Sanity must stay escaped (`escapeHTML`, validated image refs, validated article IDs).
 
+**Phone:** (+976) 7707-6977, confirmed by the owner (October 2026), shown everywhere on the site.
+
 **Terminology:** the public brand is "NEST" / "Nest Group". The group has **four operating subsidiaries** (confirmed October 2026): Nest Real Estate (NEST Property Service), Nest Mirais NBFI, Nest Travel Service and Nest Foods, with legal names in the form "VE-ST … LLC". Nest Career is not operating yet. "NEST DUP" is the hybrid investment product, "PLATHOME" the rental service and "R+LDK" the interior design service.
 
 **Open decisions and unresolved facts.** Future work must not repeat these as fact until they are confirmed:
 - **Subsidiary copy still disagrees with the confirmed count of four.** Home says "Five Companies. One Vision.", the about timeline says "three subsidiaries", and the Companies page has a Nest Career section. Companies ("Four specialized subsidiaries") and the footer (four VE-ST LLCs) are already right. How to present Nest Career until it operates is undecided.
 - **Company age.** The holding is described as "operating since 2018". Property Service started in 2016 with 7 properties. The homepage stat says "7+ Years of Excellence", while the about timeline and news say "A Decade".
 - **Sector framing.** The footer and about meta describe the group as "Real Estate and Non-Banking Finance" only. The hero lists eight business areas, and the pillars section lists four.
-- **Phone number.** As on main: the footer, Mongolian contact copy and privacy policy show (+976) 7707-6977, while the English and Japanese contact copy shows +976 7737-0770. Which number belongs where is not confirmed.
 - **Legal review.** The privacy policy (`privacy.html`, written from what the code actually does) and the calculator disclaimer need legal/compliance review. Whether the contact form needs an explicit consent checkbox under Mongolia's personal data protection law is undecided. No Terms of Use exist, and the footer no longer claims any.
 - **Future link to the management software.** The separate property-management app may later mark properties as leased or available on this site. Sanity's `property.isAvailable` field is the existing hook, but no page displays properties yet. The mechanism is not decided.
 
