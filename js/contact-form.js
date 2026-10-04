@@ -47,8 +47,10 @@ form.addEventListener("submit", function (e) {
                 result.style.color = "var(--primary)";
                 form.reset();
             } else {
-                console.warn('Form submission error:', response);
-                result.textContent = jsonResponse.message || (tr.con_error || "Something went wrong! Please try again.");
+                // The service's own message is English-only; keep it for debugging and
+                // show the visitor the translated one
+                console.warn('Form submission error:', jsonResponse.message || response.status);
+                result.textContent = tr.con_error || "Something went wrong! Please try again.";
                 result.style.background = "#fff3f3";
                 result.style.borderLeft = "4px solid #dc3545";
                 result.style.color = "#dc3545";
@@ -68,3 +70,16 @@ form.addEventListener("submit", function (e) {
             submitBtn.disabled = false;
         });
 });
+
+// The office map's labels follow the page language (Google Maps takes hl=en/mn/ja)
+function syncMapLanguage() {
+    const map = document.getElementById("officeMap");
+    if (!map) return;
+    const lang = ["en", "mn", "ja"].includes(document.documentElement.lang) ? document.documentElement.lang : "mn";
+    const url = new URL(map.src);
+    if (url.searchParams.get("hl") === lang) return;
+    url.searchParams.set("hl", lang);
+    map.src = url.toString();
+}
+document.addEventListener("languageChanged", syncMapLanguage);
+syncMapLanguage();

@@ -734,7 +734,7 @@
     border: none;
 }
 
-.v2-mvv__card.is-primary h3 { color: #fff; }
+.v2-mvv__card.is-primary :is(h2, h3) { color: #fff; }
 .v2-mvv__card.is-primary p { color: rgba(255, 255, 255, 0.85); }
 
 .v2-mvv__icon {
@@ -751,7 +751,7 @@
 
 .v2-mvv__card:hover .v2-mvv__icon { transform: rotate(-8deg) scale(1.1); }
 
-.v2-mvv__card h3 {
+.v2-mvv__card :is(h2, h3) {
     font-family: var(--font-display);
     font-size: 22px;
     color: var(--primary);

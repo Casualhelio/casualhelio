@@ -163,6 +163,10 @@ function syncLanguageUrl(lang) {
     else url.searchParams.set('lang', lang);
     if (url.href !== location.href) history.replaceState(history.state, '', url);
 
+    // Unindexed pages (the 404) get no canonical or alternates: they would
+    // point search engines at whatever missing address was requested
+    if (document.querySelector('meta[name="robots"][content*="noindex"]')) return;
+
     // The canonical is created here rather than written in the HTML: a static one
     // could only name a single language, and Google advises against JS editing one.
     let canonical = document.querySelector('link[rel="canonical"]');

@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com; frame-src https://maps.google.com https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Page Not Found — Nest Group</title>
+    <title data-i18n="e404_meta_title">Page Not Found — Nest Group</title>
     <meta name="description" content="The page you're looking for doesn't exist. Return to Nest Group homepage." />
     <meta name="robots" content="noindex">
-    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="icon" href="/assets/favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=71" />
+    <link rel="stylesheet" href="/css/styles.css?v=72" />
     <style>
         .error-page {
             min-height: 100vh;
@@ -23,6 +23,10 @@
             text-align: center;
             padding: 40px 20px;
             background: var(--off-white);
+        }
+        /* The logo file is white line art; tint it navy on the light page, as the footer does */
+        .error-page__logo {
+            filter: brightness(0) saturate(100%) invert(24%) sepia(15%) saturate(1654%) hue-rotate(160deg) brightness(94%) contrast(89%);
         }
         .error-page h1 {
             font-family: var(--font-display);
@@ -50,14 +54,17 @@
 <body>
     <div class="error-page">
         <div>
-            <a href="index.html" style="display:inline-block;margin-bottom:32px;">
-                <img src="assets/logo.png" alt="Nest Group" width="120" height="42" style="width:auto;" />
+            <a href="/" style="display:inline-block;margin-bottom:32px;">
+                <img src="/assets/logo.png" alt="Nest Group" width="120" height="42" style="width:auto;" class="error-page__logo" />
             </a>
             <h1>404</h1>
-            <h2>Page Not Found</h2>
-            <p>The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
-            <a href="index.html" class="btn-primary">Back to Home</a>
+            <h2 data-i18n="e404_title">Page Not Found</h2>
+            <p data-i18n="e404_p">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+            <a href="/" class="btn-primary" data-i18n="e404_btn">Back to Home</a>
         </div>
     </div>
+    <!-- Root-relative: this page is served for any missing path, however deep -->
+    <script src="/js/translations.js?v=72"></script>
+    <script src="/js/main.js?v=72"></script>
 </body>
 </html>

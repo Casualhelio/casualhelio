@@ -88,8 +88,17 @@
    across EN and MN; Japanese needs its own faces.
    ============================================= */
 html[lang="ja"] {
-    --font-body: 'Noto Sans JP', sans-serif;
-    --font-display: 'Noto Serif JP', serif;
+    /* Noto loads on demand (main.js); until it arrives, the closest system
+       faces stand in, sans for body and mincho for headings, on every OS */
+    --font-body: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    --font-display: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+}
+
+/* Japanese has no true italics: browsers slant the glyphs instead. Emphasis
+   comes from the colour and weight the markup already sets. */
+html[lang="ja"] em,
+html[lang="ja"] i {
+    font-style: normal !important;
 }
 
 /* =============================================
@@ -269,6 +278,19 @@ ul {
     background: var(--white);
     border-radius: 2px;
     transition: var(--transition);
+}
+
+/* Open menu: the three bars fold into a close icon (bars are 2px + 5px gap apart) */
+.hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* =============================================
@@ -493,6 +515,13 @@ ul {
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+}
+
+/* Spaced capitals suit Latin labels; Cyrillic reads more easily in sentence case */
+html[lang="mn"] .stat-label {
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    text-transform: none;
 }
 
 /* =============================================
@@ -2691,7 +2720,7 @@ html[lang="ja"] .cta-banner h2 {
     margin-bottom: 2px;
 }
 
-.team-card-content h4 {
+.team-card-content h3 {
     font-size: clamp(17px, 1.55vw, 22px);
     font-weight: 700;
     text-transform: uppercase;
@@ -2701,8 +2730,18 @@ html[lang="ja"] .cta-banner h2 {
     font-family: var(--font-display);
 }
 
-.team-card-sticky:not(.bg-primary) .team-card-content h4 {
+.team-card-sticky:not(.bg-primary) .team-card-content h3 {
     color: #244556;
+}
+
+/* What each leader is responsible for, so the names carry a track record */
+.team-card-content .team-bio {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: var(--leading-relaxed, 1.7);
+    color: var(--text-muted);
+    max-width: 46ch;
+    text-wrap: pretty;
 }
 
 .team-card-content .team-role {
@@ -2742,7 +2781,7 @@ html[lang="ja"] .cta-banner h2 {
         flex: 0 0 130px;
     }
 
-    .team-card-content h4 {
+    .team-card-content h3 {
         font-size: 24px;
     }
 }
@@ -2858,9 +2897,11 @@ html[lang="ja"] .cta-banner h2 {
         flex-direction: column;
     }
 
+    /* Light borders: the tabs sit on navy, where a navy border vanished and
+       the inactive tab read as plain text */
     .calc-tab-btn {
         border-radius: 0 !important;
-        border: 2px solid rgba(36, 69, 86, 0.2) !important;
+        border: 2px solid rgba(255, 255, 255, 0.25) !important;
         border-bottom: none !important;
     }
 
@@ -2870,7 +2911,7 @@ html[lang="ja"] .cta-banner h2 {
 
     .calc-tab-btn:last-child {
         border-radius: 0 0 8px 8px !important;
-        border-bottom: 2px solid rgba(36, 69, 86, 0.2) !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.25) !important;
     }
 
     .calc-tab-btn.active {
@@ -2899,6 +2940,379 @@ html[lang="ja"] .cta-banner h2 {
     line-height: var(--leading-normal);
     color: rgba(255, 255, 255, 0.7);
     text-wrap: pretty;
+}
+
+/* =============================================
+   PROOF STRIP — certificates, partner banks and the Group CEO, placed
+   beside the figures an investor is weighing (home, Investment)
+   ============================================= */
+.proof-strip {
+    background: var(--white);
+    border-bottom: 1px solid rgba(36, 69, 86, 0.08);
+    padding: 28px 5%;
+}
+
+.proof-strip__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.proof-strip__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.proof-strip__row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+}
+
+.proof-strip__group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Hairline dividers between the three kinds of proof */
+.proof-strip__group + .proof-strip__group {
+    padding-left: 28px;
+    border-left: 1px solid rgba(36, 69, 86, 0.1);
+}
+
+.proof-strip__iso img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}
+
+.proof-strip__banks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+}
+
+.proof-strip__banks img {
+    width: auto;
+    height: 28px;
+    max-width: 104px;
+    object-fit: contain;
+}
+
+.proof-strip__ceo {
+    gap: 14px;
+    margin-left: auto;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.proof-strip__ceo img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    outline: 1px solid rgba(0, 0, 0, 0.1);
+    outline-offset: -1px;
+}
+
+.proof-strip__ceo strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.proof-strip__ceo > span > span {
+    color: var(--text-muted);
+}
+
+.proof-strip__ceo:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+    .proof-strip__ceo {
+        margin-left: 0;
+    }
+
+    .proof-strip__group + .proof-strip__group {
+        padding-left: 0;
+        border-left: 0;
+    }
+}
+
+/* =============================================
+   NEST DUP CYCLE — rent → reinvested in the NBFI → compounds → back to
+   the balance. Three steps in a row; the loop underneath closes the circle.
+   ============================================= */
+.dup-cycle {
+    position: relative;
+    margin: 48px 0 0;
+    color: var(--primary);
+}
+
+.dup-cycle--home {
+    margin-top: 56px;
+}
+
+.dup-cycle__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.dup-cycle__steps li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    padding: 0 12px;
+    text-wrap: balance;
+}
+
+.dup-cycle__num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--primary);
+    color: var(--gold-light);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Chevron from each step to the next, centred in the gap */
+.dup-cycle__steps li + li::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: -16px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+    transform: rotate(45deg);
+}
+
+.dup-cycle__loop {
+    display: block;
+    width: 100%;
+    height: 64px;
+    margin-top: 8px;
+    color: var(--gold);
+}
+
+.dup-cycle__caption {
+    position: absolute;
+    left: 50%;
+    bottom: 12px; /* the loop's bottom run is 12px above the figure's edge */
+    transform: translate(-50%, 50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 14px;
+    background: var(--white);
+    color: var(--gold-text);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+/* The caption sits on the loop line; match the section behind it */
+.pillars-section .dup-cycle__caption {
+    background: var(--off-white);
+}
+
+@media (max-width: 640px) {
+    .dup-cycle__steps {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .dup-cycle__steps li {
+        flex-direction: row;
+        text-align: left;
+        padding: 0;
+    }
+
+    .dup-cycle__steps li + li::before {
+        top: -20px;
+        left: 17px;
+        transform: rotate(135deg);
+    }
+
+    /* Stacked, the drawn loop would run off the steps; the caption's repeat icon carries it */
+    .dup-cycle__loop {
+        display: none;
+    }
+
+    .dup-cycle__caption {
+        position: static;
+        transform: none;
+        margin-top: 20px;
+        padding: 0;
+        background: none;
+    }
+}
+
+/* =============================================
+   COMPANIES OVERVIEW — page title, the four operating companies as jump
+   links, and the NEST DUP cycle that ties property and finance together
+   ============================================= */
+.cp-overview {
+    background: var(--white);
+    padding-bottom: 96px;
+}
+
+.cp-overview__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.15;
+    margin-bottom: 40px;
+}
+
+.cp-overview__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(36, 69, 86, 0.12);
+}
+
+.cp-overview__list a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 24px 24px 24px 0;
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.cp-overview__list li + li a {
+    padding-left: 24px;
+    border-left: 1px solid rgba(36, 69, 86, 0.12);
+}
+
+.cp-overview__name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.cp-overview__list a:hover .cp-overview__name {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.cp-overview__legal {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--gold-text);
+}
+
+.cp-overview__desc {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+    .cp-overview__list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cp-overview__list li:nth-child(odd) a {
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    .cp-overview__list li:nth-child(n+3) a {
+        border-top: 1px solid rgba(36, 69, 86, 0.12);
+    }
+}
+
+@media (max-width: 560px) {
+    .cp-overview__list {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-overview__list li a,
+    .cp-overview__list li + li a {
+        padding: 20px 0;
+        border-left: 0;
+    }
+
+    .cp-overview__list li + li a {
+        border-top: 1px solid rgba(36, 69, 86, 0.12);
+    }
+}
+
+/* Year-by-year tables: on phones the five columns fit the screen instead of
+   hiding tax and balance off to the right (the cells' padding is inline) */
+@media (max-width: 640px) {
+    .calc-table-wrap {
+        padding: 20px 12px !important;
+    }
+
+    .calc-table {
+        min-width: 0 !important;
+    }
+
+    .calc-table th,
+    .calc-table td {
+        padding: 12px 3px !important;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    /* Still wider than the screen: fade the right edge as a cue to scroll */
+    .calc-table-wrap.has-more {
+        -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+        mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+    }
+
+    /* Tögrög amounts run three digits longer than yen or dollars */
+    html[lang="mn"] .calc-table td {
+        font-size: 11px;
+    }
+
+    .calc-table th {
+        font-size: 11px;
+        letter-spacing: 0;
+        white-space: normal;
+    }
+}
+
+/* Year sliders in the brand gold rather than the browser's default blue */
+#calculator input[type="range"] {
+    accent-color: var(--gold);
 }
 
 /* Result card → contact form, carrying the simulation along */
@@ -2940,33 +3354,6 @@ html[lang="ja"] h3 {
 .team-ohot-full__media img {
     outline: 1px solid rgba(0, 0, 0, 0.1);
     outline-offset: -1px;
-}
-
-/* =============================================
-   JAPANESE FONT — Meiryo
-   ============================================= */
-html[lang="ja"],
-html[lang="ja"] body,
-html[lang="ja"] * {
-    font-family: 'Meiryo', 'メイリオ', 'Noto Sans JP', 'Inter', sans-serif !important;
-}
-
-html[lang="ja"] h1,
-html[lang="ja"] h2,
-html[lang="ja"] h3,
-html[lang="ja"] .section-title,
-html[lang="ja"] .section-tag {
-    font-family: 'Meiryo', 'メイリオ', 'Noto Serif JP', 'Playfair Display', serif !important;
-}
-
-/* Headings whose level was changed for the page outline keep the sans face
-   they had in Japanese (the rule above covers h1-h3, but they used to be h4/h5) */
-html[lang="ja"] .footer-col h2,
-html[lang="ja"] .news-card-body h2,
-html[lang="ja"] .news-card-body h3,
-html[lang="ja"] .v2-row__title,
-html[lang="ja"] [data-i18n="cp_sample_plans"] {
-    font-family: 'Meiryo', 'メイリオ', 'Noto Sans JP', 'Inter', sans-serif !important;
 }
 
 /* =============================================
@@ -3117,19 +3504,18 @@ html[lang="ja"] [data-i18n="cp_sample_plans"] {
         padding: 24px 20px;
     }
 
-    /* Stat grid single column */
+    /* Stats stay two by two: one column stacked four short figures into
+       ~520px of band before any content */
     .stats-grid {
-        grid-template-columns: 1fr;
+        gap: 24px 12px;
     }
 
     .stat-item {
-        border-right: none;
-        border-bottom: 1px solid var(--light-gray);
-        padding: 16px 8px;
+        padding: 4px 8px 4px 14px;
     }
 
-    .stat-item:last-child {
-        border-bottom: none;
+    .stat-number {
+        font-size: 32px;
     }
 
     /* Hero adjustments for very small screens */

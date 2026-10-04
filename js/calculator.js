@@ -688,6 +688,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------------------------------------------------------------
+    // YEAR TABLES: when a table is wider than the screen (long tögrög amounts
+    // on a narrow phone), fade its right edge until it is scrolled to the end
+    // ---------------------------------------------------------------
+    function syncTableOverflow() {
+        document.querySelectorAll('.calc-table-wrap').forEach(wrap => {
+            const more = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft > 2;
+            wrap.classList.toggle('has-more', more);
+        });
+    }
+    document.querySelectorAll('.calc-table-wrap').forEach(wrap => {
+        wrap.addEventListener('scroll', syncTableOverflow, { passive: true });
+    });
+    window.addEventListener('resize', syncTableOverflow, { passive: true });
+    // Tables are rebuilt on every recalculation; check after each one settles
+    const tableObserver = new MutationObserver(() => requestAnimationFrame(syncTableOverflow));
+    document.querySelectorAll('.calc-table tbody').forEach(tb => tableObserver.observe(tb, { childList: true }));
+    tabBtns.forEach(btn => btn.addEventListener('click', () => requestAnimationFrame(syncTableOverflow)));
+
+    // ---------------------------------------------------------------
     // BOOT: init the default (property) tab immediately
     // ---------------------------------------------------------------
     propInitDone = true;

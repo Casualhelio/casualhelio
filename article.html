@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=71" />
+    <link rel="stylesheet" href="css/styles.css?v=72" />
     <style>
         .article-hero {
             padding: 100px 5% 40px;
@@ -232,6 +232,14 @@
                 font-size: 13px;
             }
         }
+
+        /* Below 1025px the menu is a fixed top bar (70-80px): start the loader
+           and its "not found" message below it instead of underneath */
+        @media (max-width: 1024px) {
+            #article-loader {
+                padding-top: 140px !important;
+            }
+        }
     </style>
 </head>
 
@@ -298,11 +306,11 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=71"></script>
-    <script src="js/translations.js?v=71"></script>
-    <script src="js/main.js?v=71"></script>
-    <script src="js/sanity-client.js?v=71"></script>
-    <script src="js/article.js?v=71"></script>
+    <script src="js/components.js?v=72"></script>
+    <script src="js/translations.js?v=72"></script>
+    <script src="js/main.js?v=72"></script>
+    <script src="js/sanity-client.js?v=72"></script>
+    <script src="js/article.js?v=72"></script>
 
 </body>
 

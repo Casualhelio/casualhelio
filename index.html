@@ -26,8 +26,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=71" />
-    <link rel="stylesheet" href="css/v2.css?v=71" />
+    <link rel="stylesheet" href="css/styles.css?v=72" />
+    <link rel="stylesheet" href="css/v2.css?v=72" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
@@ -316,9 +316,9 @@
             background: rgba(201, 168, 76, 0.16);
             color: #75612c; /* deeper than --gold-text: it sits on its own gold tint (5.04:1) */
             font-family: var(--font-body);
-            font-size: 10px;
+            font-size: 12px; /* 10px was below a readable size */
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             padding: 4px 10px;
             border-radius: 100px;
@@ -395,6 +395,16 @@
             margin-left: 3px;
             font-weight: 700;
             transform: translateY(-0.15em);
+        }
+
+        /* Cards whose figure is held back lead with their topic instead */
+        .econ-card__title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+            margin: 6px 0 18px;
         }
 
         .econ-card__label {
@@ -507,6 +517,32 @@
         </div>
     </section>
 
+    <!-- PROOF — certificates, banks and a named leader, next to the numbers (PRODUCT.md: proof before promise) -->
+    <section class="proof-strip" aria-labelledby="proof-home">
+        <div class="proof-strip__inner">
+            <p class="proof-strip__label" id="proof-home" data-i18n="proof_label">Certified, and trusted by Mongolia's banks</p>
+            <div class="proof-strip__row">
+                <div class="proof-strip__group proof-strip__iso">
+                    <img src="assets/iso2001-logo.png" alt="ISO 9001:2015" width="64" height="64" loading="lazy" decoding="async" />
+                    <img src="assets/ISO 27001 Information Security.png" alt="ISO 27001:2022" width="64" height="64" loading="lazy" decoding="async" />
+                </div>
+                <ul class="proof-strip__group proof-strip__banks">
+                    <li><img src="assets/logo-tdb.png" alt="Trade &amp; Development Bank" width="120" height="44" loading="lazy" decoding="async" /></li>
+                    <li><img src="assets/logo-bogd.png" alt="Bogd Bank" width="120" height="44" loading="lazy" decoding="async" /></li>
+                    <li><img src="assets/logo-golomt.png" alt="Golomt Bank" width="120" height="44" loading="lazy" decoding="async" /></li>
+                    <li><img src="assets/logo-khan.png" alt="Khan Bank" width="120" height="44" loading="lazy" decoding="async" /></li>
+                </ul>
+                <a class="proof-strip__group proof-strip__ceo" href="about.html#management">
+                    <img src="assets/tugs.jpg" alt="" width="56" height="56" loading="lazy" decoding="async" />
+                    <span>
+                        <strong data-i18n="lead1_name">Tugsbileg Khurelbaatar</strong>
+                        <span><span data-i18n="lead1_role">CEO</span> · <span data-i18n="lead1_company">VE-ST Holdings Mongolia LLC</span></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- 4 PILLARS -->
     <section class="pillars-section">
         <div class="section-inner">
@@ -560,6 +596,23 @@
                     </div>
                 </div>
             </div>
+
+            <figure class="dup-cycle reveal dup-cycle--home" aria-label="NEST DUP">
+                <ol class="dup-cycle__steps">
+                    <li><span class="dup-cycle__num" aria-hidden="true">1</span><span data-i18n="dup_step1">Rent from a central Ulaanbaatar property</span></li>
+                    <li><span class="dup-cycle__num" aria-hidden="true">2</span><span data-i18n="dup_step2">Reinvested monthly in Nest Mirais NBFI</span></li>
+                    <li><span class="dup-cycle__num" aria-hidden="true">3</span><span data-i18n="dup_step3">Interest compounds, after tax</span></li>
+                </ol>
+                <!-- The return path: step 3 feeds step 1's balance again, every month -->
+                <svg class="dup-cycle__loop" viewBox="0 0 1000 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                    <path d="M833 4 V30 Q833 52 811 52 H189 Q167 52 167 30 V12" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+                    <path d="M159 18 L167 6 L175 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+                </svg>
+                <figcaption class="dup-cycle__caption">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+                    NEST DUP
+                </figcaption>
+            </figure>
         </div>
     </section>
 
@@ -649,13 +702,13 @@
                     <p class="econ-card__body" data-i18n="econ_p1">Монгол Улс нь Япон Улстай найрсаг харилцаа, урт хугацааны стратегийн хамтын ажиллагаатай орон бөгөөд Улаанбаатар–Нарита чиглэлд ердөө 5 цагийн нислэгтэй ойр байршил нь бизнес, хөрөнгө оруулалтын харилцааг улам дэмжиж байна.</p>
                 </article>
                 <article class="econ-card">
-                    <div class="econ-card__stat"><span class="econ-num">+6.4</span><span class="unit">%</span></div>
-                    <div class="econ-card__label" data-i18n="econ_gdp">Эдийн засгийн өсөлт (2024)</div>
+                    <!-- The figure is held back until it has a source (PRODUCT.md: proof before promise) -->
+                    <h3 class="econ-card__title" data-i18n="econ_gdp">Эдийн засгийн өсөлт</h3>
                     <p class="econ-card__body" data-i18n="econ_p2">Хөгжиж буй эдийн засагтай Монгол Улс нь өндөр өсөлтийн потенциалтай зах зээлд тооцогддог бөгөөд сүүлийн жилүүдэд эдийн засгийн өсөлт 6–7% орчим хадгалагдаж, цаашид тогтвортой өсөх хүлээлттэй байна.</p>
                 </article>
                 <article class="econ-card">
-                    <div class="econ-card__stat"><span class="econ-num">+12.8</span><span class="unit">%</span></div>
-                    <div class="econ-card__label" data-i18n="econ_realestate">Үл хөдлөх хөрөнгийн дунд. өсөлт</div>
+                    <!-- The figure is held back until it has a source and period -->
+                    <h3 class="econ-card__title" data-i18n="econ_realestate">Үл хөдлөх хөрөнгийн дундаж өсөлт</h3>
                     <p class="econ-card__body" data-i18n="econ_p3">Хотжилт, дэд бүтэц, дундаж давхаргын өсөлт зэрэг хүчин зүйлсийн нөлөөгөөр үл хөдлөх хөрөнгө, санхүү, үйлчилгээ, аялал жуулчлалын салбаруудад хөрөнгө оруулалтын боломжууд идэвхтэй нэмэгдэж байна.</p>
                 </article>
             </div>
@@ -749,12 +802,12 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=71"></script>
-    <script src="js/translations.js?v=71"></script>
-    <script src="js/sanity-client.js?v=71"></script>
-    <script src="js/home-news.js?v=71"></script>
-    <script src="js/main.js?v=71"></script>
-    <script src="js/v2.js?v=71"></script>
+    <script src="js/components.js?v=72"></script>
+    <script src="js/translations.js?v=72"></script>
+    <script src="js/sanity-client.js?v=72"></script>
+    <script src="js/home-news.js?v=72"></script>
+    <script src="js/main.js?v=72"></script>
+    <script src="js/v2.js?v=72"></script>
 </body>
 
 </html>
