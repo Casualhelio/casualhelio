@@ -41,6 +41,11 @@
     /* Primary reading color (use over --text-light for body copy) */
     --text-body: #3a4a57;
 
+    /* Quiet text on white: the lightest brand-tinted grey and the darkest-needed
+       gold that still pass WCAG AA for small text (4.85:1 and 4.65:1). */
+    --text-muted: #5d7582;
+    --gold-text: #897234;
+
     --gradient-primary: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     --gradient-gold: linear-gradient(135deg, #E6C875 0%, #C9A84C 100%);
     --gradient-dark: linear-gradient(135deg, #111A22 0%, #1A2A36 100%);
@@ -1419,13 +1424,13 @@ footer {
 
 .footer-col a {
     font-size: 13px;
-    color: rgba(36, 69, 86, 0.5);
-    transition: var(--transition);
+    color: var(--text-muted);
+    transition: color 250ms ease-out, padding-left 250ms ease-out;
     white-space: nowrap;
 }
 
 .footer-col a:hover {
-    color: var(--gold);
+    color: var(--gold-text);
     padding-left: 4px;
 }
 
@@ -1434,7 +1439,7 @@ footer {
     align-items: flex-start;
     gap: 10px;
     font-size: 14px;
-    color: rgba(36, 69, 86, 0.5);
+    color: var(--text-muted);
     margin-bottom: 12px;
 }
 
@@ -1450,17 +1455,15 @@ footer {
     align-items: center;
     justify-content: space-between;
     font-size: 13px;
-    color: rgba(36, 69, 86, 0.3);
+    color: var(--text-muted);
 }
 
-/* The faded row colour above is too light for a link (WCAG 1.4.3), so the
-   privacy link uses the readable footer text colour. */
+/* Same colour as the copyright text; the underline marks it as a link */
 .footer-bottom a {
     display: inline-block;
     padding: 4px 0;
-    color: var(--text-light);
     text-decoration: underline;
-    text-decoration-color: rgba(86, 101, 115, 0.4);
+    text-decoration-color: rgba(93, 117, 130, 0.4);
     text-underline-offset: 3px;
     transition: color 200ms ease-out, text-decoration-color 200ms ease-out;
 }
