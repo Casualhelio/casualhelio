@@ -38,6 +38,7 @@
 })();
 
 const NavbarHTML = `
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to main content</a>
     <nav class="navbar" id="navbar">
         <a href="index.html" class="nav-logo">
             <img src="assets/logo.png" alt="Nest Group Logo" width="120" height="42" style="width:auto;" />

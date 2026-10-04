@@ -3148,11 +3148,50 @@ html {
     border: 0;
 }
 
-/* Visible keyboard focus — gold ring, only for keyboard nav */
+/* Visible keyboard focus, only for keyboard nav. A focus ring needs 3:1
+   against what is around it: the deeper gold on light pages (5.09:1), the
+   light gold on the navy surfaces (5.8:1). The brand gold is 2.3:1 on white. */
 :focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--gold-text);
     outline-offset: 3px;
     border-radius: 4px;
+}
+
+:is(.navbar, .v2-dark, .page-hero--dark, .hero-video-home, .ap-hero, .article-hero,
+    #calculator, .cta-banner, .skip-link) :focus-visible,
+.skip-link:focus-visible {
+    outline-color: var(--gold-light);
+}
+
+/* Keyboard users can jump straight past the menu. Off-screen until it has focus. */
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 2000;
+    padding: 12px 18px;
+    background: var(--primary-dark);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-200%);
+    transition: transform 150ms ease-out;
+}
+
+.skip-link:focus {
+    transform: none;
+}
+
+/* Ring inside the navy box, so it contrasts whatever page sits behind */
+.skip-link:focus-visible {
+    outline-offset: -5px;
+}
+
+/* The skip link moves focus to <main>; it is a target, not a control */
+main:focus {
+    outline: none;
 }
 
 .navbar a:focus-visible,
