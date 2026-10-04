@@ -90,3 +90,6 @@ tools/backups/
 js/edit-mode.js
 edit.html
 tools/
+
+# Impeccable live-preview session state (local runtime, not site code)
+.impeccable/live/
