@@ -26,8 +26,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=72" />
-    <link rel="stylesheet" href="css/v2.css?v=72" />
+    <link rel="stylesheet" href="css/styles.css?v=73" />
+    <link rel="stylesheet" href="css/v2.css?v=73" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
@@ -397,16 +397,6 @@
             transform: translateY(-0.15em);
         }
 
-        /* Cards whose figure is held back lead with their topic instead */
-        .econ-card__title {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1.3;
-            margin: 6px 0 18px;
-        }
-
         .econ-card__label {
             font-size: 12px;
             color: var(--text-light);
@@ -702,13 +692,13 @@
                     <p class="econ-card__body" data-i18n="econ_p1">Монгол Улс нь Япон Улстай найрсаг харилцаа, урт хугацааны стратегийн хамтын ажиллагаатай орон бөгөөд Улаанбаатар–Нарита чиглэлд ердөө 5 цагийн нислэгтэй ойр байршил нь бизнес, хөрөнгө оруулалтын харилцааг улам дэмжиж байна.</p>
                 </article>
                 <article class="econ-card">
-                    <!-- The figure is held back until it has a source (PRODUCT.md: proof before promise) -->
-                    <h3 class="econ-card__title" data-i18n="econ_gdp">Эдийн засгийн өсөлт</h3>
+                    <div class="econ-card__stat"><span class="econ-num">+6.4</span><span class="unit">%</span></div>
+                    <div class="econ-card__label" data-i18n="econ_gdp">Эдийн засгийн өсөлт (2024)</div>
                     <p class="econ-card__body" data-i18n="econ_p2">Хөгжиж буй эдийн засагтай Монгол Улс нь өндөр өсөлтийн потенциалтай зах зээлд тооцогддог бөгөөд сүүлийн жилүүдэд эдийн засгийн өсөлт 6–7% орчим хадгалагдаж, цаашид тогтвортой өсөх хүлээлттэй байна.</p>
                 </article>
                 <article class="econ-card">
-                    <!-- The figure is held back until it has a source and period -->
-                    <h3 class="econ-card__title" data-i18n="econ_realestate">Үл хөдлөх хөрөнгийн дундаж өсөлт</h3>
+                    <div class="econ-card__stat"><span class="econ-num">+12.8</span><span class="unit">%</span></div>
+                    <div class="econ-card__label" data-i18n="econ_realestate">Үл хөдлөх хөрөнгийн дундаж өсөлт</div>
                     <p class="econ-card__body" data-i18n="econ_p3">Хотжилт, дэд бүтэц, дундаж давхаргын өсөлт зэрэг хүчин зүйлсийн нөлөөгөөр үл хөдлөх хөрөнгө, санхүү, үйлчилгээ, аялал жуулчлалын салбаруудад хөрөнгө оруулалтын боломжууд идэвхтэй нэмэгдэж байна.</p>
                 </article>
             </div>
@@ -802,12 +792,12 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=72"></script>
-    <script src="js/translations.js?v=72"></script>
-    <script src="js/sanity-client.js?v=72"></script>
-    <script src="js/home-news.js?v=72"></script>
-    <script src="js/main.js?v=72"></script>
-    <script src="js/v2.js?v=72"></script>
+    <script src="js/components.js?v=73"></script>
+    <script src="js/translations.js?v=73"></script>
+    <script src="js/sanity-client.js?v=73"></script>
+    <script src="js/home-news.js?v=73"></script>
+    <script src="js/main.js?v=73"></script>
+    <script src="js/v2.js?v=73"></script>
 </body>
 
 </html>

@@ -32,7 +32,7 @@ Local lead generation and recruiting are not primary goals for the site.
 ## Operating Context
 
 - Because Japanese investors are the primary audience, the Japanese-language experience is a primary path, not a translation afterthought.
-- Investors evaluate via the Investment page's return simulator (two tabs: Property × Finance and Finance only). Yield, NBFI rate and tax come from a Sanity `investmentRates` document when one exists (none has been created yet), otherwise from the confirmed defaults under Evidence on Hand. Foreign-currency amounts use daily mid-market rates from moneyconvert.net; the Mongolian bank-rate feed the site once used is defunct.
+- Investors evaluate via the Investment page's return simulator (two tabs: Property × Finance and Finance only). On the Property × Finance tab, yield, NBFI rate and tax come from a Sanity `investmentRates` document when one exists (none has been created yet), otherwise from the defaults under Evidence on Hand; the Finance tab uses fixed rates. Rates and formulas match the main branch, which the owner confirmed correct (October 2026). Foreign-currency amounts use daily mid-market rates from moneyconvert.net; the Mongolian bank-rate feed the site once used is defunct.
 - Inquiries go through the Web3Forms contact form (subjects include Investor Relations and Partnership) or by phone/email to the Ulaanbaatar head office (Chingeltei District, Baga Toiruu 46; Mon–Fri 9–18).
 - Staff edit fixed site text via a local on-page editor (`edit.html`, local only and not deployed) that writes `js/translations.js`. News is edited in Sanity Studio (hosted at nest-group.sanity.studio). The Studio also has schemas for properties and calculator rates, but as of October 2026 Sanity holds only news articles and images.
 - The site is a public brochure and lead channel, not a client portal. Property-management operations (contracts, rent tracking, bank payment matching) will live in a **separate website/application**, which is out of scope for this record.
@@ -53,7 +53,7 @@ Local lead generation and recruiting are not primary goals for the site.
 - **Subsidiary copy still disagrees with the confirmed count of four.** Home says "Five Companies. One Vision.", the about timeline says "three subsidiaries", and the Companies page has a Nest Career section. Companies ("Four specialized subsidiaries") and the footer (four VE-ST LLCs) are already right. How to present Nest Career until it operates is undecided.
 - **Company age.** The holding is described as "operating since 2018". Property Service started in 2016 with 7 properties. The homepage stat says "7+ Years of Excellence", while the about timeline and news say "A Decade".
 - **Sector framing.** The footer and about meta describe the group as "Real Estate and Non-Banking Finance" only. The hero lists eight business areas, and the pillars section lists four.
-- **Phone number.** The site now shows (+976) 7707-6977 everywhere; the English and Japanese copy previously showed a different number. Awaiting confirmation.
+- **Phone number.** As on main: the footer, Mongolian contact copy and privacy policy show (+976) 7707-6977, while the English and Japanese contact copy shows +976 7737-0770. Which number belongs where is not confirmed.
 - **Legal review.** The privacy policy (`privacy.html`, written from what the code actually does) and the calculator disclaimer need legal/compliance review. Whether the contact form needs an explicit consent checkbox under Mongolia's personal data protection law is undecided. No Terms of Use exist, and the footer no longer claims any.
 - **Future link to the management software.** The separate property-management app may later mark properties as leased or available on this site. Sanity's `property.isAvailable` field is the existing hook, but no page displays properties yet. The mechanism is not decided.
 
@@ -68,7 +68,7 @@ Local lead generation and recruiting are not primary goals for the site.
 
 ## Evidence on Hand
 
-- **Operating figures (as published on the site):** 115+ properties under management (from 7 in 2016), 70+ investors, 30+ team members, an NBFI portfolio that grew from 1.6B to 16.4B MNT (10×) since 2018, and 2,500+ NBFI clients. Published asset-management rates are about 5% for JPY and about 14% for MNT (MNT confirmed October 2026; the copy previously said ~13%). Calculator defaults, used until a Sanity `investmentRates` document overrides them: 7% property rental yield and 20% withholding tax (from the original calculator data), 14% for the MNT NBFI product (confirmed), and 5% for foreign-currency deposits.
+- **Operating figures (as published on the site):** 115+ properties under management (from 7 in 2016), 70+ investors, 30+ team members, an NBFI portfolio that grew from 1.6B to 16.4B MNT (10×) since 2018, and 2,500+ NBFI clients. Published asset-management rates are about 5% for JPY and about 13% for MNT. Calculator (as on main, confirmed correct by the owner in October 2026): the Property × Finance tab uses 7% rental yield, 12% NBFI interest compounded monthly, and 20% tax charged on each year's interest (Sanity `investmentRates` can override these); the Finance tab defaults to 14% for MNT (choices 12–15%) and 5% for foreign currencies (4–6%), compounding yearly with 20% tax.
 - **Certifications:** ISO 9001:2015 (quality management) and ISO 27001:2022 (information security), with files `assets/iso2001-logo.png` and `assets/ISO 27001 Information Security.png`, plus the award photo `assets/timeline/iso-award.jpg`.
 - **Partners (with logos where present):** Trade & Development Bank, Bogd Bank, Golomt Bank, Khan Bank, World Standard Consulting, MonCertf, Idea+, NUDEN SOLUTION, Chingeltei District Kindergarten #39, Kaisei Capital and Flower Hotel.
 - **Leadership:** Tugsbileg Khurelbaatar (Group CEO), Munkhbold Boldbaatar (CEO, Property Service), Enkhtur Ankhbayar (COO, Mirais NBFI) and Bayanjargal Erkhembayar (COO, Property Service). Each has a photo in `assets/`.
@@ -78,7 +78,7 @@ Local lead generation and recruiting are not primary goals for the site.
   - An independent board, governance framework or ESG claims. The governance section was removed because the company is pre-IPO.
   - Investor testimonials, case studies, realized-return figures and press coverage.
   - Property listings in Sanity. The "PJ Yado NP18-17" example property was hardcoded in early calculator code, not Sanity data, and has been removed.
-  - Sources for the home page market figures. "+6.4% economic growth (2024)" and "+12.8% average real estate growth" had no source or period and are held back (October 2026); restore them only with a cited source. The econ_p2 paragraph still says growth has been "around 6–7% in recent years" and needs the same check.
+  - Sources for the home page market figures "+6.4% economic growth (2024)*" and "+12.8% average real estate growth". The owner confirmed the main-branch figures (October 2026), but the asterisk has no footnote and no source or period is shown.
 
 ## Product Principles
 

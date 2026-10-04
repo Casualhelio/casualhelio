@@ -2,9 +2,10 @@
 // UNIFIED INVESTMENT CALCULATOR — Two tabs:
 //   1) Property × Finance  (rent + NBFI compounding)
 //   2) Finance Only         (annual compounding)
-// Both tabs share one set of rates (Sanity `investmentRates`, else the
-// published defaults below) and withhold tax on interest before it is
-// reinvested, so the same product gives the same answer in either tab.
+// Rates and formulas are the ones on the main branch (confirmed correct by
+// the owner, October 2026): the property tab uses Sanity `investmentRates`
+// or 7% yield / 12% NBFI / 20% tax; the finance tab defaults to 14% MNT
+// (5% foreign) with 20% tax.
 // ===============================================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -20,20 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let propInitDone = false;
     let finInitDone = false;
 
-    // Recalc hooks, set by each tab's init; called when the shared rates arrive from Sanity
+    // Set by the property tab's init; called when its rates arrive from Sanity
     let _propRecalc = null;
-    let _finRecalc = null;
 
     // ---------------------------------------------------------------
-    // SHARED RATES — Sanity `investmentRates`, falling back to the confirmed
-    // defaults: 7% rental yield and 20% tax from the original calculator data,
-    // 14% for the MNT non-bank finance product (confirmed Oct 2026).
+    // PROPERTY-TAB RATES — Sanity `investmentRates`, falling back to the
+    // main-branch defaults: 7% rental yield, 12% NBFI, 20% tax on interest.
     // ---------------------------------------------------------------
     const RATES = {
         yieldPercent: 7.0,   // property rental yield
-        nbfiPercent: 14.0,   // MNT non-bank finance product
-        taxPercent: 20.0,    // withholding tax on interest
+        nbfiPercent: 12.0,   // NBFI rate the rent is reinvested at
+        taxPercent: 20.0,    // tax on interest
     };
+
+    // FINANCE-TAB RATES (fixed, as on main): 14% default for MNT, 20% tax
+    const FIN_MNT_DEFAULT = 0.14;
+    const FIN_TAX_RATE = 0.20;
 
     async function loadInvestmentRates() {
         if (!window.SanityAPI || !window.SanityAPI.fetch) return;
@@ -46,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // typeof: `null >= 0` is true, so a cleared Studio field would otherwise pass
             if (typeof rates.taxRatePercent === 'number' && rates.taxRatePercent >= 0) RATES.taxPercent = rates.taxRatePercent;
             if (propInitDone && _propRecalc) _propRecalc();
-            if (finInitDone && _finRecalc) _finRecalc();
         } catch (err) {
             // Sanity unavailable — keep the published defaults
         }
@@ -334,24 +336,22 @@ document.addEventListener('DOMContentLoaded', () => {
             let cumulativeTax = 0;
             let totalCashPool = 0;
 
-            // Rent goes into the NBFI product monthly; each month's interest has
-            // withholding tax deducted before it is reinvested (as in the finance tab).
+            // Rent goes into the NBFI product monthly and its interest compounds
+            // monthly; tax is charged on each year's interest (main-branch formula).
             for (let y = 1; y <= years; y++) {
                 const annualRent = initialInvestment * (state.yieldPercent / 100);
                 totalPropertyRent += annualRent;
                 let yearInterest = 0;
-                let yearTax = 0;
                 for (let m = 1; m <= 12; m++) {
                     totalCashPool += annualRent / 12;
                     const monthInterest = totalCashPool * ((state.nbfiPercent / 100) / 12);
-                    const monthTax = monthInterest * (state.taxPercent / 100);
                     yearInterest += monthInterest;
-                    yearTax += monthTax;
-                    totalCashPool += monthInterest - monthTax;
+                    totalCashPool += monthInterest;
                 }
                 cumulativeInterest += yearInterest;
+                const yearTax = yearInterest * (state.taxPercent / 100);
                 cumulativeTax += yearTax;
-                const currentYearEndBalance = initialInvestment + totalCashPool;
+                const currentYearEndBalance = initialInvestment + totalCashPool - cumulativeTax;
 
                 if (tableBody) {
                     const tr = document.createElement('tr');
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            const finalNetProfit = totalCashPool;
+            const finalNetProfit = totalCashPool - cumulativeTax;
             const totalReturn = initialInvestment + finalNetProfit;
             const totalROI = initialInvestment > 0 ? (finalNetProfit / initialInvestment) * 100 : 0;
 
@@ -469,13 +469,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let finCurrency = langCurrency();
         let finCurrencyTouched = false;
         let finAmountTouched = false;
-        let userPickedRate = false;
         let finYears = 5;
         let finAmount = DEFAULT_AMOUNTS[finCurrency]; // as typed, in finCurrency
 
         const ER = () => window.ExchangeRate;
-        const taxRate = () => RATES.taxPercent / 100;
-        const defaultRate = () => (finCurrency === 'MNT' ? RATES.nbfiPercent / 100 : FOREIGN_DEFAULT);
+        const taxRate = () => FIN_TAX_RATE;
+        const defaultRate = () => (finCurrency === 'MNT' ? FIN_MNT_DEFAULT : FOREIGN_DEFAULT);
         const pct = (r) => `${+(r * 100).toFixed(1)}%`;
         let finRate = defaultRate();
 
@@ -525,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'font-weight:700', 'font-size:14px', 'cursor:pointer',
                     'transition:background-color 0.15s ease-out,color 0.15s ease-out,border-color 0.15s ease-out', 'font-family:inherit',
                 ].join(';');
-                btn.addEventListener('click', () => { finRate = r; userPickedRate = true; buildRateChips(); finCalculate(); });
+                btn.addEventListener('click', () => { finRate = r; buildRateChips(); finCalculate(); });
                 finRateChipsEl.appendChild(btn);
             });
             if (finLblRate) finLblRate.textContent = (finRate * 100).toFixed(1) + '%';
@@ -559,7 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (code === finCurrency) return;
             finCurrency = code;
             finRate = defaultRate(); // MNT and foreign products have different rates
-            userPickedRate = false;
             // A typed amount keeps its number under the new label; the default becomes the new currency's default
             if (!finAmountTouched) finAmount = DEFAULT_AMOUNTS[code];
             buildFinCurrSwitcher(); buildRateChips();
@@ -678,13 +676,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ER().init().then(() => { buildFinCurrSwitcher(); updateFinExchInfo(); finCalculate(); });
         }
         finCalculate();
-
-        // Shared rates arrived from Sanity: move to the new default unless the visitor picked a rate
-        _finRecalc = () => {
-            if (!userPickedRate) finRate = defaultRate();
-            buildRateChips();
-            finCalculate();
-        };
     }
 
     // ---------------------------------------------------------------
