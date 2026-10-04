@@ -1251,7 +1251,7 @@ ul {
     width: 55%;
     background:
         linear-gradient(rgba(36, 69, 86, 0.18), rgba(36, 69, 86, 0.18)),
-        url('../assets/group.jpg') 50% 30% / cover no-repeat;
+        url('../assets/group-web.jpg') 50% 30% / cover no-repeat;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%);
     mask-image: linear-gradient(90deg, transparent, #000 45%);
     pointer-events: none;

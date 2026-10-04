@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" />
     <meta name="theme-color" content="#244556" />
-    <link rel="stylesheet" href="css/styles.css?v=67" />
-    <link rel="stylesheet" href="css/v2.css?v=67" />
+    <link rel="stylesheet" href="css/styles.css?v=68" />
+    <link rel="stylesheet" href="css/v2.css?v=68" />
     <style>
         /* ── HOME VIDEO HERO ── */
         .hero-video-home { background: #0a1a24; }
@@ -189,7 +189,8 @@
             .map-overlay-svg .route-base { stroke-dashoffset: 0; }
             .map-overlay-svg .plane { opacity: 1; offset-distance: 60%; animation: none; }
             .map-overlay-svg .node-inner { opacity: 1; transform: none; animation: none; }
-            /* no looping hero video; the dark hero background shows instead */
+            /* no looping hero video; a still from the film shows instead */
+            .hero-video-wrap { background: url('assets/hero-poster.jpg') center / cover no-repeat; }
             .hero-video-wrap video { display: none; }
         }
 
@@ -516,7 +517,7 @@
 
                 <a href="companies.html#nest-travel" class="division-row reveal">
                     <div class="division-row__media">
-                        <img src="assets/ub.jpg" alt="Aerial view of Ulaanbaatar" loading="lazy" decoding="async" />
+                        <img src="assets/ub-web.jpg" alt="Aerial view of Ulaanbaatar" loading="lazy" decoding="async" />
                     </div>
                     <div class="division-row__body">
                         <h3 class="division-row__title" data-i18n="pillar3_title">Аялал жуулчлал</h3>
@@ -547,7 +548,7 @@
             </div>
 
             <div class="map-container reveal">
-                <img src="assets/watercolor_map.png" alt="World Map" class="world-svg-img" loading="lazy" decoding="async" />
+                <img src="assets/watercolor_map.webp" alt="World Map" class="world-svg-img" loading="lazy" decoding="async" />
 
                 <!-- Overlay for nodes & connections -->
                 <!-- Overlay uses equirectangular-style coords on 1400×700 ≈ lon (-180–180°), lat (90N–90S) -->
@@ -652,7 +653,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:60px;">
                 <div class="reveal">
                     <div class="v2-img" style="height:350px;">
-                        <img src="assets/strategy-map.jpg" alt="Ulaanbaatar Central" loading="lazy" />
+                        <img src="assets/strategy-map-web.jpg" alt="Ulaanbaatar Central" loading="lazy" />
                     </div>
                 </div>
                 <div class="reveal">
@@ -665,7 +666,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:60px;">
                 <div class="reveal" style="order:2;">
                     <div class="v2-img" style="height:350px;">
-                        <img src="assets/ub1.png" alt="Inbound Tourism Growth" loading="lazy" />
+                        <img src="assets/ub1.webp" alt="Inbound Tourism Growth" loading="lazy" />
                     </div>
                 </div>
                 <div class="reveal" style="order:1;">
@@ -722,12 +723,12 @@
     <!-- FOOTER WRAPPER -->
     <div id="footer-wrapper"></div>
 
-    <script src="js/components.js?v=67"></script>
-    <script src="js/translations.js?v=67"></script>
-    <script src="js/sanity-client.js?v=67"></script>
-    <script src="js/home-news.js?v=67"></script>
-    <script src="js/main.js?v=67"></script>
-    <script src="js/v2.js?v=67"></script>
+    <script src="js/components.js?v=68"></script>
+    <script src="js/translations.js?v=68"></script>
+    <script src="js/sanity-client.js?v=68"></script>
+    <script src="js/home-news.js?v=68"></script>
+    <script src="js/main.js?v=68"></script>
+    <script src="js/v2.js?v=68"></script>
 </body>
 
 </html>
