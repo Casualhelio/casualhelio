@@ -5,7 +5,7 @@ these**, and `.cpanel.yml` never copies this folder, so they are not deployed.
 
 | Original | Web version the site uses |
 |---|---|
-| `hero-video.mp4` (102 s, 1080p, 29.6 MB) | `assets/hero-video-1080.mp4`, `assets/hero-video-720.mp4` |
+| `hero-video.mp4` (102 s, 1080p, 29.6 MB) | `assets/hero-video-1080.mp4` (full frame), `assets/hero-video-phone.mp4` (picture area only: `crop=1088:800:416:140`, no letterbox or subtitles) |
 | `tugs.png`, `munkhbold.png` (JPEG files, 14–17 MP) | `assets/tugs.jpg`, `assets/munkhbold.jpg` (700 px) |
 | `group.jpg` (6000×4000) | `assets/group-web.jpg` (1800×1200) |
 | `ub.jpg` (6525×4348) | `assets/ub-web.jpg` (900 px) |

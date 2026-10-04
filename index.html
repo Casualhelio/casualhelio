@@ -49,6 +49,16 @@
             pointer-events: none;
         }
 
+        /* The phone film has no letterbox, so it simply covers the hero */
+        @media (max-width: 768px) {
+            .hero-video-wrap video {
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                min-width: 0; min-height: 0;
+                transform: none;
+            }
+        }
+
         .hero-video-overlay {
             position: absolute;
             inset: 0;
@@ -446,9 +456,11 @@
     <section class="hero hero-video-home">
         <div class="hero-video-wrap">
             <video autoplay muted loop playsinline disablepictureinpicture data-ambient>
-                <!-- Phones get the 720p encode (6.7 MB), everything else 1080p (12 MB).
-                     Browsers that ignore `media` take the first source, i.e. the smaller one. -->
-                <source src="assets/hero-video-720.mp4" type="video/mp4" media="(max-width: 768px)">
+                <!-- Phones get a 1088x800 cut of the film's picture area (6.5 MB): no letterbox
+                     bars or burned-in subtitles, which a tall screen would otherwise show as dark
+                     bands and half a line of Japanese. Everything else gets the full 1080p frame
+                     (12 MB). Browsers that ignore `media` take the first source, the smaller one. -->
+                <source src="assets/hero-video-phone.mp4" type="video/mp4" media="(max-width: 768px)">
                 <source src="assets/hero-video-1080.mp4" type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
