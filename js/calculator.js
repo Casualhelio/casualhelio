@@ -25,12 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let _finRecalc = null;
 
     // ---------------------------------------------------------------
-    // SHARED RATES — Sanity `investmentRates`, falling back to the rates
-    // published in the site copy (MNT asset management ~13%).
+    // SHARED RATES — Sanity `investmentRates`, falling back to the confirmed
+    // defaults: 7% rental yield and 20% tax from the original calculator data,
+    // 14% for the MNT non-bank finance product (confirmed Oct 2026).
     // ---------------------------------------------------------------
     const RATES = {
         yieldPercent: 7.0,   // property rental yield
-        nbfiPercent: 13.0,   // MNT non-bank finance product
+        nbfiPercent: 14.0,   // MNT non-bank finance product
         taxPercent: 20.0,    // withholding tax on interest
     };
 
