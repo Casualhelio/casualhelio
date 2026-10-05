@@ -1,0 +1,1 @@
+import{i as e,o as t}from"./motion-core.CXwSLreZ.js";import"./news.VkPI3o59.js";e(()=>t());
