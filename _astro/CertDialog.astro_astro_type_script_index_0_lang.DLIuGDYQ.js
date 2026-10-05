@@ -1,0 +1,1 @@
+import{n as e}from"./transitions.IQOC4PDH.js";var t=document.getElementById(`cert-dialog`);if(t){let n=e(t);document.querySelectorAll(`[data-cert-open]`).forEach(e=>e.addEventListener(`click`,t=>{t.preventDefault(),n.open(e)}))}
