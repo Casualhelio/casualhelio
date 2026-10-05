@@ -1,0 +1,1 @@
+import{a as e,s as t}from"./motion-core.tuN1HvO0.js";import"./news.T0cSAVfV.js";e(()=>t());
