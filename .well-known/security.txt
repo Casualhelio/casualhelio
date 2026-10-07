@@ -1,0 +1,5 @@
+# Security contact for nest.mn (RFC 9116)
+Contact: mailto:info@nest.mn
+Expires: 2027-10-07T00:00:00.000Z
+Preferred-Languages: en, mn
+Canonical: https://nest.mn/.well-known/security.txt
