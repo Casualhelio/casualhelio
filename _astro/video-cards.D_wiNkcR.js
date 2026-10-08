@@ -1,0 +1,1 @@
+var e=Array.from(document.querySelectorAll(`[data-video-card]`));e.forEach(t=>{let n=t.querySelector(`video`),r=t.querySelector(`.vc-cover`);n&&r&&(r.addEventListener(`click`,()=>{t.classList.add(`playing`),n.controls=!0,n.play().catch(()=>{}),n.focus()}),n.addEventListener(`play`,()=>{e.forEach(e=>{let n=e.querySelector(`video`);e!==t&&n&&!n.paused&&n.pause()})}))});
