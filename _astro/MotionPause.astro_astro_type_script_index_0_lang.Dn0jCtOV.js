@@ -1,0 +1,1 @@
+document.querySelectorAll(`[data-motion-toggle]`).forEach(e=>{let t=e.closest(`[data-motion-scope]`),n=e.querySelector(`.t-icon-swap`);t&&e.addEventListener(`click`,()=>{let r=t.classList.toggle(`is-paused`);e.setAttribute(`aria-label`,(r?e.dataset.labelPlay:e.dataset.labelPause)||``),n&&(n.dataset.state=r?`b`:`a`)})});
