@@ -12,4 +12,5 @@ deployment:
     - /bin/cp -RfT assets "$DEPLOYPATH/assets"
     - /bin/mkdir -p "$DEPLOYPATH/.well-known"
     - /bin/cp -f .well-known/security.txt "$DEPLOYPATH/.well-known/"
+    - /bin/cp -RfT card "$DEPLOYPATH/card"
     - /bin/cp -f index.html about.html companies.html contact.html investor-relations.html news.html article.html privacy.html 404.html robots.txt sitemap.xml .htaccess "$DEPLOYPATH/"

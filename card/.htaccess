@@ -1,0 +1,4 @@
+# Business cards shared as links (/card/…): never in search results
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noimageindex"
+</IfModule>
