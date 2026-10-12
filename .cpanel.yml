@@ -1,0 +1,8 @@
+---
+# cPanel Git Version Control: "Deploy HEAD Commit" copies the built site into
+# public_html. Made by web/scripts/build-deploy.mjs; edit that, not this.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/nestmn/public_html
+    - /bin/mkdir -p "$DEPLOYPATH"
+    - /bin/cp -RfT site "$DEPLOYPATH"

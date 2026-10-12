@@ -1,0 +1,93 @@
+# nest.mn on Apache (cPanel), behind Cloudflare.
+# scripts/build-deploy.mjs copies this file to the site root as .htaccess.
+
+ErrorDocument 404 /404.html
+DirectoryIndex index.html
+Options -Indexes
+AddDefaultCharset utf-8
+AddType font/woff2 .woff2
+AddType image/webp .webp
+AddType image/avif .avif
+AddType text/javascript .js .mjs
+
+# ─── Security headers (the ones a page's <meta> cannot set) ─────────────────
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  # Every page also carries its own, narrower policy in a <meta> tag
+  # (src/layouts/Base.astro); a browser applies both. This header is the
+  # widest any page needs (the contact page's form and hCaptcha) plus the
+  # parts only a header can set (frame-ancestors). Fonts are served by the
+  # site itself, so Google Fonts is no longer allowed.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://cdn.sanity.io; connect-src 'self' https://ka04oafk.api.sanity.io https://cdn.moneyconvert.net https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://maps.google.com https://www.google.com https://hcaptcha.com https://*.hcaptcha.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'; upgrade-insecure-requests"
+
+  # Caching. Files in /_astro/ have a fingerprint in their name that changes
+  # with their content, so browsers may keep them for a year. Pages are
+  # checked on every visit, so a new deploy shows at once.
+  <If "%{REQUEST_URI} =~ m#^/_astro/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Business cards shared as links (/card/…): never in search results
+  <If "%{REQUEST_URI} =~ m#^/card/#">
+    Header set X-Robots-Tag "noindex, nofollow, noimageindex"
+  </If>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png        "access plus 7 days"
+  ExpiresByType image/jpeg       "access plus 7 days"
+  ExpiresByType image/webp       "access plus 7 days"
+  ExpiresByType image/svg+xml    "access plus 7 days"
+  ExpiresByType video/mp4        "access plus 30 days"
+  ExpiresByType application/pdf  "access plus 7 days"
+  ExpiresByType font/woff2       "access plus 1 year"
+  ExpiresByType text/css         "access plus 7 days"
+  ExpiresByType text/javascript  "access plus 7 days"
+  ExpiresByType text/html        "access plus 0 seconds"
+</IfModule>
+
+# ─── Compression ─────────────────────────────────────────────────────────────
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # ─── HTTPS only ──────────────────────────────────────────────────────────
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ─── Old language links ──────────────────────────────────────────────────
+  # The old site named the language as ?lang=en / ?lang=ja; each language now
+  # has its own address. Search engines and shared links move with a 301.
+  # (?lang=mn stays: the page script remembers that choice and tidies the URL.)
+  # An article keeps its ?id=
+  RewriteCond %{QUERY_STRING} ^(?=.*(?:^|&)lang=(en|ja)(?:&|$))(?=.*(?:^|&)id=([A-Za-z0-9._-]+)).*$
+  RewriteRule ^article\.html$ /%1/article.html?id=%2 [R=301,L]
+  RewriteCond %{QUERY_STRING} (?:^|&)lang=(en|ja)(?:&|$)
+  RewriteRule ^(about|companies|investor-relations|news|contact|privacy)\.html$ /%1/$1.html? [R=301,L]
+  RewriteCond %{QUERY_STRING} (?:^|&)lang=(en|ja)(?:&|$)
+  RewriteRule ^(index\.html)?$ /%1/? [R=301,L]
+</IfModule>
+
+# ─── Never serve working files, if any ever reach the server ────────────────
+<FilesMatch "\.(ps1|py|csv|md|log|yml|yaml|sh|bak|sql|docx?|xlsx?)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(test|edit|edit-mode|edit-server|index-alt|admin-translations|photo-choices)\.(js|html)$">
+  Require all denied
+</FilesMatch>
